@@ -1,5 +1,8 @@
 # Mush3D
 
+**Useful links:**
+- [ExcaliDraw Board](https://excalidraw.com/#room=40d1ff70b3686a5c5b03,w6kdCY5a6fkLumdioki-Cg)
+
 ## Installing
 **Clone the repository**
 ```
