@@ -18,6 +18,7 @@ python setup.py
 **Running linters and Django tests**
 - *Linters* will run on every **commit**. Type `pre-commit run -a` to run them manually.
 - *Tests* will run on every **push** or with `pre-commit run --hook-stage manual tests` command.
+
 You can always skip pre-commit hooks when committing changes by adding `--no-verify` flag.
 
 ## Compiling localization messages
