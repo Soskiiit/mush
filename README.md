@@ -1,5 +1,7 @@
 # Mush3D
 
+[![Code Quality Check](https://github.com/Soskiiit/mush/actions/workflows/linters.yml/badge.svg)](https://github.com/Soskiiit/mush/actions/workflows/linters.yml) [![Django Tests](https://github.com/Soskiiit/mush/actions/workflows/tests.yml/badge.svg)](https://github.com/Soskiiit/mush/actions/workflows/tests.yml)
+
 **Useful links:**
 - [ExcaliDraw Board](https://excalidraw.com/#room=40d1ff70b3686a5c5b03,w6kdCY5a6fkLumdioki-Cg)
 
