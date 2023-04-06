@@ -11,6 +11,7 @@ ROOT_DIR                = os.path.realpath(os.path.dirname(__file__))
 PROJECT_DIR             = os.path.join(ROOT_DIR, PROJECT_NAME)
 VENV_DIR                = os.path.join(ROOT_DIR, '.venv')
 VENV_PYTHON             = os.path.join(VENV_DIR, 'bin', 'python3') if sys.platform == 'linux' else os.path.join(VENV_DIR, 'Scripts', 'python.exe')
+VENV_PRECOMMIT          = os.path.join(VENV_DIR, 'bin', 'pre-commit')
 MANAGEPY_PATH           = os.path.join(PROJECT_DIR, 'manage.py')
 DEV_REQUIREMENTS_PATH   = os.path.join(ROOT_DIR, 'requirements', 'dev.txt')
 DOTENV_PATH             = os.path.join(PROJECT_DIR, '.env')
@@ -41,9 +42,9 @@ def setup():
     run([sys.executable, MANAGEPY_PATH, 'migrate'])
     run([sys.executable, MANAGEPY_PATH, 'shell'], input=b'from django.contrib.auth.models import User; User.objects.create_superuser("admin", "admin@mail.com", "admin")\n', stdout=sp.DEVNULL, stderr=sp.DEVNULL, ignore_errors=True)
 
-    run(['pre-commit', 'install', '--hook-type', 'pre-commit'])
-    run(['pre-commit', 'install', '--hook-type', 'pre-push'])
-    run(['pre-commit', 'install', '--install-hooks'])
+    run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-commit'])
+    run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-push'])
+    run([VENV_PRECOMMIT, 'install', '--install-hooks'])
     with open(DOTENV_PATH, 'w') as file:
         file.write('\n'.join(f'{k}={v}' for k,v in DOTENV_CONTENTS.items()))
 
