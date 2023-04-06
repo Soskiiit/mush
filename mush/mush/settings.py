@@ -1,28 +1,34 @@
+import os
 from pathlib import Path
 
-from dotenv import dotenv_values
+from django.core.management.utils import get_random_secret_key
+from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+DOTENV_PATH = os.path.join(BASE_DIR, ".env")
 
-environment_variables = dotenv_values()
-environment_variables.setdefault('SECRET_KEY', 'test')
-environment_variables.setdefault('DEBUG', 'True')
-environment_variables.setdefault('ALLOWED_HOSTS', '')
-SECRET_KEY = environment_variables['SECRET_KEY']
-DEBUG = environment_variables['DEBUG'].upper() in ['1', 'TRUE', 'T']
-ALLOWED_HOSTS = environment_variables['ALLOWED_HOSTS'].split()
+load_dotenv(DOTENV_PATH)
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
+DEBUG = os.getenv("DJANGO_DEBUG", "True") != "False"
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
+INTERNAL_IPS = os.getenv("DJANGO_INTERNAL_IPS", "").split(",")
 
 
 INSTALLED_APPS = [
-    'catalog.apps.CatalogConfig',
+    # Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sorl.thumbnail'
+    # Third-party
+    'sorl.thumbnail',
+    'tailwind',
+    # Project-specific
+    'theme',
+    'catalog.apps.CatalogConfig',
 ]
 
 MIDDLEWARE = [
@@ -99,6 +105,7 @@ STATICFILES_DIRS = [
 ]
 STATIC_URL = '/static/'
 
-
 MEDIA_ROOT = f'{BASE_DIR}/media'
 MEDIA_URL = '/media/'
+
+TAILWIND_APP_NAME = 'theme'
