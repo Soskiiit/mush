@@ -27,7 +27,7 @@ def run(cmd: list, stdout=sp.PIPE, stderr=sp.PIPE, ignore_errors=False, *args, *
     print('>', ' '.join(cmd))
     r = sp.run(cmd, stdout=stdout, stderr=stderr, *args, **kwargs)
     if r.returncode != 0 and not ignore_errors:
-        print(r.stdout)
+        print(r.stdout.decode(), r.stderr.decode(), sep='\n')
         quit()
 
 
@@ -41,6 +41,7 @@ def setup():
     run([sys.executable, '-m', 'pip', 'install', '-r', DEV_REQUIREMENTS_PATH])
     run([sys.executable, MANAGEPY_PATH, 'migrate'])
     run([sys.executable, MANAGEPY_PATH, 'shell'], input=b'from django.contrib.auth.models import User; User.objects.create_superuser("admin", "admin@mail.com", "admin")\n', stdout=sp.DEVNULL, stderr=sp.DEVNULL, ignore_errors=True)
+    run([sys.executable, MANAGEPY_PATH, 'tailwind', 'install'])
 
     run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-commit'])
     run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-push'])
