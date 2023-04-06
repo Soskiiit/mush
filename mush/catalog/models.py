@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.models import User
 from django.db import models
 from sorl.thumbnail import get_thumbnail
@@ -39,6 +41,9 @@ class Project(models.Model):
         verbose_name = 'проект'
         verbose_name_plural = 'проекты'
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class Photo(models.Model):
     image = models.ImageField(upload_to='gallery', verbose_name='изображение')
@@ -58,3 +63,6 @@ class Photo(models.Model):
     class Meta:
         verbose_name = 'изображение'
         verbose_name_plural = 'изображения'
+
+    def __str__(self):
+        return f'{os.path.basename(self.image)}'
