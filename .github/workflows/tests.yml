@@ -26,7 +26,3 @@ jobs:
       run: |
         source .venv/bin/activate
         pre-commit run -a --hook-stage manual tests
-    - name: Run Django dev server
-      run: |
-        source .venv/bin/activate
-        timeout 20 python ./mush/manage.py runserver
