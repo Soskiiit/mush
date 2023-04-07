@@ -41,7 +41,6 @@ def setup():
     run([sys.executable, '-m', 'pip', 'install', '-r', DEV_REQUIREMENTS_PATH])
     run([sys.executable, MANAGEPY_PATH, 'migrate'])
     run([sys.executable, MANAGEPY_PATH, 'shell'], input=b'from django.contrib.auth.models import User; User.objects.create_superuser("admin", "admin@mail.com", "admin")\n', stdout=sp.DEVNULL, stderr=sp.DEVNULL, ignore_errors=True)
-    run([sys.executable, MANAGEPY_PATH, 'tailwind', 'install'])
 
     run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-commit'])
     run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-push'])
