@@ -2,7 +2,6 @@ from pathlib import Path
 
 from dotenv import dotenv_values
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 environment_variables = dotenv_values()
@@ -13,8 +12,8 @@ SECRET_KEY = environment_variables['SECRET_KEY']
 DEBUG = environment_variables['DEBUG'].upper() in ['1', 'TRUE', 'T']
 ALLOWED_HOSTS = environment_variables['ALLOWED_HOSTS'].split()
 
-
 INSTALLED_APPS = [
+    'photogrammetry.apps.PhotogrammetryConfig',
     'catalog.apps.CatalogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -93,12 +92,10 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 STATICFILES_DIRS = [
     f'{BASE_DIR}/static_dev',
 ]
 STATIC_URL = '/static/'
-
 
 MEDIA_ROOT = f'{BASE_DIR}/media'
 MEDIA_URL = '/media/'
