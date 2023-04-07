@@ -18,6 +18,10 @@ def run_process(request):
         photos = [Image.open(cur_photo_path) for cur_photo_path in photo_paths]
 
         model_path = photos_to_model(photos)
-        return HttpResponse('<h1>Done, models is in {0}</h1>'.format(model_path))
+        return HttpResponse(
+            '<h1>Done, models is in {0}</h1>'.format(model_path)
+        )
     else:
-        return HttpResponse('<h1>sowwy, no photogrammetry yet... Working on it</h1>')
+        return HttpResponse(
+            '<h1>sowwy, no photogrammetry yet... Working on it</h1>'
+        )

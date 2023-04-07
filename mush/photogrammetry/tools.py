@@ -23,10 +23,10 @@ def photos_to_model(photos):
         photos[i].save(photo_path + 'photo_' + str(i) + '.jpg')
 
     metashape_path = (
-            '"' + shutil.which('metashape') + '"'
+        '"' + shutil.which('metashape') + '"'
     )  # YOU MUST SPECIFY METASHAPE PATH IN YOUR PATH VARIABLES
     main_script_path = (
-            os.path.dirname(os.path.abspath(__file__)) + '/main_script.py'
+        os.path.dirname(os.path.abspath(__file__)) + '/main_script.py'
     )
     model_path = os.path.dirname(os.path.abspath(__file__)) + '/temp/model.glb'
     os.system(
