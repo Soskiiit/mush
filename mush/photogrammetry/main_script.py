@@ -5,14 +5,18 @@ import Metashape
 
 photo_path = sys.argv[1]
 model_path = sys.argv[2]
-photos = [os.path.join(photo_path, cur_photo) for cur_photo in os.listdir(photo_path)]
+photos = [
+    os.path.join(photo_path, cur_photo) for cur_photo in os.listdir(photo_path)
+]
 
 print('loaded photos:', photos)
 
 doc = Metashape.app.document
 chunk = doc.addChunk()
 chunk.addPhotos(photos)
-chunk.matchPhotos(downscale=1, generic_preselection=True, reference_preselection=False)
+chunk.matchPhotos(
+    downscale=1, generic_preselection=True, reference_preselection=False
+)
 chunk.alignCameras()
 chunk.buildDepthMaps(downscale=4, filter_mode=Metashape.AggressiveFiltering)
 chunk.buildModel(

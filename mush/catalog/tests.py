@@ -6,8 +6,7 @@ from django.test import TestCase
 class TestModels(TestCase):
     def setUp(self):
         self.owner = User.objects.create_user(
-            username='testuser',
-            password='12345'
+            username='testuser', password='12345'
         )
 
     def test_project_create(self):

@@ -14,27 +14,23 @@ class Project(models.Model):
     name = models.CharField(verbose_name='название', max_length=255)
     description = models.TextField(verbose_name='описание', blank=True)
     owner = models.ForeignKey(
-        User,
-        verbose_name='владелец',
-        on_delete=models.CASCADE
+        User, verbose_name='владелец', on_delete=models.CASCADE
     )
     is_public = models.BooleanField(default=False, verbose_name='публичный')
     status = models.CharField(
-        choices=status_choices,
-        default='in_queue',
-        max_length=255
+        choices=status_choices, default='in_queue', max_length=255
     )
     models_highres = models.FileField(
         upload_to='models_highres',
         verbose_name='3D модель',
         null=True,
-        blank=True
+        blank=True,
     )
     model_lod = models.FileField(
         upload_to='models_lod',
         verbose_name='3D модель (LOD in .glb)',
         null=True,
-        blank=True
+        blank=True,
     )
 
     class Meta:
