@@ -6,9 +6,10 @@ repos:
   hooks:
   - id: trailing-whitespace
     name: Removing trailing whitespace
-    exclude: 'README\.md'
+    exclude: '(README\.md|docs)'
   - id: end-of-file-fixer
     name: Checking EOF with newline
+    exclude: '(README\.md|docs)'
   - id: check-merge-conflict
     name: Checking for merge conflicts
 
