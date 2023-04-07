@@ -1,3 +1,4 @@
+import shutil
 from pathlib import Path
 
 from dotenv import dotenv_values
@@ -11,6 +12,7 @@ environment_variables.setdefault('ALLOWED_HOSTS', '')
 SECRET_KEY = environment_variables['SECRET_KEY']
 DEBUG = environment_variables['DEBUG'].upper() in ['1', 'TRUE', 'T']
 ALLOWED_HOSTS = environment_variables['ALLOWED_HOSTS'].split()
+ENABLE_PHOTOGRAMMETRY = not (shutil.which('metashape') is None)
 
 INSTALLED_APPS = [
     'photogrammetry.apps.PhotogrammetryConfig',
