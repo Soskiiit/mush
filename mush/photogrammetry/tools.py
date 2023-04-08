@@ -3,13 +3,14 @@ import shutil
 import threading
 from pathlib import Path
 
-import Metashape
 from django.core.mail import send_mail
 from mush.settings import ENABLE_PHOTOGRAMMETRY
 
+if ENABLE_PHOTOGRAMMETRY:
+    import Metashape
+
 
 def photogrammetry_main_thread(photo_path, model_path, user):
-    print('starting photogrammetry')
     photos = [
         os.path.join(photo_path, cur_photo)
         for cur_photo in os.listdir(photo_path)

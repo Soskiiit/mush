@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from dotenv import dotenv_values
+import pkg_resources
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -11,15 +12,9 @@ environment_variables.setdefault('ALLOWED_HOSTS', '')
 SECRET_KEY = environment_variables['SECRET_KEY']
 DEBUG = environment_variables['DEBUG'].upper() in ['1', 'TRUE', 'T']
 ALLOWED_HOSTS = environment_variables['ALLOWED_HOSTS'].split()
-ENABLE_PHOTOGRAMMETRY = True
 
-# try:
-#     import Metashape
-#
-#     ENABLE_PHOTOGRAMMETRY = True
-#     print('successfully found installed Metashape package')
-# except ModuleNotFoundError:
-#     print('Not found installed Metashape package!')
+installed_packages = {pkg.key for pkg in pkg_resources.working_set}
+ENABLE_PHOTOGRAMMETRY = 'metashape' in installed_packages
 
 INSTALLED_APPS = [
     'photogrammetry.apps.PhotogrammetryConfig',
