@@ -1,4 +1,3 @@
-import shutil
 from pathlib import Path
 
 from dotenv import dotenv_values
@@ -12,7 +11,15 @@ environment_variables.setdefault('ALLOWED_HOSTS', '')
 SECRET_KEY = environment_variables['SECRET_KEY']
 DEBUG = environment_variables['DEBUG'].upper() in ['1', 'TRUE', 'T']
 ALLOWED_HOSTS = environment_variables['ALLOWED_HOSTS'].split()
-ENABLE_PHOTOGRAMMETRY = not (shutil.which('metashape') is None)
+ENABLE_PHOTOGRAMMETRY = True
+
+# try:
+#     import Metashape
+#
+#     ENABLE_PHOTOGRAMMETRY = True
+#     print('successfully found installed Metashape package')
+# except ModuleNotFoundError:
+#     print('Not found installed Metashape package!')
 
 INSTALLED_APPS = [
     'photogrammetry.apps.PhotogrammetryConfig',
@@ -101,3 +108,6 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = f'{BASE_DIR}/media'
 MEDIA_URL = '/media/'
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "sent_mail"
