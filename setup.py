@@ -10,10 +10,9 @@ PROJECT_NAME            = 'mush'
 ROOT_DIR                = os.path.realpath(os.path.dirname(__file__))
 PROJECT_DIR             = os.path.join(ROOT_DIR, PROJECT_NAME)
 VENV_DIR                = os.path.join(ROOT_DIR, '.venv')
-VENV_PYTHON             = os.path.join(VENV_DIR, 'bin', 'python3') if sys.platform == 'linux' else os.path.join(VENV_DIR, 'Scripts', 'python.exe')
+VENV_PYTHON             = os.path.join(VENV_DIR, 'bin', 'python3') if (sys.platform == 'linux' or sys.platform == 'darwin') else os.path.join(VENV_DIR, 'Scripts', 'python.exe')
 VENV_PRECOMMIT          = os.path.join(VENV_DIR, 'bin', 'pre-commit')
 MANAGEPY_PATH           = os.path.join(PROJECT_DIR, 'manage.py')
-DEV_REQUIREMENTS_PATH   = os.path.join(ROOT_DIR, 'requirements', 'dev.txt')
 DOTENV_PATH             = os.path.join(PROJECT_DIR, '.env')
 DOTENV_CONTENTS = {
     'DJANGO_DEBUG': True,
@@ -21,6 +20,15 @@ DOTENV_CONTENTS = {
     'DJANGO_ALLOWED_HOSTS': 'localhost,127.0.0.1',
     'DJANGO_INTERNAL_IPS': 'localhost,127.0.0.1',
 }
+if sys.platform == 'linux':
+    DEV_REQUIREMENTS_PATH = os.path.join(ROOT_DIR, 'requirements/devs',
+                                         'dev_linux.txt')
+elif sys.platform == 'darwin':
+    DEV_REQUIREMENTS_PATH = os.path.join(ROOT_DIR, 'requirements/devs',
+                                         'dev_macos.txt')
+else:
+    DEV_REQUIREMENTS_PATH = os.path.join(ROOT_DIR, 'requirements/devs',
+                                         'dev_windows.txt')
 
 
 def run(cmd: list, stdout=sp.PIPE, stderr=sp.PIPE, ignore_errors=False, *args, **kwargs):

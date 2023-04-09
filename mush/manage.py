@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/home/sss/PycharmProjects/mush_venv/bin/python
 import os
 import sys
 
