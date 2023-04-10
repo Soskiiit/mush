@@ -48,6 +48,8 @@ def setup():
     with open(DOTENV_PATH, 'w') as file:
         file.write('\n'.join(f'{k}={v}' for k,v in DOTENV_CONTENTS.items()))
 
+    print('All done. Super user credentials are "admin:admin"')
+
 
 if __name__ == '__main__':
     try:
