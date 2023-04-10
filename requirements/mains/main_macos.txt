@@ -1,6 +1,0 @@
-Django==3.2.18
-Pillow==9.4.0
-sorl-thumbnail==12.9.0
-django-debug-toolbar==3.8.1
-python-dotenv==0.21.1
-./requirements/local_dependencies/Metashape-2.0.1-cp37.cp38.cp39.cp310.cp311-abi3-macosx_11_0_universal2.macosx_10_13_x86_64.whl
