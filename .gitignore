@@ -3,6 +3,8 @@
 
 # Folders
 .ignore/
+node_modules/
+mush/theme/static/
 
 # Python
 __pycache__/

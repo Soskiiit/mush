@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third-party
     'sorl.thumbnail',
-    'tailwind',
     'django_browser_reload',
     # Project-specific
     'theme',
@@ -105,11 +104,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 STATICFILES_DIRS = [
-    f'{BASE_DIR}/static_dev',
+    BASE_DIR / 'static',
+    os.path.join(BASE_DIR, 'theme', 'static'),
 ]
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = f'{BASE_DIR}/media'
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
-
-TAILWIND_APP_NAME = 'theme'

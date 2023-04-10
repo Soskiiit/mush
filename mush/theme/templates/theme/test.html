@@ -1,0 +1,10 @@
+{% extends "theme/base.html" %}
+{% load static %}
+
+{% block body %}
+    <div class="p-5">
+        <div style="width: 15rem;">
+            {% include "catalog/components/item-card.html" with image="assets/pumpkin.jpg" name="Тыква" owner="some-random-guy-with-a-truncated-nickname" downloads=15 %}
+        </div>
+    </div>
+{% endblock %}

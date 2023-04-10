@@ -3,5 +3,4 @@ Pillow==9.4.0
 sorl-thumbnail==12.9.0
 django-debug-toolbar==3.8.1
 python-dotenv==0.21.1
-django-tailwind==3.5.0
 django-browser-reload==1.7.0

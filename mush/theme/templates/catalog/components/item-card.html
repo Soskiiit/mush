@@ -1,0 +1,16 @@
+{% load static %}
+
+<div class="card">
+    <img src="{% static image %}" class="card-img-top">
+    <div class="card-body">
+        <h5 class="card-title">{{name}}</h5>
+        <div class="d-flex flex-row justify-content-between text-muted">
+            <span class="text-truncate">
+                by <a href="#" class="text-reset card-link">{{owner}}</a>
+            </span>
+            <span class="text-nowrap">
+                {{downloads}} <img src="{% static "assets/download.svg" %}">
+            </span>
+        </div>
+    </div>
+</div>
