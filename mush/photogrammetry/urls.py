@@ -5,5 +5,7 @@ from . import views
 app_name = 'photogrammetry'
 
 urlpatterns = [
-    path('', views.run_photogrammetry, name='run_process'),
+    path('compute/<int:project_id>/',
+         views.run_photogrammetry,
+         name='run_process'),
 ]

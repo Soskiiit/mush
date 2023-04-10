@@ -67,20 +67,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': '''django.contrib.auth.password_validation
-        .UserAttributeSimilarityValidator''',
+        'NAME': '''django.contrib.auth.password_validation.'''
+                '''UserAttributeSimilarityValidator''',
     },
     {
-        'NAME': '''django.contrib.auth
-        .password_validation.MinimumLengthValidator''',
+        'NAME': '''django.contrib.auth.password_validation.'''
+                '''MinimumLengthValidator''',
     },
     {
-        'NAME': '''django.contrib.auth
-        .password_validation.CommonPasswordValidator''',
+        'NAME': '''django.contrib.auth.password_validation.'''
+                '''CommonPasswordValidator''',
     },
     {
-        'NAME': '''django.contrib.auth
-        .password_validation.NumericPasswordValidator''',
+        'NAME': '''django.contrib.auth.password_validation.'''
+                '''NumericPasswordValidator''',
     },
 ]
 
@@ -104,5 +104,5 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = f'{BASE_DIR}/media'
 MEDIA_URL = '/media/'
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = BASE_DIR / "sent_mail"
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = f'{BASE_DIR}/sent_mail'
