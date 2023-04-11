@@ -2,7 +2,31 @@
 {% load static %}
 
 {% block body %}
-    <div class="p-5 row g-3">
+    <div class="bg-white">
+        <div class="container py-5">
+            <div class="row flex-lg-row-reverse align-items-center">
+                <div class="col-lg-6">
+                    <img src="{% static "assets/catalog-hero.jpg" %}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold lh-1 mb-3">
+                        Photogrammetry the easy way
+                    </h1>
+                    <p class="lead">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat.
+                    </p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Get started</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid p-5 row g-3">
         <div class="col-xl-3 col-lg-4 col-md-6">
             {% include "catalog/components/item-card.html" with image="assets/pumpkin.jpg" name="Тыква" owner="some-random-guy-with-a-truncated-nickname" downloads=15 %}
         </div>
@@ -18,5 +42,16 @@
         <div class="col-xl-3 col-lg-4 col-md-6">
             {% include "catalog/components/item-card.html" with image="assets/pumpkin.jpg" name="Тыква" owner="some-random-guy-with-a-truncated-nickname" downloads=15 %}
         </div>
+    </div>
+
+    <div class="container mb-5">
+        <nav class="mx-auto" style="width:fit-content;">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">...10</a></li>
+            </ul>
+        </nav>
     </div>
 {% endblock %}
