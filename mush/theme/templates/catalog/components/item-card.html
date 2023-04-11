@@ -26,14 +26,15 @@ aspect-ratio: 1;
 background-image: url({% static image %});
 background-repeat: no-repeat;
 background-position: center;
-background-size: cover;">
+background-size: cover;
+">
     <div class="h-100 user-select-none catalog-card-body">
         <div class="w-100 mt-auto p-5 pb-4 text-white">
             <h3 class="w-100 mb-3 fs-4 lh-1 fw-bold">{{name}}</h3>
             <div class="d-flex flex-row align-items-baseline justify-content-between">
                 <div>
                     <img
-                    src="https://github.com/mdo.png"
+                    src="{% static "assets/profile.jpeg" %}"
                     class="rounded-circle"
                     width="32" height="32">
                     <small>owner</small>
