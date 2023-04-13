@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from dotenv import dotenv_values
-
+import pkg_resources
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -13,8 +13,11 @@ SECRET_KEY = environment_variables['SECRET_KEY']
 DEBUG = environment_variables['DEBUG'].upper() in ['1', 'TRUE', 'T']
 ALLOWED_HOSTS = environment_variables['ALLOWED_HOSTS'].split()
 
+installed_packages = {pkg.key for pkg in pkg_resources.working_set}
+ENABLE_PHOTOGRAMMETRY = 'metashape' in installed_packages
 
 INSTALLED_APPS = [
+    'photogrammetry.apps.PhotogrammetryConfig',
     'catalog.apps.CatalogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -64,20 +67,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': '''django.contrib.auth.password_validation
-        .UserAttributeSimilarityValidator''',
+        'NAME': '''django.contrib.auth.password_validation.'''
+                '''UserAttributeSimilarityValidator''',
     },
     {
-        'NAME': '''django.contrib.auth
-        .password_validation.MinimumLengthValidator''',
+        'NAME': '''django.contrib.auth.password_validation.'''
+                '''MinimumLengthValidator''',
     },
     {
-        'NAME': '''django.contrib.auth
-        .password_validation.CommonPasswordValidator''',
+        'NAME': '''django.contrib.auth.password_validation.'''
+                '''CommonPasswordValidator''',
     },
     {
-        'NAME': '''django.contrib.auth
-        .password_validation.NumericPasswordValidator''',
+        'NAME': '''django.contrib.auth.password_validation.'''
+                '''NumericPasswordValidator''',
     },
 ]
 
@@ -93,12 +96,13 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 STATICFILES_DIRS = [
     f'{BASE_DIR}/static_dev',
 ]
 STATIC_URL = '/static/'
 
-
 MEDIA_ROOT = f'{BASE_DIR}/media'
 MEDIA_URL = '/media/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = f'{BASE_DIR}/sent_mail'
