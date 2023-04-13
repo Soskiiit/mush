@@ -1,8 +1,11 @@
 {% extends "theme/base.html" %}
 
-{% block body %}
+{# Makes <header> empty #}
+{% block header %}{% endblock %}
+
+{% block fullwidth-body %}
     <div class="px-3 py-5">
-        <form action="{% block form-action %}{% endblock %}">
+        <form action="{% block form-action %}{% endblock %}" method="post">
         {% csrf_token %}
             <div
             class="
