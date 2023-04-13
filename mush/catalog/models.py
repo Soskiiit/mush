@@ -58,9 +58,9 @@ class Photo(models.Model):
 
     def img_thmb(self):
         if self.image:
-            return mark_safe(f"<img src='{self.image.url}' width='50px'>")
+            return mark_safe(f'''<img src='{self.image.url}' width='50px'>''')
 
-    img_thmb.short_description = "превью"
+    img_thmb.short_description = 'превью'
     img_thmb.allow_tags = True
 
     class Meta:

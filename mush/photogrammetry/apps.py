@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class PhotogrammetryConfig(AppConfig):
-    default_auto_field = "django.db.models.BigAutoField"
-    name = "photogrammetry"
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'photogrammetry'
