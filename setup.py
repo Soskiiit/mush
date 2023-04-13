@@ -64,17 +64,7 @@ def install_metashape():
     }
 
     print('Installing Metashape package...')
-    with tempfile.TemporaryDirectory() as temp_dir:
-        package_name = metashape_packages[sys.platform]
-        package_path = os.path.join(temp_dir, package_name)
-
-        print('Downloading...')
-        with open(package_path, 'wb') as file:
-            with urllib.request.urlopen(base_url + package_name) as resp:
-                file.write(resp.read())
-
-        print('Installing...')
-        run([sys.executable, '-m', 'pip', 'install', package_path])
+    run([sys.executable, '-m', 'pip', 'install', base_url + metashape_packages[sys.platform]])
 
 
 if __name__ == '__main__':
