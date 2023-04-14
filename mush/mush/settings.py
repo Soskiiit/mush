@@ -6,13 +6,13 @@ from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-DOTENV_PATH = os.path.join(BASE_DIR, ".env")
+DOTENV_PATH = os.path.join(BASE_DIR, '.env')
 
 load_dotenv(DOTENV_PATH)
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
-DEBUG = os.getenv("DJANGO_DEBUG", "True") != "False"
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
-INTERNAL_IPS = os.getenv("DJANGO_INTERNAL_IPS", "").split(",")
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', get_random_secret_key())
+DEBUG = os.getenv('DJANGO_DEBUG', 'True') != 'False'
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',')
+INTERNAL_IPS = os.getenv('DJANGO_INTERNAL_IPS', '').split(',')
 
 
 INSTALLED_APPS = [
