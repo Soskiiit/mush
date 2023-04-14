@@ -19,3 +19,17 @@
     color: white !important;
     background-color: var(--bs-danger) !important;
 }
+
+.bg-img {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.my-link {
+    text-decoration: none !important;
+}
+
+.my-link:hover {
+    text-decoration: underline !important;
+}

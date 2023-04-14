@@ -5,6 +5,10 @@ is_model_ready = 1
 is_user_the_owner = 1
 
 
+class ProfileView(TemplateView):
+    template_name = 'users/profile.html'
+
+
 class SignupView(TemplateView):
     template_name = 'theme/test-form.html'
 
