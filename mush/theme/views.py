@@ -9,6 +9,10 @@ class SignupView(TemplateView):
     template_name = 'theme/test-form.html'
 
 
+class MyProjectsView(TemplateView):
+    template_name = 'catalog/my-projects.html'
+
+
 class CatalogView(TemplateView):
     template_name = 'catalog/index.html'
 

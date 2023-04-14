@@ -4,6 +4,7 @@ from theme import views
 
 urlpatterns = [
     path('', views.CatalogView.as_view(), name='index'),
+    path('projects/', views.MyProjectsView.as_view(), name='my-projects'),
     path('signup/', views.SignupView.as_view(), name='signup'),
     path('item/', views.ItemDetailsView.as_view(), name='item'),
     path('edit/', views.ItemEditView.as_view(), name='edit'),
