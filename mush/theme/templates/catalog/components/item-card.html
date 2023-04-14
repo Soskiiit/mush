@@ -28,7 +28,7 @@ background-repeat: no-repeat;
 background-position: center;
 background-size: cover;
 ">
-    <div class="h-100 user-select-none catalog-card-body">
+    <a href="{% url "item" %}" class="h-100 user-select-none text-decoration-none catalog-card-body">
         <div class="w-100 mt-auto p-5 pb-4 text-white">
             <h3 class="w-100 mb-3 fs-4 lh-1 fw-bold">{{name}}</h3>
             <div class="d-flex flex-row align-items-baseline justify-content-between">
@@ -47,5 +47,5 @@ background-size: cover;
                 </div>
             </div>
         </div>
-    </div>
+    </a>
 </div>

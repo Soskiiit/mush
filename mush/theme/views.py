@@ -5,6 +5,14 @@ is_model_ready = 1
 is_user_the_owner = 1
 
 
+class SignupView(TemplateView):
+    template_name = 'theme/test-form.html'
+
+
+class CatalogView(TemplateView):
+    template_name = 'catalog/index.html'
+
+
 class ItemEditView(TemplateView):
     template_name = 'catalog/item-edit.html'
 
