@@ -1,0 +1,18 @@
+{% extends "theme/base.html" %}
+{% load static %}
+
+{% block article-body %}
+    <div class="row flex-lg-row-reverse g-5">
+
+        <!-- Description -->
+        <div class="col-lg-4 d-flex flex-column">
+            {% block side-panel %}{% endblock %}
+        </div>
+
+        <!-- Preview -->
+        <div class="col-lg-8 p-0 border" style="min-height: 350px;">
+            {% block panel %}{% endblock %}
+        </div>
+
+    </div>
+{% endblock %}

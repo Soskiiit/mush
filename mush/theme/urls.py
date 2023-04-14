@@ -3,5 +3,6 @@ from theme import views
 
 
 urlpatterns = [
-    path('', views.BaseView.as_view(), name='base'),
+    path('', views.ItemDetailsView.as_view(), name='item'),
+    path('edit/', views.ItemEditView.as_view(), name='edit'),
 ]

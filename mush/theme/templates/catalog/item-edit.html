@@ -1,0 +1,107 @@
+{% extends "catalog/item-base.html" %}
+{% load static %}
+
+{% block tab_title %}Тыква{% endblock %}
+
+{% block side-panel %}
+    <!-- Name -->
+    <div class="mb-3">
+        <input type="text" name="" class="form-control form-control-lg" value="Тыква">
+        {# <h4 class="mb-0">Тыква</h4> #}
+    </div>
+
+    <hr class="mt-0 mb-3 border-secondary">
+
+    <div class="mb-3 col-auto form-check form-switch fs-4">
+        <label class="form-check-label fw-light" for="public-switch">Make public</label>
+        <input class="form-check-input" type="checkbox" role="switch" id="public-switch">
+    </div>
+
+    <div class="mb-3 col-auto d-flex flex-row">
+        <a href="{% url "item" %}" class="w-100 btn btn-success me-2">Save</a>
+    </div>
+
+    <!-- Details -->
+    <div class="mb-3 p-3 container-fluid border rounded rounded-lg">
+        <h5>Details</h5>
+        <div class="mb-0">
+            <div class="mb-1 d-flex flex-row justify-content-between">
+                <div>Publish date</div>
+                <div class="fw-bold text-muted">03-04-2022</div>
+            </div>
+            <div class="mb-1 d-flex flex-row justify-content-between">
+                <div>Polygons</div>
+                <div class="fw-bold text-muted">7502</div>
+            </div>
+            <div class="mb-1 d-flex flex-row justify-content-between">
+                <div>Vertices</div>
+                <div class="fw-bold text-muted">7651</div>
+            </div>
+            <div class="d-flex flex-row justify-content-between">
+                <div>Textures</div>
+                <div class="fw-bold text-muted">1</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block panel %}
+    <div class="px-5 py-4 pt-3">
+        <nav>
+            <div class="nav nav-pills mb-4 justify-content-center" id="nav-tab" role="tablist">
+                <button
+                class="nav-link me-2 active"
+                id="nav-gen-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-gen"
+                type="button"
+                role="tab"
+                aria-controls="nav-gen"
+                aria-selected="true">
+                    Generate from images
+                </button>
+                <button
+                class="nav-link"
+                id="nav-upload-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-upload"
+                type="button"
+                role="tab"
+                aria-controls="nav-upload"
+                aria-selected="false"
+                tabindex="-1">
+                    Upload 3D model
+                </button>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div
+            class="tab-pane fade active show"
+            id="nav-gen"
+            role="tabpanel"
+            aria-labelledby="nav-gen-tab">
+                <h4 class="fw-normal mb-3">Upload images</h4>
+                <input type="file" class="form-control" multiple>
+            </div>
+            <div
+            class="tab-pane fade"
+            id="nav-upload"
+            role="tabpanel"
+            aria-labelledby="nav-upload-tab">
+                <h4 class="fw-normal mb-3">Upload 3D model</h4>
+                <input type="file" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="px-5 py-4">
+        <div class="mb-4">
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {# <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script> #}
+    {# <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script> #}
+{% endblock %}
