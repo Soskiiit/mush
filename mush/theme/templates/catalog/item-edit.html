@@ -46,20 +46,24 @@
 
     {% if model_ready %}
         <!-- Download options -->
-        <div class="p-3 container-fluid border rounded rounded-lg bg-white">
+        <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white">
             <h5>Download options</h5>
-                <ul class="mb-0 list-unstyled">
-                    <li class="d-flex flex-row justify-content-between">
-                        <a href="#">.obj</a>
-                        <div class="fw-bold text-muted">3 Mb</div>
-                    </li>
-                    <li class="d-flex flex-row justify-content-between">
-                        <a href="#">.mdl</a>
-                        <div class="fw-bold text-muted">3.5 Mb</div>
-                    </li>
-                </ul>
+            <ul class="mb-0 list-unstyled">
+                <li class="d-flex flex-row justify-content-between">
+                    <a href="#">.obj</a>
+                    <div class="fw-bold text-muted">3 Mb</div>
+                </li>
+                <li class="d-flex flex-row justify-content-between">
+                    <a href="#">.mdl</a>
+                    <div class="fw-bold text-muted">3.5 Mb</div>
+                </li>
+            </ul>
         </div>
     {% endif %}
+
+    <button class="w-100 btn btn-light-danger">
+        Delete project
+    </button>
 {% endblock %}
 
 {% block panel %}

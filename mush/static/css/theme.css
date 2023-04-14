@@ -2,3 +2,20 @@
 .bg-gray-dark {
     background-color: var(--bs-gray-dark);
 }
+
+.btn-light-danger {
+    border: none;
+    font-weight: 500;
+    color: var(--bs-danger);
+}
+
+.btn-light-danger:hover {
+    color: white;
+    background-color: var(--bs-danger);
+}
+
+.btn-light-danger:active {
+    border: none;
+    color: white !important;
+    background-color: var(--bs-danger) !important;
+}
