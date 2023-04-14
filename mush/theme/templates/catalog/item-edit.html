@@ -13,8 +13,8 @@
     <hr class="mt-0 mb-3 border-secondary">
 
     <div class="mb-3 col-auto form-check form-switch fs-4">
-        <label class="form-check-label fw-light" for="public-switch">Make public</label>
-        <input class="form-check-input" type="checkbox" role="switch" id="public-switch">
+        <label class="form-check-label fw-light" style="pointer-events: none; user-select: none;" for="public-switch">Make public</label>
+        <input class="form-check-input" style="cursor: pointer;" type="checkbox" role="switch" id="public-switch">
     </div>
 
     <div class="mb-3 col-auto d-flex flex-row">
@@ -22,7 +22,7 @@
     </div>
 
     <!-- Details -->
-    <div class="mb-3 p-3 container-fluid border rounded rounded-lg">
+    <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white">
         <h5>Details</h5>
         <div class="mb-0">
             <div class="mb-1 d-flex flex-row justify-content-between">
@@ -43,6 +43,23 @@
             </div>
         </div>
     </div>
+
+    {% if model_ready %}
+        <!-- Download options -->
+        <div class="p-3 container-fluid border rounded rounded-lg bg-white">
+            <h5>Download options</h5>
+                <ul class="mb-0 list-unstyled">
+                    <li class="d-flex flex-row justify-content-between">
+                        <a href="#">.obj</a>
+                        <div class="fw-bold text-muted">3 Mb</div>
+                    </li>
+                    <li class="d-flex flex-row justify-content-between">
+                        <a href="#">.mdl</a>
+                        <div class="fw-bold text-muted">3.5 Mb</div>
+                    </li>
+                </ul>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block panel %}

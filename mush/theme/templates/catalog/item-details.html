@@ -11,18 +11,16 @@
 
     <hr class="mt-0 mb-3 border-secondary">
 
-    <div class="mb-3 col-auto d-flex flex-row">
-        {% if 1 %} {# "if user == item.owner" #}
-            <!-- Edit & Make public -->
-            <a href="{% url "edit" %}" class="w-100 btn btn-outline-primary me-2">Edit</a>
-        {% else %}
-            <!-- Creator -->
+    {% if is_user_the_owner %}
+        <a href="{% url "edit" %}" class="w-100 mb-3 btn btn-outline-secondary">Edit</a>
+    {% else %}
+        <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white d-flex flex-row">
             <img
             src="{% static "assets/profile.jpeg" %}"
             alt="mdo"
-            class="me-2 rounded-circle"
+            class="me-3 rounded-circle"
             width="64" height="64">
-            <div class="flex-grow-1 d-flex flex-column justify-content-center">
+            <div class="d-flex flex-column justify-content-center">
                 <div class="">
                     Creator
                 </div>
@@ -30,11 +28,11 @@
                     ...
                 </div>
             </div>
-        {% endif%}
-    </div>
+        </div>
+    {% endif%}
 
     <!-- Details -->
-    <div class="mb-3 p-3 container-fluid border rounded rounded-lg">
+    <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white">
         <h5>Details</h5>
         <div class="mb-0">
             <div class="mb-1 d-flex flex-row justify-content-between">
@@ -56,35 +54,45 @@
         </div>
     </div>
     <!-- Download options -->
-    <div class="p-3 container-fluid border rounded rounded-lg">
+    <div class="p-3 container-fluid border rounded rounded-lg bg-white">
         <h5>Download options</h5>
-        <ul class="mb-0 list-unstyled">
-            <li class="d-flex flex-row justify-content-between">
-                <a href="#">.obj</a>
-                <div class="fw-bold text-muted">3 Mb</div>
-            </li>
-            <li class="d-flex flex-row justify-content-between">
-                <a href="#">.mdl</a>
-                <div class="fw-bold text-muted">3.5 Mb</div>
-            </li>
-        </ul>
+        {% if model_ready %}
+            <ul class="mb-0 list-unstyled">
+                <li class="d-flex flex-row justify-content-between">
+                    <a href="#">.obj</a>
+                    <div class="fw-bold text-muted">3 Mb</div>
+                </li>
+                <li class="d-flex flex-row justify-content-between">
+                    <a href="#">.mdl</a>
+                    <div class="fw-bold text-muted">3.5 Mb</div>
+                </li>
+            </ul>
+        {% else %}
+            <div class="text-muted">No options available</div>
+        {% endif %}
     </div>
 {% endblock %}
 
 {% block panel %}
-    <model-viewer
-    class="w-100 h-100"
-    id="mv-demo"
-    shadow-intensity="1"
-    src="{% static "assets/pumpkin.glb" %}"
-    alt="A 3D model of a pumpkin"
-    auto-rotate
-    camera-controls
-    poster="">
-    </model-viewer>
+    {% if model_ready %}
+        <model-viewer
+        class="w-100 h-100"
+        id="mv-demo"
+        shadow-intensity="1"
+        src="{% static "assets/pumpkin.glb" %}"
+        alt="A 3D model of a pumpkin"
+        auto-rotate
+        camera-controls
+        poster="">
+        </model-viewer>
+    {% else %}
+        <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
+            <div class="text-muted fw-light fs-4">Processing...</div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+    {# <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script> #}
+    {# <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script> #}
 {% endblock %}
