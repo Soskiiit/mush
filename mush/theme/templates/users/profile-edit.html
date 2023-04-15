@@ -3,6 +3,23 @@
 
 {% block tab_title %}Profile{% endblock %}
 
+{% block styles %}
+<style type="text/css">
+    .profile-picture {
+        background-image: url({% static "assets/profile.jpeg" %});
+        height: 15rem;
+        aspect-ratio: 1;
+        color: transparent;
+        cursor: pointer;
+    }
+    .profile-picture:hover {
+        background-color: rgba(0,0,0,0.5);
+        background-blend-mode: multiply;
+        color: white;
+    }
+</style>
+{% endblock %}
+
 {% block fullwidth-body %}
     <div class="p-5">
         <div class="row row-cols-1 justify-content-center">
@@ -11,15 +28,21 @@
             <div class="col-lg-8">
                 <div
                 class="d-flex flex-row justify-content-start align-items-center">
-                    <div
-                    class="rounded-circle bg-img me-3"
-                    style="
-                    height: 15rem;
-                    border: solid 3px white;
-                    aspect-ratio: 1;
-                    background-image: url({% static "assets/profile.jpeg" %});
-                    ">
-                    </div>
+                    <label
+                    class="
+                    profile-picture bg-img
+                    rounded-circle
+                    me-3
+                    d-flex flex-row justify-content-center align-items-center"
+                    id="avatar"
+                    for="file-input">
+                        Change avatar
+                        <input
+                        id="file-input"
+                        style="display: none;"
+                        type="file"
+                        accept="image/*">
+                    </label>
                     <div
                     class="d-flex flex-column w-100">
                         <div class="mb-3">
@@ -122,5 +145,14 @@
             </div>
         </div>
     </div>
+{% endblock %}
 
+{% block scripts %}
+<script type="text/javascript">
+    function changeProfilePicture(e) {
+        $('#avatar').css('background-image', `url(${URL.createObjectURL(e.target.files[0])})`)
+    }
+
+    $('#file-input').on('change', changeProfilePicture)
+</script>
 {% endblock %}
