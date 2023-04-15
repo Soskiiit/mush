@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sorl.thumbnail',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -106,3 +107,5 @@ MEDIA_URL = '/media/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = f'{BASE_DIR}/sent_mail'
+
+AUTH_USER_MODEL = 'users.User'
