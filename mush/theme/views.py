@@ -9,6 +9,10 @@ class ProfileView(TemplateView):
     template_name = 'users/profile.html'
 
 
+class ProfileEditView(TemplateView):
+    template_name = 'users/profile-edit.html'
+
+
 class SignupView(TemplateView):
     template_name = 'theme/test-form.html'
 
