@@ -9,9 +9,12 @@ environment_variables = dotenv_values()
 environment_variables.setdefault('SECRET_KEY', 'test')
 environment_variables.setdefault('DEBUG', 'True')
 environment_variables.setdefault('ALLOWED_HOSTS', '')
+environment_variables.setdefault('LOWRES_MODEL_FACE_COUNT', 10000)
+
 SECRET_KEY = environment_variables['SECRET_KEY']
 DEBUG = environment_variables['DEBUG'].upper() in ['1', 'TRUE', 'T']
 ALLOWED_HOSTS = environment_variables['ALLOWED_HOSTS'].split()
+LOWRES_MODEL_FACE_COUNT = environment_variables['LOWRES_MODEL_FACE_COUNT']
 
 installed_packages = {pkg.key for pkg in pkg_resources.working_set}
 ENABLE_PHOTOGRAMMETRY = 'metashape' in installed_packages
@@ -67,20 +70,28 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': '''django.contrib.auth.password_validation.'''
-                '''UserAttributeSimilarityValidator''',
+        'NAME': (
+            '''django.contrib.auth.password_validation.'''
+            '''UserAttributeSimilarityValidator'''
+        ),
     },
     {
-        'NAME': '''django.contrib.auth.password_validation.'''
-                '''MinimumLengthValidator''',
+        'NAME': (
+            '''django.contrib.auth.password_validation.'''
+            '''MinimumLengthValidator'''
+        ),
     },
     {
-        'NAME': '''django.contrib.auth.password_validation.'''
-                '''CommonPasswordValidator''',
+        'NAME': (
+            '''django.contrib.auth.password_validation.'''
+            '''CommonPasswordValidator'''
+        ),
     },
     {
-        'NAME': '''django.contrib.auth.password_validation.'''
-                '''NumericPasswordValidator''',
+        'NAME': (
+            '''django.contrib.auth.password_validation.'''
+            '''NumericPasswordValidator'''
+        ),
     },
 ]
 
