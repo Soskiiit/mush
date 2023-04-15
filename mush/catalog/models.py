@@ -34,8 +34,8 @@ class Project(models.Model):
     )
     faces = models.IntegerField(default=0, verbose_name='Число полигонов')
     vertexes = models.IntegerField(default=0, verbose_name='Число вершин')
-    public_date = models.DateField(auto_now_add=True, verbose_name='Дата публикации')
-
+    public_date = models.DateField(auto_now_add=True,
+                                   verbose_name='Дата публикации')
 
     class Meta:
         verbose_name = 'проект'
