@@ -29,6 +29,12 @@ python ./mush/manage.py makemessages -a
 python ./mush/manage.py compilemessages --ignore .venv
 ```
 
+## Dumping fixtures
+```
+./mush/manage.py dumpdata users &> ./mush/users/fixtures/default.json
+./mush/manage.py dumpdata catalog &> ./mush/catalog/fixtures/default.json
+```
+
 ## Running development server
 ```
 python ./mush/manage.py runserver

@@ -21,11 +21,11 @@
             class="me-3 rounded-circle"
             width="64" height="64">
             <div class="d-flex flex-column justify-content-center">
-                <a href="{% url "user" id=project.owner.id %}">
-                    {{project.owner.username}}
+                <a class="text-reset" href="{% url "profile" id=project.owner.id %}">
+                    {{project.owner.first_name}}
                 </a>
                 <div class="text-muted">
-                    ...
+                    @{{project.owner.username}}
                 </div>
             </div>
         </div>

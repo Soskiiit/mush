@@ -27,8 +27,9 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'django_browser_reload',
     # Project-specific
-    'theme',
+    'theme.apps.ThemeConfig',
     'catalog.apps.CatalogConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [

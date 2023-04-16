@@ -1,7 +1,7 @@
 {% extends "theme/base.html" %}
 {% load static %}
 
-{% block tab_title %}Profile{% endblock %}
+{% block tab_title %}{{profile.username}}{% endblock %}
 
 {% block fullwidth-body %}
     <div class="bg-white p-5">
@@ -20,8 +20,8 @@
             <div
             class="d-flex flex-column justify-content-center overflow-hidden"
             >
-                <h3>{{observed_user.first_name}}</h3>
-                <h4 class="text-muted">@{{observed_user.username}}</h4>
+                <h3>{{profile.first_name}}</h3>
+                <h4 class="text-muted">@{{profile.username}}</h4>
                 <!--
                 <div class="mb-2 d-flex flex-row justify-content-start">
                     <a href="#" target="_blank" class="me-3 my-link text-muted">
@@ -34,9 +34,6 @@
                     </a>
                 </div>
                 -->
-                {% if observed_user == user %}
-                    <a href="{% url "profile-edit" %}" class="btn btn-light" style="width: fit-content;">Edit profile</a>
-                {% endif %}
             </div>
         </div>
 

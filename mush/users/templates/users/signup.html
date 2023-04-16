@@ -1,0 +1,49 @@
+{% extends "theme/form.html" %}
+{% load static %}
+
+{% block tab_title %}Sign-up{% endblock %}
+
+{% block form-header %}
+    Sign-up
+{% endblock %}
+
+{% block form-description %}
+    Create an account
+{% endblock %}
+
+{% block form-action %}{% url "signup" %}{% endblock %}
+
+{% block form-body %}
+    <div class="row g-3">
+        <div class="col-12">
+            <ul>
+                {% for message in messages %}
+                    <li class="text-danger">{{message}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% for field in form %}
+            <div class="col-12">
+                <label class="form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                {{ field }}
+                <div class="invalid-feedback">
+                    {{field.errors}}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="col-12">
+            <button type="submit" class="mt-3 w-100 btn btn-lg btn-primary">
+                Sign-up
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block form-footer %}
+    <div class="d-flex flex-row justify-content-between">
+        <a href="{% url "index" %}" class="link">Return</a>
+        <a href="{% url "login" %}" class="link">Log in instead</a>
+    </div>
+{% endblock %}

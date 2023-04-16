@@ -21,17 +21,18 @@
                     <ul class="dropdown-menu text-small">
                         <li><span class="dropdown-item-text" style="font-weight: 500 !important;">{{user.username}}</span></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/admin" target="_blank">Admin</a></li>
-                        <li><a class="dropdown-item" href="{% url "my-projects" %}">Projects</a></li>
-                        <li><a class="dropdown-item" href="{% url "profile" %}">Profile</a></li>
-                        <li><a class="dropdown-item" href="{% url "profile-edit" %}">Settings</a></li>
+                        {% if user.is_superuser %}
+                            <li><a class="dropdown-item" href="/admin" target="_blank">Admin</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="{% url "my-profile" %}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url "edit-my-profile" %}">Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        <li><a class="dropdown-item" href="{% url "logout" %}">Sign out</a></li>
                     </ul>
                 </div>
             {% else %}
-                <a href="#" class="btn btn-outline-primary me-2">Login</a>
-                <a href="#" class="btn btn-primary">Sign-up</a>
+                <a href="{% url "login" %}" class="btn btn-outline-primary me-2">Login</a>
+                <a href="{% url "signup" %}" class="btn btn-primary">Sign-up</a>
             {% endif %}
         </div>
     </div>
