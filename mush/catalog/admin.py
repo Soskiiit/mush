@@ -1,5 +1,6 @@
-from catalog.models import Photo, Project
 from django.contrib import admin
+
+from .models import Photo, Project
 
 
 class PhotoTabular(admin.TabularInline):

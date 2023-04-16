@@ -1,3 +1,4 @@
+import logging
 import os
 import threading
 from pathlib import Path
@@ -46,21 +47,28 @@ def photogrammetry_main_thread(photo_paths, model_path, project_id):
             path=os.path.join(model_path, f'model{project_id}_prev.glb')
         )
         Project.objects.filter(id=project_id).update(
-            status='completed', model_lod='/'.join(Path(model_path).parts[-2:])
+            status='completed',
+            models_highres=os.path.join(Path(model_path).parts[-1],
+                                        f'model{project_id}_full.glb'),
+            model_lod=os.path.join(Path(model_path).parts[-1],
+                                   f'model{project_id}_prev.glb')
         )
     except Exception as ex:
-        print(ex)
+        logging.basicConfig(filename='photogrammetry.log',
+                            level=logging.ERROR,
+                            format="%(asctime)s %(message)s")
+        logging.error(f'{ex} for project with id: {project_id}')
         Project.objects.filter(id=project_id).update(status='error')
 
 
 def run_photogrammetry_thread(project_id):
     if not settings.ENABLE_PHOTOGRAMMETRY:
-        return None
+        return
     photo_paths = Photo.objects.filter(for_project_id=project_id).values_list(
         'image', flat=True
     )
     photo_paths = [
-        f'{settings.MEDIA_ROOT}/{cur_photo_path}'
+        os.path.join(settings.MEDIA_ROOT, cur_photo_path)
         for cur_photo_path in photo_paths
     ]
 

@@ -5,12 +5,12 @@ from users.models import User
 
 
 class Project(models.Model):
-    status_choices = (
-        ('in_queue', 'в очереди'),
-        ('in_progress', 'в обработке'),
-        ('completed', 'обработка завершена'),
-        ('error', 'ошибка')
-    )
+    class ProgressOfProcessing(models.TextChoices):
+        IN_QUEUE = 'in_queue', 'в очереди'
+        IN_WORK = 'in_work', 'в обработке'
+        COMPLETED = 'completed', 'обработка завершена'
+        ERROR = 'error', 'ошибка'
+
     name = models.CharField(verbose_name='название', max_length=255)
     description = models.TextField(verbose_name='описание', blank=True)
     owner = models.ForeignKey(
@@ -18,7 +18,9 @@ class Project(models.Model):
     )
     is_public = models.BooleanField(default=False, verbose_name='публичный')
     status = models.CharField(
-        choices=status_choices, default='in_queue', max_length=255
+        choices=ProgressOfProcessing.choices,
+        default=ProgressOfProcessing.IN_QUEUE,
+        max_length=255
     )
     models_highres = models.FileField(
         upload_to='models_highres',
@@ -32,10 +34,10 @@ class Project(models.Model):
         null=True,
         blank=True,
     )
-    faces = models.IntegerField(default=0, verbose_name='Число полигонов')
-    vertexes = models.IntegerField(default=0, verbose_name='Число вершин')
+    faces = models.IntegerField(default=0, verbose_name='число полигонов')
+    vertexes = models.IntegerField(default=0, verbose_name='число вершин')
     public_date = models.DateField(auto_now_add=True,
-                                   verbose_name='Дата публикации')
+                                   verbose_name='дата публикации')
 
     class Meta:
         verbose_name = 'проект'
@@ -62,7 +64,13 @@ class Photo(models.Model):
 
     def img_thmb(self):
         if self.image:
-            return mark_safe(f'''<img src='{self.image.url}' width='50px'>''')
+            micro_image = get_thumbnail(
+                self.image,
+                '75x75',
+                crop='center',
+                quality=51
+            )
+            return mark_safe(f'''<img src='{micro_image.url}' width='75px'>''')
 
     img_thmb.short_description = 'превью'
     img_thmb.allow_tags = True

@@ -42,9 +42,9 @@ def setup():
     run([sys.executable, MANAGEPY_PATH, 'migrate'])
     run([sys.executable, MANAGEPY_PATH, 'shell'], input=b'from django.contrib.auth.models import User; User.objects.create_superuser("admin", "admin@mail.com", "admin")\n', stdout=sp.DEVNULL, stderr=sp.DEVNULL, ignore_errors=True)
 
-    run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-commit'])
-    run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-push'])
-    run([VENV_PRECOMMIT, 'install', '--install-hooks'])
+    # run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-commit'])
+    # run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-push'])
+    # run([VENV_PRECOMMIT, 'install', '--install-hooks'])
     with open(DOTENV_PATH, 'w') as file:
         file.write('\n'.join(f'{k}={v}' for k,v in DOTENV_CONTENTS.items()))
 

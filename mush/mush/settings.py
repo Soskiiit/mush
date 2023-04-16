@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from dotenv import dotenv_values
-import pkg_resources
+from importlib.metadata import packages_distributions
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -16,8 +16,8 @@ DEBUG = environment_variables['DEBUG'].upper() in ['1', 'TRUE', 'T']
 ALLOWED_HOSTS = environment_variables['ALLOWED_HOSTS'].split()
 LOWRES_MODEL_FACE_COUNT = environment_variables['LOWRES_MODEL_FACE_COUNT']
 
-installed_packages = {pkg.key for pkg in pkg_resources.working_set}
-ENABLE_PHOTOGRAMMETRY = 'metashape' in installed_packages
+installed_packages = [pkg for pkg in packages_distributions()]
+ENABLE_PHOTOGRAMMETRY = 'Metashape' in installed_packages
 
 INSTALLED_APPS = [
     'photogrammetry.apps.PhotogrammetryConfig',
@@ -109,14 +109,14 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [
-    f'{BASE_DIR}/static_dev',
+    BASE_DIR / 'static_dev',
 ]
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = f'{BASE_DIR}/media'
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = f'{BASE_DIR}/sent_mail'
+EMAIL_FILE_PATH = BASE_DIR / 'sent_mail'
 
 AUTH_USER_MODEL = 'users.User'
