@@ -63,7 +63,7 @@ def run_photogrammetry_thread(project_id):
         f'{settings.MEDIA_ROOT}/{cur_photo_path}'
         for cur_photo_path in photo_paths
     ]
-    
+
     # Для удобного тестирования - импорт фоток из глобальной папки
     # photo_path = 'D:\Media\Photos\Photogram\examples\Meshroom_6_monstree'
 
