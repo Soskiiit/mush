@@ -41,6 +41,7 @@ class Project(models.Model):
         verbose_name='Превью',
         on_delete=models.CASCADE,
         null=True,
+        blank=True,
     )
 
     def model_ext(self):
