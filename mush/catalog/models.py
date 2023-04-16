@@ -1,3 +1,5 @@
+import os
+
 from django.db import models
 from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
@@ -43,6 +45,7 @@ class Project(models.Model):
     def model_ext(self):
         return os.path.splitext(str(self.models_highres))[1]
     model_ext.short_description = 'Расширение модели'
+
     faces = models.IntegerField(default=0, verbose_name='Число полигонов')
     vertexes = models.IntegerField(default=0, verbose_name='Число вершин')
     public_date = models.DateField(auto_now_add=True,

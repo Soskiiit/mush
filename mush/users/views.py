@@ -22,8 +22,8 @@ def signup(request):
             email=email
         )
         user.save()
-        user_pd = UserProfile.objects.create(for_user=user)
-        user_pd.save()
+        profile = UserProfile.objects.create(for_user=user)
+        profile.save()
         return redirect('index')
 
     return render(request, 'users/signup.html', {'form': form})

@@ -3,6 +3,7 @@ from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
+import pkg_resources
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,15 +14,15 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', get_random_secret_key())
 DEBUG = os.getenv('DJANGO_DEBUG', 'True') != 'False'
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',')
 INTERNAL_IPS = os.getenv('DJANGO_INTERNAL_IPS', '').split(',')
-LOWRES_MODEL_FACE_COUNT = int(os.getenv('DJANGO_LOWRES_MODEL_FACE_COUNT', 10000))
+LOWRES_MODEL_FACE_COUNT = int(
+    os.getenv('DJANGO_LOWRES_MODEL_FACE_COUNT', 10000)
+)
 
 installed_packages = {pkg.key for pkg in pkg_resources.working_set}
 ENABLE_PHOTOGRAMMETRY = 'metashape' in installed_packages
 
 INSTALLED_APPS = [
     # Django
-    'photogrammetry.apps.PhotogrammetryConfig',
-    'catalog.apps.CatalogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,6 +33,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'django_browser_reload',
     # Project-specific
+    'photogrammetry.apps.PhotogrammetryConfig',
     'theme.apps.ThemeConfig',
     'catalog.apps.CatalogConfig',
     'users.apps.UsersConfig',
@@ -129,5 +131,3 @@ STATICFILES_DIRS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = f'{BASE_DIR}/sent_mail'
-
-AUTH_USER_MODEL = 'users.User'
