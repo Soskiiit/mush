@@ -56,7 +56,7 @@ def photogrammetry_main_thread(photo_paths, model_path, project_id):
     except Exception as ex:
         logging.basicConfig(filename='photogrammetry.log',
                             level=logging.ERROR,
-                            format="%(asctime)s %(message)s")
+                            format='%(asctime)s %(message)s')
         logging.error(f'{ex} for project with id: {project_id}')
         Project.objects.filter(id=project_id).update(status='error')
 
