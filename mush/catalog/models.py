@@ -36,6 +36,16 @@ class Project(models.Model):
         null=True,
         blank=True
     )
+    preview = models.OneToOneField(
+        'Photo',
+        verbose_name='Превью',
+        on_delete=models.CASCADE,
+        null=True,
+    )
+
+    def model_ext(self):
+        return os.path.splitext(str(self.models_highres))[1]
+    model_ext.short_description = 'Расширение модели'
 
     class Meta:
         verbose_name = 'проект'
@@ -47,9 +57,6 @@ class Project(models.Model):
 
 class Photo(models.Model):
     image = models.ImageField(upload_to='gallery', verbose_name='изображение')
-    for_project = models.OneToOneField(
-        Project, verbose_name='привязано к', on_delete=models.CASCADE
-    )
 
     def get_img_1280x(self):
         return get_thumbnail(self.image, '1280', quality=51)
@@ -65,4 +72,4 @@ class Photo(models.Model):
         verbose_name_plural = 'изображения'
 
     def __str__(self):
-        return f'{os.path.basename(self.image)}'
+        return f'{os.path.basename(str(self.image))}'

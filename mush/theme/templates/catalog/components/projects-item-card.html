@@ -1,7 +1,7 @@
 {% load static %}
 
 <a
-href="{% url "item" %}"
+href="{% url "project" id=project.id %}"
 class="
 w-100
 text-decoration-none text-reset
@@ -14,18 +14,18 @@ style="cursor: pointer;">
     flex: none;
     width: 13rem;
     aspect-ratio: 1;
-    background-image: url({% static "assets/pumpkin.jpg" %});
+    background-image: url({{project.preview.get_img_300x300.url}});
     ">
     </div>
 
     <div class="flex-grow-1 px-4 py-5 d-flex flex-column justify-content-between">
         <div class="d-flex justify-content-between align-items-baseline">
-            <div class="fs-1 fw-light text-truncate m-0">{{name}}</div>
+            <div class="fs-1 fw-light text-truncate m-0">{{project.name}}</div>
             <div class="text-muted">Last updated 21-04-2021</div>
         </div>
         <div class="d-flex flex-row">
             <div class="fs-5 me-4">
-                {% if public %}
+                {% if project.is_public %}
                     <span class="text-success">
                         <svg class="bi" width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor">
                             <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
@@ -36,8 +36,8 @@ style="cursor: pointer;">
                     <span class="text-muted">Private</span>
                 {% endif %}
             </div>
+            <!--
             <div class="fs-5 me-4">
-
                 {% if generated %}
                 <span class="text-success">
                     <svg class="bi" width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor">
@@ -49,6 +49,7 @@ style="cursor: pointer;">
                     <span class="text-muted">Uploaded</span>
                 {% endif %}
             </div>
+            -->
         </div>
     </div>
 </a>

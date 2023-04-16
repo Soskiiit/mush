@@ -6,13 +6,13 @@
 {% block side-panel %}
     <!-- Name -->
     <div class="mb-3">
-        <h4 class="mb-0">Тыква</h4>
+        <h4 class="mb-0">{{project.name}}</h4>
     </div>
 
     <hr class="mt-0 mb-3 border-secondary">
 
-    {% if is_user_the_owner %}
-        <a href="{% url "edit" %}" class="w-100 mb-3 btn btn-outline-secondary">Edit</a>
+    {% if user == project.owner %}
+        <a href="{% url "project-edit" id=project.id %}" class="w-100 mb-3 btn btn-outline-secondary">Edit</a>
     {% else %}
         <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white d-flex flex-row">
             <img
@@ -21,9 +21,9 @@
             class="me-3 rounded-circle"
             width="64" height="64">
             <div class="d-flex flex-column justify-content-center">
-                <div class="">
-                    Creator
-                </div>
+                <a href="{% url "user" id=project.owner.id %}">
+                    {{project.owner.username}}
+                </a>
                 <div class="text-muted">
                     ...
                 </div>
@@ -32,6 +32,7 @@
     {% endif%}
 
     <!-- Details -->
+    <!--
     <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white">
         <h5>Details</h5>
         <div class="mb-0">
@@ -53,18 +54,15 @@
             </div>
         </div>
     </div>
+    -->
     <!-- Download options -->
     <div class="p-3 container-fluid border rounded rounded-lg bg-white">
         <h5>Download options</h5>
-        {% if model_ready %}
+        {% if project.status == 'completed' %}
             <ul class="mb-0 list-unstyled">
                 <li class="d-flex flex-row justify-content-between">
-                    <a href="#">.obj</a>
-                    <div class="fw-bold text-muted">3 Mb</div>
-                </li>
-                <li class="d-flex flex-row justify-content-between">
-                    <a href="#">.mdl</a>
-                    <div class="fw-bold text-muted">3.5 Mb</div>
+                    <a href="{{project.models_highres.url}}">{{project.model_ext}}</a>
+                    {# <div class="fw-bold text-muted">3 Mb</div> #}
                 </li>
             </ul>
         {% else %}
@@ -74,12 +72,12 @@
 {% endblock %}
 
 {% block panel %}
-    {% if model_ready %}
+    {% if project.status == 'completed' %}
         <model-viewer
         class="w-100 h-100"
         id="mv-demo"
         shadow-intensity="1"
-        src="{% static "assets/pumpkin.glb" %}"
+        src="{{project.models_highres.url}}"
         alt="A 3D model of a pumpkin"
         auto-rotate
         camera-controls

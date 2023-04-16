@@ -7,19 +7,22 @@
                 Mush3D
             </a>
 
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="{% url "index" %}" class="nav-link px-2 link-secondary">Catalog</a></li>
-                {# <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li> #}
-                {# <li><a href="#" class="nav-link px-2 link-dark">About</a></li> #}
-            </ul>
+            {% with request.resolver_match.view_name as view_name %}
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="{% url "index" %}" class="nav-link px-2 link-{% if view_name == 'index' %}secondary{% else %}dark{% endif %}">Catalog</a></li>
+                </ul>
+            {% endwith %}
 
-            {% if 1 %} {# if user.is_authenticated #}
+            {% if user.is_authenticated %}
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{% static "assets/profile.jpeg" %}" alt="mdo" class="rounded-circle" width="32" height="32">
                     </a>
-                    <ul class="dropdown-menu text-small" style="">
-                        <li><a class="dropdown-item" href="{% url "my-projects" %}">My projects</a></li>
+                    <ul class="dropdown-menu text-small">
+                        <li><span class="dropdown-item-text" style="font-weight: 500 !important;">{{user.username}}</span></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/admin" target="_blank">Admin</a></li>
+                        <li><a class="dropdown-item" href="{% url "my-projects" %}">Projects</a></li>
                         <li><a class="dropdown-item" href="{% url "profile" %}">Profile</a></li>
                         <li><a class="dropdown-item" href="{% url "profile-edit" %}">Settings</a></li>
                         <li><hr class="dropdown-divider"></li>

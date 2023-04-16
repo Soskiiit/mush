@@ -21,130 +21,133 @@
 {% endblock %}
 
 {% block fullwidth-body %}
-    <div class="p-5">
-        <div class="row row-cols-1 justify-content-center">
+    <form method="post">
+        {% csrf_token %}
+        <div class="p-5">
+            <div class="row row-cols-1 justify-content-center">
 
-            <!-- Picture & name -->
-            <div class="col-lg-8">
-                <div
-                class="d-flex flex-row justify-content-start align-items-center">
-                    <label
-                    class="
-                    profile-picture bg-img
-                    rounded-circle
-                    me-3
-                    d-flex flex-row justify-content-center align-items-center"
-                    id="avatar"
-                    for="file-input">
-                        Change avatar
-                        <input
-                        id="file-input"
-                        style="display: none;"
-                        type="file"
-                        accept="image/*">
-                    </label>
+                <!-- Picture & name -->
+                <div class="col-lg-8">
                     <div
-                    class="d-flex flex-column w-100">
-                        <div class="mb-3">
-                            <label for="fullname" class="form-label">Full name</label>
-                            <input type="text" class="form-control form-control-lg" id="fullname" placeholder="">
-                        </div>
-                        <label for="nickname" class="form-label">Nickname</label>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@</span>
-                            <input type="text" class="form-control" id="nickname" placeholder="">
-                        </div>
+                    class="d-flex flex-row justify-content-start align-items-center">
+                        <label
+                        class="
+                        profile-picture bg-img
+                        rounded-circle
+                        me-3
+                        d-flex flex-row justify-content-center align-items-center"
+                        id="avatar"
+                        for="file-input">
+                            Change avatar
+                            <input
+                            id="file-input"
+                            style="display: none;"
+                            type="file"
+                            accept="image/*">
+                        </label>
+                        <div
+                        class="d-flex flex-column w-100">
+                            <div class="mb-3">
+                                <label for="fullname" class="form-label">Full name</label>
+                                <input type="text" class="form-control form-control-lg" id="fullname" name="name" placeholder="">
+                            </div>
+                            <label for="nickname" class="form-label">Nickname</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                                <input type="text" class="form-control" id="nickname" name="nickname" placeholder="">
+                            </div>
 
-                        <button
-                        type="submit"
-                        class="btn btn-success"
-                        style="width: fit-content;">
-                            Save changes
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-8"><hr class="mb-4 border-secondary"></div>
-
-            <!-- Bio -->
-            <div class="col-lg-8">
-                <div class="row row-cols-lg-2 gy-3">
-                    <div class="col-lg-3">
-                        <h3 class="text-muted">Bio</h3>
-                    </div>
-                    <div class="col-lg-9">
-                          <textarea class="form-control" style="min-height: 150px;"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-8"><hr class="mb-4 border-secondary"></div>
-
-            <!-- Contacts -->
-            <div class="col-lg-8">
-                <div class="row row-cols-lg-2 gy-3">
-                    <div class="col-lg-3">
-                        <h3 class="text-muted">Contacts</h3>
-                    </div>
-                    <div class="col-lg-9">
-                        <div class="mb-3">
-                            <label for="twitter" class="form-label">Twitter</label>
-                            <input type="text" class="form-control" id="twitter" placeholder="">
-                        </div>
-                        <div class="">
-                            <label for="github" class="form-label">GitHub</label>
-                            <input type="text" class="form-control" id="github" placeholder="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-8"><hr class="mb-4 border-secondary"></div>
-
-            <!-- Security -->
-            <div class="col-lg-8">
-                <div class="row row-cols-lg-2 gy-3">
-                    <div class="col-lg-3">
-                        <h3 class="text-muted">Security</h3>
-                    </div>
-                    <div class="col-lg-9">
-                        <div class="mb-3">
-                            <label for="backup-email" class="form-label">Backup email</label>
-                            <input type="text" class="form-control" id="backup-email" placeholder="">
-                        </div>
-                        <div class="d-flex flex-column" style="width: fit-content;">
-                            <a href="#" class="mb-3 btn btn-primary">Change password</a>
-                            <button type="button" class="btn btn-light-danger" data-bs-toggle="modal" data-bs-target="#delete-modal">
-                                Delete account
+                            <button
+                            type="submit"
+                            class="btn btn-success"
+                            style="width: fit-content;">
+                                Save changes
                             </button>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-8"><hr class="mb-4 border-secondary"></div>
+
+                <!-- Bio -->
+                <div class="col-lg-8">
+                    <div class="row row-cols-lg-2 gy-3">
+                        <div class="col-lg-3">
+                            <h3 class="text-muted">Bio</h3>
+                        </div>
+                        <div class="col-lg-9">
+                              <textarea name="bio" class="form-control" style="min-height: 150px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8"><hr class="mb-4 border-secondary"></div>
+
+                <!-- Contacts -->
+                <div class="col-lg-8">
+                    <div class="row row-cols-lg-2 gy-3">
+                        <div class="col-lg-3">
+                            <h3 class="text-muted">Contacts</h3>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="mb-3">
+                                <label for="twitter" class="form-label">Twitter</label>
+                                <input type="text" name="twitter" class="form-control" id="twitter" placeholder="">
+                            </div>
+                            <div class="">
+                                <label for="github" class="form-label">GitHub</label>
+                                <input type="text" name="github" class="form-control" id="github" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8"><hr class="mb-4 border-secondary"></div>
+
+                <!-- Security -->
+                <div class="col-lg-8">
+                    <div class="row row-cols-lg-2 gy-3">
+                        <div class="col-lg-3">
+                            <h3 class="text-muted">Security</h3>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="mb-3">
+                                <label for="backup-email" class="form-label">Backup email</label>
+                                <input type="text" name="email" class="form-control" id="backup-email" placeholder="">
+                            </div>
+                            <div class="d-flex flex-column" style="width: fit-content;">
+                                <a href="#" class="mb-3 btn btn-primary">Change password</a>
+                                <button type="button" class="btn btn-light-danger" data-bs-toggle="modal" data-bs-target="#delete-modal">
+                                    Delete account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-
         </div>
-    </div>
 
-    <!-- Account deletion modal -->
-    <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <!-- Account deletion modal -->
+        <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5 fw-semibold text-danger" id="label">Delete account</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete your account?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="{% url "signup" %}" class="btn btn-danger">Delete</a>
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 fw-semibold text-danger" id="label">Delete account</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete your account?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" name="delete" value="1" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 {% endblock %}
 
 {% block scripts %}

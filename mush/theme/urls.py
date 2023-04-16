@@ -3,15 +3,13 @@ from theme import views
 
 
 urlpatterns = [
-    path('', views.CatalogView.as_view(), name='index'),
-    path('projects/', views.MyProjectsView.as_view(), name='my-projects'),
-    path('signup/', views.SignupView.as_view(), name='signup'),
-    path('item/', views.ItemDetailsView.as_view(), name='item'),
-    path('edit/', views.ItemEditView.as_view(), name='edit'),
-    path('profile/', views.ProfileView.as_view(), name='profile'),
-    path(
-        'profile-edit/',
-        views.ProfileEditView.as_view(),
-        name='profile-edit'
-    ),
+    path('', views.catalog, name='index'),
+
+    path('projects/', views.projects, name='my-projects'),
+    path('project/<int:id>', views.project, name='project'),
+    path('project-edit/<int:id>', views.project_edit, name='project-edit'),
+
+    path('user/<int:id>', views.user, name='user'),
+    path('profile/', views.profile, name='profile'),
+    path('profile-edit/', views.profile_edit, name='profile-edit'),
 ]

@@ -10,21 +10,22 @@
             My Projects
         </h1>
 
-        <form class="d-flex flex-column align-items-center">
-            <input class="mb-3 form-control" type="text" placeholder="Search..." style="max-width: 550px;">
+        <form class="d-flex flex-column align-items-center" method="post">
+            {% csrf_token %}
+            <input class="mb-3 form-control" name="search" type="text" placeholder="Search..." style="max-width: 550px;">
             <div class="d-flex flex-row">
                 <button class="me-2 btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Order by
                 </button>
                 <ul class="dropdown-menu" style="">
-                    <li><a class="dropdown-item" href="#">Date published</a></li>
+                    <li><button type="submit" name="orderby" value="date"  class="dropdown-item">Date published</button></li>
                 </ul>
                 <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Type
                 </button>
                 <ul class="dropdown-menu" style="">
-                    <li><a class="dropdown-item" href="#">Generated</a></li>
-                    <li><a class="dropdown-item" href="#">Uploaded</a></li>
+                    <li><button type="submit" name="type" value="generated" class="dropdown-item">Generated</button></li>
+                    <li><button type="submit" name="type" value="uploaded" class="dropdown-item">Uploaded</button></li>
                 </ul>
             </div>
         </form>
@@ -33,10 +34,13 @@
     <!-- Project list -->
     <div class="mx-lg-5 px-5 py-4 d-flex flex-column">
         <div class="mb-3 mx-auto">
-            <a href="{% url "edit" %}" class="btn btn-light btn-lg">Create new</a>
+            <a href="#" class="btn btn-light btn-lg">Create new</a>
         </div>
-        <div class="mb-3">{% include "catalog/components/projects-item-card.html" with name="Тыква" generated=1 public=1 %}</div>
-        <div class="mb-3">{% include "catalog/components/projects-item-card.html" with name="Тыква" generated=1 %}</div>
-        <div class="mb-3">{% include "catalog/components/projects-item-card.html" with name="Тыква" %}</div>
+
+        {% for project in projects %}
+            <div class="mb-3">
+                {% include "catalog/components/projects-item-card.html" with project=project %}
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

@@ -22,26 +22,27 @@
 class="catalog-card bg-img rounded rounded-3 overflow-hidden"
 style="
 aspect-ratio: 1;
-/*height: 20rem;*/
-background-image: url({% static image %});
+background-image: url({{project.preview.get_img_300x300.url}});
 ">
-    <a href="{% url "item" %}" class="h-100 user-select-none text-decoration-none catalog-card-body">
+    <a href="{% url "project" id=project.id %}" class="h-100 user-select-none text-decoration-none catalog-card-body">
         <div class="w-100 mt-auto p-5 pb-4 text-white">
-            <h3 class="w-100 mb-3 fs-4 lh-1 fw-bold">{{name}}</h3>
+            <h3 class="w-100 mb-3 fs-4 lh-1 fw-bold">{{project.name}}</h3>
             <div class="d-flex flex-row align-items-baseline justify-content-between">
                 <div>
                     <img
                     src="{% static "assets/profile.jpeg" %}"
                     class="rounded-circle"
                     width="32" height="32">
-                    <small>owner</small>
+                    <small>{{project.owner.username}}</small>
                 </div>
+                <!--
                 <div>
                     <small class="text-nowrap d-flex align-items-baseline">
-                        <span class="me-1">{{downloads}} </span>
+                        <span class="me-1">0 </span>
                         <img src="{% static "assets/download.svg" %}">
                     </small>
                 </div>
+                -->
             </div>
         </div>
     </a>

@@ -1,53 +1,57 @@
-from django.views.generic.base import TemplateView
+from catalog.models import Project
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render
 
 
-is_model_ready = 1
-is_user_the_owner = 1
+def user(request, id):
+    ctx = {
+        'observed_user': User.objects.get(id=id),
+        'projects': Project.objects.filter(owner__id=id),
+    }
+    return render(request, 'users/profile.html', ctx)
 
 
-class ProfileView(TemplateView):
-    template_name = 'users/profile.html'
+def profile(request):
+    return user(request, request.user.id)
 
 
-class ProfileEditView(TemplateView):
-    template_name = 'users/profile-edit.html'
+def profile_edit(request):
+    return render(request, 'users/profile-edit.html', {})
 
 
-class SignupView(TemplateView):
-    template_name = 'theme/test-form.html'
+def projects(request):
+    if request.method == 'POST':
+        print(request.POST)
+        return redirect('my-projects')
+
+    ctx = {
+        'projects': Project.objects.all()
+    }
+    return render(request, 'catalog/my-projects.html', ctx)
 
 
-class MyProjectsView(TemplateView):
-    template_name = 'catalog/my-projects.html'
+def project(request, id):
+    ctx = {
+        'project': Project.objects.get(id=id),
+    }
+    return render(request, 'catalog/item-details.html', ctx)
 
 
-class CatalogView(TemplateView):
-    template_name = 'catalog/index.html'
+def catalog(request):
+    ctx = {
+        'projects': Project.objects.filter(
+            is_public=True, status='completed'
+        )
+    }
+    return render(request, 'catalog/index.html', ctx)
 
 
-class ItemEditView(TemplateView):
-    template_name = 'catalog/item-edit.html'
+def project_edit(request, id):
+    if request.method == 'POST':
+        print(request.POST)
+        return redirect('project', id=id)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # For debug purposes only
-        local_context = {
-            'model_ready': is_model_ready,
-            'is_user_the_owner': is_user_the_owner,
-        }
-        context.update(local_context)
-        return context
-
-
-class ItemDetailsView(TemplateView):
-    template_name = 'catalog/item-details.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # For debug purposes only
-        local_context = {
-            'model_ready': is_model_ready,
-            'is_user_the_owner': is_user_the_owner,
-        }
-        context.update(local_context)
-        return context
+    ctx = {
+        'project': Project.objects.get(id=id),
+    }
+    return render(request, 'catalog/item-edit.html', ctx)
