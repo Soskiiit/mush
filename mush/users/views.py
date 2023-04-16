@@ -1,9 +1,11 @@
 from catalog.models import Project
-from django.contrib.auth import logout as django_logout
+from django.contrib.auth import (
+    authenticate, login as django_login, logout as django_logout
+)
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
-from .forms import SignupForm
+from .forms import LoginForm, SignupForm
 from .models import UserProfile
 
 
@@ -28,7 +30,19 @@ def signup(request):
 
 
 def login(request):
-    return redirect('index')
+    form = LoginForm(request.POST)
+
+    if request.method == 'POST' and form.is_valid():
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            django_login(request, user)
+            return redirect('index')
+
+        return redirect('login')
+
+    return render(request, 'users/login.html', {'form': form})
 
 
 def logout(request):

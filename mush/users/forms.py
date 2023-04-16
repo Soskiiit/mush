@@ -33,6 +33,16 @@ class SignupForm(forms.Form):
         return cleaned_data
 
 
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    password = forms.CharField(
+        widget=PasswordInput(attrs={'class': 'form-control'})
+    )
+
+
 class UpdateProfileForm(forms.Form):
     first_name = forms.CharField(max_length=100)
     last_name = forms.CharField(max_length=100)
