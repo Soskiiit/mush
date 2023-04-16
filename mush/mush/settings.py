@@ -1,7 +1,8 @@
+from importlib.metadata import packages_distributions
 from pathlib import Path
 
 from dotenv import dotenv_values
-from importlib.metadata import packages_distributions
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -16,7 +17,7 @@ DEBUG = environment_variables['DEBUG'].upper() in ['1', 'TRUE', 'T']
 ALLOWED_HOSTS = environment_variables['ALLOWED_HOSTS'].split()
 LOWRES_MODEL_FACE_COUNT = environment_variables['LOWRES_MODEL_FACE_COUNT']
 
-installed_packages = [pkg for pkg in packages_distributions()]
+installed_packages = packages_distributions()
 ENABLE_PHOTOGRAMMETRY = 'Metashape' in installed_packages
 
 INSTALLED_APPS = [
