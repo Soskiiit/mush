@@ -13,10 +13,15 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', get_random_secret_key())
 DEBUG = os.getenv('DJANGO_DEBUG', 'True') != 'False'
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',')
 INTERNAL_IPS = os.getenv('DJANGO_INTERNAL_IPS', '').split(',')
+LOWRES_MODEL_FACE_COUNT = int(os.getenv('DJANGO_LOWRES_MODEL_FACE_COUNT', 10000))
 
+installed_packages = {pkg.key for pkg in pkg_resources.working_set}
+ENABLE_PHOTOGRAMMETRY = 'metashape' in installed_packages
 
 INSTALLED_APPS = [
     # Django
+    'photogrammetry.apps.PhotogrammetryConfig',
+    'catalog.apps.CatalogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,20 +80,28 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': '''django.contrib.auth.password_validation
-        .UserAttributeSimilarityValidator''',
+        'NAME': (
+            '''django.contrib.auth.password_validation.'''
+            '''UserAttributeSimilarityValidator'''
+        ),
     },
     {
-        'NAME': '''django.contrib.auth
-        .password_validation.MinimumLengthValidator''',
+        'NAME': (
+            '''django.contrib.auth.password_validation.'''
+            '''MinimumLengthValidator'''
+        ),
     },
     {
-        'NAME': '''django.contrib.auth
-        .password_validation.CommonPasswordValidator''',
+        'NAME': (
+            '''django.contrib.auth.password_validation.'''
+            '''CommonPasswordValidator'''
+        ),
     },
     {
-        'NAME': '''django.contrib.auth
-        .password_validation.NumericPasswordValidator''',
+        'NAME': (
+            '''django.contrib.auth.password_validation.'''
+            '''NumericPasswordValidator'''
+        ),
     },
 ]
 
@@ -110,6 +123,11 @@ MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / 'static_dev',
     os.path.join(BASE_DIR, 'theme', 'static'),
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = f'{BASE_DIR}/sent_mail'
+
+AUTH_USER_MODEL = 'users.User'
