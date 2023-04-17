@@ -3,7 +3,6 @@ from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
-import pkg_resources
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,8 +17,9 @@ LOWRES_MODEL_FACE_COUNT = int(
     os.getenv('DJANGO_LOWRES_MODEL_FACE_COUNT', 10000)
 )
 
-installed_packages = {pkg.key for pkg in pkg_resources.working_set}
-ENABLE_PHOTOGRAMMETRY = 'metashape' in installed_packages
+ENABLE_PHOTOGRAMMETRY = os.getenv(
+    'DJANGO_ENABLE_PHOTOGRAMMETRY', 'True'
+) != 'False'
 
 INSTALLED_APPS = [
     # Django

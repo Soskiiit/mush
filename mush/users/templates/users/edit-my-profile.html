@@ -6,7 +6,7 @@
 {% block styles %}
 <style type="text/css">
     .profile-picture {
-        background-image: url({% static "assets/profile.jpeg" %});
+        background-image: url({% static "assets/profile.png" %});
         height: 15rem;
         aspect-ratio: 1;
         color: transparent;
@@ -120,7 +120,7 @@
                         </div>
                         <div class="col-lg-9">
                             <div class="d-flex flex-column" style="width: fit-content;">
-                                <a href="#" class="mb-2 btn btn-primary">Change password</a>
+                                {# <a href="#" class="mb-2 btn btn-primary">Change password</a> #}
                                 <button type="button" class="btn btn-light-danger" data-bs-toggle="modal" data-bs-target="#delete-modal">
                                     Delete account
                                 </button>

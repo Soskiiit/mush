@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block article-body %}
-    <form method="post">
+    <form method="post" action="{% block action %}{% endblock %}"  enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row flex-lg-row-reverse g-5">
 

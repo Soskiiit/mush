@@ -20,6 +20,7 @@ DOTENV_CONTENTS = {
     'DJANGO_SECRET_KEY': 'secret_key',
     'DJANGO_ALLOWED_HOSTS': 'localhost,127.0.0.1',
     'DJANGO_INTERNAL_IPS': 'localhost,127.0.0.1',
+    'DJANGO_ENABLE_PHOTOGRAMMETRY': True,
 }
 
 

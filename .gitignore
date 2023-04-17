@@ -6,6 +6,7 @@
 node_modules/
 mush/theme/static/
 mush/media/cache/
+mush/media/
 
 # Python
 __pycache__/
