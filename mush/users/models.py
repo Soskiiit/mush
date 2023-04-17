@@ -1,30 +1,32 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from sorl.thumbnail import get_thumbnail
 
 
-class UserProfile(models.Model):
-    for_user = models.OneToOneField(
-        User, on_delete=models.CASCADE, verbose_name='пользователь'
-    )
+class User(AbstractUser):
     image = models.ImageField(
         verbose_name='Аватар',
         blank=True,
+        null=True,
         upload_to='avatars'
     )
-    bio = models.CharField(verbose_name='О себе', max_length=256)
+    twitter = models.CharField(unique=True,
+                               verbose_name='twitter',
+                               blank=True,
+                               null=True,
+                               max_length=15)
+    github = models.CharField(unique=True,
+                              verbose_name='github',
+                              blank=True,
+                              null=True,
+                              max_length=255)
 
-    def get_img_300x300(self):
+    def profile_img_300x300(self):
         if self.image:
             return get_thumbnail(
                 self.image, '300x300', crop='center', quality=51
             )
-        else:
-            return False
 
     class Meta:
         verbose_name = 'о пользователе'
         verbose_name_plural = 'о пользователях'
-
-    def __str__(self):
-        return str(self.for_user)

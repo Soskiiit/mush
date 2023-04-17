@@ -2,11 +2,10 @@ from catalog.models import Project
 from django.contrib.auth import (
     authenticate, login as django_login, logout as django_logout
 )
-from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
 from .forms import LoginForm, SignupForm
-from .models import UserProfile
+from .models import User
 
 
 def signup(request):
@@ -22,8 +21,6 @@ def signup(request):
             email=email
         )
         user.save()
-        profile = UserProfile.objects.create(for_user=user)
-        profile.save()
         return redirect('index')
 
     return render(request, 'users/signup.html', {'form': form})
