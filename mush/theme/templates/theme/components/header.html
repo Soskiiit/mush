@@ -1,0 +1,39 @@
+{% load static %}
+
+<header class="p-3 border-bottom">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 me-lg-2 mb-lg-0 navbar-brand fs-4 fw-semibold text-dark text-decoration-none">
+                Mush3D
+            </a>
+
+            {% with request.resolver_match.view_name as view_name %}
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="{% url "index" %}" class="nav-link px-2 link-{% if view_name == 'index' %}secondary{% else %}dark{% endif %}">Catalog</a></li>
+                </ul>
+            {% endwith %}
+
+            {% if user.is_authenticated %}
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{% static "assets/profile.jpeg" %}" alt="mdo" class="rounded-circle" width="32" height="32">
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                        <li><span class="dropdown-item-text" style="font-weight: 500 !important;">{{user.username}}</span></li>
+                        <li><hr class="dropdown-divider"></li>
+                        {% if user.is_superuser %}
+                            <li><a class="dropdown-item" href="/admin" target="_blank">Admin</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="{% url "my-profile" %}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url "edit-my-profile" %}">Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url "logout" %}">Sign out</a></li>
+                    </ul>
+                </div>
+            {% else %}
+                <a href="{% url "login" %}" class="btn btn-outline-primary me-2">Login</a>
+                <a href="{% url "signup" %}" class="btn btn-primary">Sign-up</a>
+            {% endif %}
+        </div>
+    </div>
+</header>

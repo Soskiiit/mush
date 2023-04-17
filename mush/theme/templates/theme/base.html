@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="{% static "assets/favicon.svg" %}" />
+
+        <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap/bootstrap.min.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static "css/theme.css" %}">
+        {% block styles %}{% endblock %}
+
+        <title>{% block tab_title %}Page Title{% endblock %} • Mush3D</title>
+    </head>
+
+    <body class="min-vh-100 vw-100 d-flex flex-column">
+        {% block header %}{% include "theme/components/header.html" %}{% endblock %}
+
+        <main class="flex-grow-1 p-0 m-0 bg-light">
+            {% block fullwidth-body %}
+                <div class="mx-lg-5 px-5 py-4">
+                    {% block article-body %}{% endblock %}
+                </div>
+            {% endblock %}
+        </main>
+
+        {% include "theme/components/footer.html" %}
+    </body>
+
+    <script type="text/javascript" src="{% static "js/bootstrap/bootstrap.bundle.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery/jquery-3.6.4.min.js" %}"></script>
+    {% block scripts %}{% endblock %}
+</html>

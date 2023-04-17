@@ -1,39 +1,46 @@
 from importlib.metadata import packages_distributions
+import os
 from pathlib import Path
 
-from dotenv import dotenv_values
+from django.core.management.utils import get_random_secret_key
+from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+DOTENV_PATH = os.path.join(BASE_DIR, '.env')
 
-environment_variables = dotenv_values()
-environment_variables.setdefault('SECRET_KEY', 'test')
-environment_variables.setdefault('DEBUG', 'True')
-environment_variables.setdefault('ALLOWED_HOSTS', '')
-environment_variables.setdefault('LOWRES_MODEL_FACE_COUNT', 10000)
-
-SECRET_KEY = environment_variables['SECRET_KEY']
-DEBUG = environment_variables['DEBUG'].upper() in ['1', 'TRUE', 'T']
-ALLOWED_HOSTS = environment_variables['ALLOWED_HOSTS'].split()
-LOWRES_MODEL_FACE_COUNT = environment_variables['LOWRES_MODEL_FACE_COUNT']
+load_dotenv(DOTENV_PATH)
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', get_random_secret_key())
+DEBUG = os.getenv('DJANGO_DEBUG', 'True') != 'False'
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',')
+INTERNAL_IPS = os.getenv('DJANGO_INTERNAL_IPS', '').split(',')
+LOWRES_MODEL_FACE_COUNT = int(
+    os.getenv('DJANGO_LOWRES_MODEL_FACE_COUNT', 10000)
+)
 
 installed_packages = packages_distributions()
 ENABLE_PHOTOGRAMMETRY = 'Metashape' in installed_packages
 
 INSTALLED_APPS = [
-    'photogrammetry.apps.PhotogrammetryConfig',
-    'catalog.apps.CatalogConfig',
+    # Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Third-party
     'sorl.thumbnail',
+    'django_browser_reload',
+    # Project-specific
+    'photogrammetry.apps.PhotogrammetryConfig',
+    'theme.apps.ThemeConfig',
+    'catalog.apps.CatalogConfig',
     'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
+    # Django
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -41,6 +48,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Third-party
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'mush.urls'
@@ -52,6 +61,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                # Django
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -109,15 +119,17 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static_dev',
-]
-STATIC_URL = '/static/'
-
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = BASE_DIR / 'sent_mail'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static_dev',
+    BASE_DIR / 'theme' / 'static',
+]
 
 AUTH_USER_MODEL = 'users.User'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'sent_mail'

@@ -3,6 +3,9 @@
 
 # Folders
 .ignore/
+node_modules/
+mush/theme/static/
+mush/media/cache/
 
 # Python
 __pycache__/

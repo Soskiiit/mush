@@ -41,12 +41,16 @@ def setup():
     run([sys.executable, '-m', 'pip', 'install', '-r', DEV_REQUIREMENTS_PATH])
     run([sys.executable, MANAGEPY_PATH, 'migrate'])
     run([sys.executable, MANAGEPY_PATH, 'shell'], input=b'from django.contrib.auth.models import User; User.objects.create_superuser("admin", "admin@mail.com", "admin")\n', stdout=sp.DEVNULL, stderr=sp.DEVNULL, ignore_errors=True)
-
-    # run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-commit'])
-    # run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-push'])
-    # run([VENV_PRECOMMIT, 'install', '--install-hooks'])
+    try:
+        run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-commit'])
+        run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-push'])
+        run([VENV_PRECOMMIT, 'install', '--install-hooks'])
+    except FileNotFoundError:
+        print('can`t initialize hooks')
     with open(DOTENV_PATH, 'w') as file:
         file.write('\n'.join(f'{k}={v}' for k,v in DOTENV_CONTENTS.items()))
+
+    print('All done. Super user credentials are "admin:admin"')
 
 
 if __name__ == '__main__':
