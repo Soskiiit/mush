@@ -16,7 +16,7 @@
 
     <div class="mb-3 col-auto form-check form-switch fs-4">
         <label class="form-check-label fw-light" style="pointer-events: none; user-select: none;" for="public-switch">Make public</label>
-        <input class="form-check-input" style="cursor: pointer;" type="checkbox" name="public" role="switch" id="public-switch">
+        <input class="form-check-input" style="cursor: pointer;" type="checkbox" name="public" role="switch" id="public-switch" {% if project.is_public %}checked{% endif %}>
     </div>
 
     <div class="mb-3 col-auto d-flex flex-row">

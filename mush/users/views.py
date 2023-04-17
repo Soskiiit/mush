@@ -21,6 +21,7 @@ def signup(request):
             email=email
         )
         user.save()
+        django_login(request, user)
         return redirect('index')
 
     return render(request, 'users/signup.html', {'form': form})

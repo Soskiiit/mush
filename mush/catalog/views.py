@@ -31,14 +31,20 @@ def project_edit(request, id):
             return redirect('my-profile')
 
         project.name = request.POST['name']
-        # project.public =
-        for image in request.FILES.getlist('images'):
-            photo = Photo.objects.create(for_project=project, image=image)
-            photo.save()
-            print('added', image)
+
+        if 'public' in request.POST:
+            project.is_public = request.POST['public'] == 'on'
+        else:
+            project.is_public = False
+
         project.save()
 
-        run_photogrammetry_thread(project.id)
+        if request.FILES:
+            for image in request.FILES.getlist('images'):
+                photo = Photo.objects.create(for_project=project, image=image)
+                photo.save()
+            run_photogrammetry_thread(project.id)
+
         return redirect('project', id=id)
 
     ctx = {
