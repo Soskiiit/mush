@@ -8,9 +8,10 @@ import subprocess as sp
 
 
 PROJECT_NAME            = 'mush'
+IT_IS_NOT_CI_CD = 'ci_cd' not in sys.argv[1:]
 ROOT_DIR                = os.path.realpath(os.path.dirname(__file__))
 PROJECT_DIR             = os.path.join(ROOT_DIR, PROJECT_NAME)
-VENV_DIR                = os.path.dirname(os.path.dirname(os.path.dirname(sys.path[-1])))
+VENV_DIR                = os.path.dirname(os.path.dirname(os.path.dirname(sys.path[-1]))) if IT_IS_NOT_CI_CD else os.path.join(ROOT_DIR, '.venv')
 VENV_PYTHON             = os.path.join(VENV_DIR, 'bin', 'python3') if sys.platform == 'linux' else os.path.join(VENV_DIR, 'Scripts', 'python.exe')
 VENV_PRECOMMIT          = os.path.join(VENV_DIR, 'bin', 'pre-commit')
 MANAGEPY_PATH           = os.path.join(PROJECT_DIR, 'manage.py')
@@ -39,8 +40,8 @@ def run(cmd: list, stdout=sp.PIPE, stderr=sp.PIPE, ignore_errors=False, *args, *
 
 def install_metashape_package():
     system = platform.system()
-    if system in METASHAPE_DOWNLOAD_LINKS:
-        os.system(f'python3 -m pip install {METASHAPE_DOWNLOAD_LINKS[system]}')
+    if system in METASHAPE_DOWNLOAD_LINKS and IT_IS_NOT_CI_CD:
+        run([sys.executable, '-m', 'pip', 'install', METASHAPE_DOWNLOAD_LINKS[system]])
     else:
         print('Photogrammetry support on your system isn`t avaliable')
 
@@ -49,7 +50,7 @@ def setup():
     if sys.prefix == sys.base_prefix:
         shutil.rmtree(VENV_DIR, ignore_errors=True)
         run(['python', '-m', 'venv', VENV_DIR])
-        run([VENV_PYTHON, __file__] + sys.argv[1:], stdout=None, stderr=None)
+        run([VENV_PYTHON, __file__], stdout=None, stderr=None)
         exit(0)
 
     run([sys.executable, '-m', 'pip', 'install', '-r', DEV_REQUIREMENTS_PATH])
