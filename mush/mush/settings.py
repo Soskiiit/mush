@@ -1,5 +1,5 @@
-from importlib.metadata import packages_distributions
 import os
+from importlib.metadata import packages_distributions
 from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
