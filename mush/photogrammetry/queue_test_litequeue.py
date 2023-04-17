@@ -3,13 +3,13 @@ from mush.mush.settings import BASE_DIR
 
 # BASE_DIR = 'C:/Users/Oleg/PycharmProjects/mush/mush/'
 
-db_dir = f"{BASE_DIR}/db2.sqlite3"
+db_dir = f'{BASE_DIR}/db2.sqlite3'
 # db_dir=':memory:'
 
-print(f"using database directory: {db_dir}")
+print(f'using database directory: {db_dir}')
 q = LiteQueue(db_dir)
 
-q.put("hello")
+q.put('hello')
 print(q)
 
 # Если запускать этот файл из проекта, выводится

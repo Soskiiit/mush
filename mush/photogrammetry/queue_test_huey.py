@@ -1,11 +1,11 @@
 from huey import SqliteHuey
-from mush.settings import BASE_DIR
+from mush.mush.settings import BASE_DIR
 
 # BASE_DIR = 'C:/Users/Oleg/PycharmProjects/mush/mush/'
 
-db_dir = f"{BASE_DIR}/db2.sqlite3"
+db_dir = f'{BASE_DIR}/db2.sqlite3'
 
-print(f"using database directory: {db_dir}")
+print(f'using database directory: {db_dir}')
 
 huey = SqliteHuey(filename=db_dir)
 
