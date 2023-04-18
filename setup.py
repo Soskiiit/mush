@@ -88,9 +88,10 @@ def setup():
         console_logger.error('can`t initialize hooks')
     with open(DOTENV_PATH, 'w') as file:
         file.write('\n'.join(f'{k}={v}' for k,v in DOTENV_CONTENTS.items()))
-    console_logger.info(
-        f'All done. Super user credentials are "admin:{admin_password}"'
-    )
+    if IT_IS_NOT_CI_CD:
+        console_logger.info(
+            f'All done. Super user credentials are "admin:{admin_password}"'
+        )
 
 
 if __name__ == '__main__':
