@@ -20,6 +20,7 @@ class User(AbstractUser):
                               blank=True,
                               null=True,
                               max_length=255)
+    bio = models.TextField(verbose_name='О себе', blank=True, default='')
 
     def profile_img_300x300(self):
         if self.image:
@@ -28,5 +29,5 @@ class User(AbstractUser):
             )
 
     class Meta:
-        verbose_name = 'о пользователе'
-        verbose_name_plural = 'о пользователях'
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'

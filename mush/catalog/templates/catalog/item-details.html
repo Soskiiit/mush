@@ -16,13 +16,13 @@
     {% else %}
         <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white d-flex flex-row">
             <img
-            src="{% static "assets/profile.jpeg" %}"
+            src="{% if project.owner.profile_img_300x300 %}{{project.owner.profile_img_300x300.url}}{% else %}{% static "assets/profile.png" %}{% endif %}"
             alt="mdo"
             class="me-3 rounded-circle"
             width="64" height="64">
             <div class="d-flex flex-column justify-content-center">
                 <a class="text-reset" href="{% url "profile" id=project.owner.id %}">
-                    {{project.owner.first_name}}
+                    {{project.owner.first_name}} {{project.owner.last_name}}
                 </a>
                 <div class="text-muted">
                     @{{project.owner.username}}

@@ -14,7 +14,6 @@ class Project(models.Model):
         ('error', 'ошибка')
     )
     name = models.CharField(verbose_name='название', max_length=255)
-    description = models.TextField(verbose_name='описание', blank=True)
     owner = models.ForeignKey(
         User, verbose_name='владелец', on_delete=models.CASCADE
     )
