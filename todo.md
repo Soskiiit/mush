@@ -3,16 +3,17 @@
 - [ ] `/` - Catalog
   - [ ] Rewrite lorem-ipsum text
 - [ ] `/project/<id>` - Project details
+  - [ ] When generation fails show `Failed` header & scrollable log panel
   - [ ] Make preview panel fill all the vertical space
   - [ ] Add summary (vertex & polygon count, file size)
   - [ ] Change project card's `no-image` placeholder
   - [ ] Add public/private indication if logged in
 - [ ] `/project-edit/<id>` - Edit project
   - [ ] Add `@login_required`
-  - [ ] When generation fails show `Failed` header & scrollable log panel
   - [ ] Allow users to upload 3D models
-  - [ ] Delete associated images on error
+  - [ ] Delete associated images on generation error or new image/model upload
   - [ ] Redirect to `project-edit` after save to show `Processing...` message
+  - [ ] Create separate `project-delete` view for project deletion
   - [ ] Add *Are you sure?* pop-up when deleting project
 - [ ] `/project-create` - Create project
   - [ ] Add `@login_required`
