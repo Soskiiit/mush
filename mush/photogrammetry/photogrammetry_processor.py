@@ -42,14 +42,18 @@ def photogrammetry_calc(photo_paths, model_path, project_id):
             surface_type=Metashape.Arbitrary,
             interpolation=Metashape.EnabledInterpolation,
         )
+        chunk.smoothModel()
         chunk.buildUV(mapping_mode=Metashape.GenericMapping)
         chunk.buildTexture(
             blending_mode=Metashape.MosaicBlending, texture_size=4096
         )
-        chunk.smoothModel()
+
         chunk.exportModel(
             path=os.path.join(model_path, f'model{project_id}_full.glb')
         )
+        model_stats = chunk.model.statistics()
+        face_count = model_stats.faces
+        vert_count = model_stats.vertices
 
         chunk.decimateModel(face_count=settings.LOWRES_MODEL_FACE_COUNT)
         chunk.buildUV(mapping_mode=Metashape.GenericMapping, texture_size=2048)
@@ -59,6 +63,7 @@ def photogrammetry_calc(photo_paths, model_path, project_id):
         chunk.exportModel(
             path=os.path.join(model_path, f'model{project_id}_prev.glb')
         )
+
         Project.objects.filter(id=project_id).update(
             status='completed',
             models_highres=os.path.join(
@@ -67,7 +72,10 @@ def photogrammetry_calc(photo_paths, model_path, project_id):
             model_lod=os.path.join(
                 Path(model_path).parts[-1], f'model{project_id}_prev.glb'
             ),
+            faces=face_count,
+            vertices=vert_count,
         )
+
     except Exception as ex:
         photogrametry_logger.error(f'{ex} for project with id: {project_id}')
         Project.objects.filter(id=project_id).update(status='error')
