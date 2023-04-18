@@ -19,8 +19,8 @@ LOWRES_MODEL_FACE_COUNT = int(
 )
 
 ENABLE_PHOTOGRAMMETRY = os.getenv(
-    'DJANGO_ENABLE_PHOTOGRAMMETRY', True
-) and pkgutil.find_loader('Metashape') is not None
+    'DJANGO_ENABLE_PHOTOGRAMMETRY', 'True'
+) != 'False' and pkgutil.find_loader('Metashape') is not None
 
 INSTALLED_APPS = [
     # Django
