@@ -17,7 +17,7 @@ photogrammetry_queue = LiteQueue(DATABASE_DIR)
 
 logging.basicConfig(
     filename='photogrammetry.log',
-    level=logging.ERROR,
+    level=logging.INFO,
     format='%(asctime)s %(message)s',
 )
 photogrametry_logger = logging.getLogger('photogrammetry_logger')
