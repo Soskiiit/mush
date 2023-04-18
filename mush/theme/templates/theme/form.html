@@ -1,0 +1,27 @@
+{% extends "theme/base.html" %}
+
+{# Makes <header> empty #}
+{% block header %}{% endblock %}
+
+{% block fullwidth-body %}
+    <div class="px-3 py-5">
+        <form action="{% block form-action %}{% endblock %}" method="post">
+        {% csrf_token %}
+            <div
+            class="
+            mx-auto px-4 py-4
+            border rounded-4
+            bg-white"
+            style="max-width: 550px;">
+                <div class="mb-4 text-center">
+                    <h3 class="fw-normal">{% block form-header %}Form Header{% endblock %}</h3>
+                    <span class="fw-normal">{% block form-description %}Form Description{% endblock %}</span>
+                </div>
+
+                <div class="mb-4">{% block form-body %}Form Body{% endblock %}</div>
+
+                <div class="text-muted mb-4">{% block form-footer %}Form Footer{% endblock %}</div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

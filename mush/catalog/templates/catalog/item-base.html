@@ -1,0 +1,25 @@
+{% extends "theme/base.html" %}
+{% load static %}
+
+{% block article-body %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="row flex-lg-row-reverse g-5">
+
+            <!-- Description -->
+            <div class="col-lg-4 d-flex flex-column">
+                {% block side-panel %}{% endblock %}
+            </div>
+
+            <!-- Preview -->
+            <div class="col-lg-8 p-0 border rounded overflow-hidden bg-white" style="min-height: 60vh;">
+                {% block panel %}{% endblock %}
+            </div>
+
+        </div>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static "js/model-viewer.min.js" %}"></script>
+{% endblock %}
