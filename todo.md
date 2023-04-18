@@ -39,5 +39,9 @@
 
 ## Other stuff
 - [ ] Add preview thumbnail generation
+- [ ] Allow views to somehow retrieve Metashape logs to show error messages
+- [ ] Make `GeneratedModel` model instead of `run_photogrammetry_thread`
+      which would rerun Metashape on every `save()`? (suggestion)
 - [ ] Add vertex & polygon info generation
+- [ ] Remove empty stuff from `mush/photogrammetry`
 - [ ] Localization
