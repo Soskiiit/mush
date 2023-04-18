@@ -22,7 +22,7 @@ class Project(models.Model):
     status = models.CharField(
         choices=ProgressOfProcessing.choices,
         default=ProgressOfProcessing.IN_QUEUE,
-        max_length=255
+        max_length=255,
     )
     models_highres = models.FileField(
         upload_to='models_highres',
@@ -44,9 +44,10 @@ class Project(models.Model):
         blank=True,
     )
     faces = models.IntegerField(default=0, verbose_name='Число полигонов')
-    vertexes = models.IntegerField(default=0, verbose_name='Число вершин')
-    public_date = models.DateField(auto_now_add=True,
-                                   verbose_name='дата публикации')
+    vertices = models.IntegerField(default=0, verbose_name='Число вершин')
+    public_date = models.DateField(
+        auto_now_add=True, verbose_name='дата публикации'
+    )
 
     class Meta:
         verbose_name = 'проект'
@@ -74,10 +75,7 @@ class Photo(models.Model):
     def img_thmb(self):
         if self.image:
             micro_image = get_thumbnail(
-                self.image,
-                '75x75',
-                crop='center',
-                quality=51
+                self.image, '75x75', crop='center', quality=51
             )
             return mark_safe(f'''<img src='{micro_image.url}' width='75px'>''')
 
