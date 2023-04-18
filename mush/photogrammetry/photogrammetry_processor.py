@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 import time
@@ -9,11 +8,19 @@ import adj_django_connection
 from catalog.models import Project
 from django.conf import settings
 from litequeue import LiteQueue
+from tools import json_to_photogrammetry_args
 
 DATABASE_DIR = adj_django_connection.ROOT_DIR / 'db.sqlite3'
 
 
 photogrammetry_queue = LiteQueue(DATABASE_DIR)
+
+logging.basicConfig(
+    filename='photogrammetry.log',
+    level=logging.ERROR,
+    format='%(asctime)s %(message)s',
+)
+photogrametry_logger = logging.getLogger('photogrammetry_logger')
 
 
 def photogrammetry_calc(photo_paths, model_path, project_id):
@@ -62,30 +69,31 @@ def photogrammetry_calc(photo_paths, model_path, project_id):
             ),
         )
     except Exception as ex:
-        logging.basicConfig(
-            filename='photogrammetry.log',
-            level=logging.ERROR,
-            format='%(asctime)s %(message)s',
-        )
-        logging.error(f'{ex} for project with id: {project_id}')
+        photogrametry_logger.error(f'{ex} for project with id: {project_id}')
         Project.objects.filter(id=project_id).update(status='error')
 
 
 if __name__ == '__main__':
-    print('Starting worker')
+    print('Waiting for tasks')
+    photogrametry_logger.info('Waiting for tasks')
     while True:
         if photogrammetry_queue.empty():
             time.sleep(1)
         else:
             try:
                 message = photogrammetry_queue.pop().data
-                args = json.loads(message)
-                print(
+                args = json_to_photogrammetry_args(message)
+                photogrametry_logger.info(
                     f'starting photogrammetry in project {args["project_id"]}'
                 )
                 photogrammetry_calc(**args)
-                print('done photogrammetry process')
+                photogrametry_logger.info(
+                    f'done photogrammetry in project {args["project_id"]}'
+                )
                 if photogrammetry_queue.empty():
                     print('Waiting for tasks')
             except Exception as ex:
-                print(f'Caught {ex} during processing project')
+                print(f'caught {ex} during photogrammetry process')
+                photogrametry_logger.error(
+                    f'caught {ex} during photogrammetry process'
+                )
