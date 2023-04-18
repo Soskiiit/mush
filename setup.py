@@ -71,14 +71,15 @@ def setup():
     run([sys.executable, '-m', 'pip', 'install', '-r', DEV_REQUIREMENTS_PATH])
     install_metashape_package()
     run([sys.executable, MANAGEPY_PATH, 'migrate'])
-    admin_password = input("Enter password for admin user: ")
-    run([sys.executable, MANAGEPY_PATH, 'shell'],
-        input=bytes(f'from users.models import User; '
-                    f'User.objects.create_superuser'
-                    f'("admin", "admin@mail.com", '
-                    f'"{admin_password}")\n',
-                    f'utf-8'),
-        stdout=sp.DEVNULL, stderr=sp.DEVNULL, ignore_errors=True)
+    if IT_IS_NOT_CI_CD:
+        admin_password = input("Enter password for admin user: ")
+        run([sys.executable, MANAGEPY_PATH, 'shell'],
+            input=bytes(f'from users.models import User; '
+                        f'User.objects.create_superuser'
+                        f'("admin", "admin@mail.com", '
+                        f'"{admin_password}")\n',
+                        f'utf-8'),
+            stdout=sp.DEVNULL, stderr=sp.DEVNULL, ignore_errors=True)
     try:
         run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-commit'])
         run([VENV_PRECOMMIT, 'install', '--hook-type', 'pre-push'])
