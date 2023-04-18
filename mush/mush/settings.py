@@ -1,5 +1,5 @@
 import os
-from importlib.metadata import packages_distributions
+import pkgutil
 from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
@@ -18,8 +18,9 @@ LOWRES_MODEL_FACE_COUNT = int(
     os.getenv('DJANGO_LOWRES_MODEL_FACE_COUNT', 10000)
 )
 
-installed_packages = packages_distributions()
-ENABLE_PHOTOGRAMMETRY = 'Metashape' in installed_packages
+ENABLE_PHOTOGRAMMETRY = os.getenv(
+    'DJANGO_ENABLE_PHOTOGRAMMETRY', True
+) and pkgutil.find_loader('Metashape') is not None
 
 INSTALLED_APPS = [
     # Django
