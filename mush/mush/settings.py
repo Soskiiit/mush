@@ -1,4 +1,5 @@
 import os
+from importlib.metadata import packages_distributions
 from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
@@ -19,7 +20,7 @@ LOWRES_MODEL_FACE_COUNT = int(
 
 ENABLE_PHOTOGRAMMETRY = os.getenv(
     'DJANGO_ENABLE_PHOTOGRAMMETRY', 'True'
-) != 'False'
+) != 'False' and 'Metashape' in packages_distributions()
 
 INSTALLED_APPS = [
     # Django
