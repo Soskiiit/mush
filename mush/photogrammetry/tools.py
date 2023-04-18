@@ -1,91 +1,44 @@
-import logging
+import json
 import os
-import threading
-from pathlib import Path
 
 from catalog.models import Photo, Project
 from django.conf import settings
+from litequeue import LiteQueue
 
-if settings.ENABLE_PHOTOGRAMMETRY:
-    import Metashape
-
-
-def photogrammetry_main_thread(photo_paths, model_path, project_id):
-    try:
-        doc = Metashape.Document()
-        chunk = doc.addChunk()
-        chunk.addPhotos(photo_paths)
-        chunk.matchPhotos(
-            downscale=1,
-            generic_preselection=True,
-            reference_preselection=False,
-        )
-        chunk.alignCameras()
-        chunk.buildDepthMaps(
-            downscale=4, filter_mode=Metashape.AggressiveFiltering
-        )
-        chunk.buildModel(
-            source_data=Metashape.DepthMapsData,
-            surface_type=Metashape.Arbitrary,
-            interpolation=Metashape.EnabledInterpolation,
-        )
-        chunk.buildUV(mapping_mode=Metashape.GenericMapping)
-        chunk.buildTexture(
-            blending_mode=Metashape.MosaicBlending, texture_size=4096
-        )
-        chunk.smoothModel()
-        chunk.exportModel(
-            path=os.path.join(model_path, f'model{project_id}_full.glb')
-        )
-
-        chunk.decimateModel(face_count=settings.LOWRES_MODEL_FACE_COUNT)
-        chunk.buildUV(mapping_mode=Metashape.GenericMapping, texture_size=2048)
-        chunk.buildTexture(
-            blending_mode=Metashape.MosaicBlending, texture_size=1024
-        )
-        chunk.exportModel(
-            path=os.path.join(model_path, f'model{project_id}_prev.glb')
-        )
-        Project.objects.filter(id=project_id).update(
-            status='completed',
-            models_highres=os.path.join(Path(model_path).parts[-1],
-                                        f'model{project_id}_full.glb'),
-            model_lod=os.path.join(Path(model_path).parts[-1],
-                                   f'model{project_id}_prev.glb')
-        )
-    except Exception as ex:
-        logging.basicConfig(filename='photogrammetry.log',
-                            level=logging.ERROR,
-                            format='%(asctime)s %(message)s')
-        logging.error(f'{ex} for project with id: {project_id}')
-        Project.objects.filter(id=project_id).update(status='error')
+photogrammetry_queue = LiteQueue(settings.DATABASE_DIR)
 
 
 def run_photogrammetry_thread(project_id):
     if not settings.ENABLE_PHOTOGRAMMETRY:
         return
-    photo_paths = Photo.objects.filter(for_project_id=project_id).values_list(
-        'image', flat=True
-    )
-    photo_paths = [
-        os.path.join(settings.MEDIA_ROOT, cur_photo_path)
-        for cur_photo_path in photo_paths
-    ]
 
-    # Для удобного тестирования - импорт фоток из глобальной папки
-    # photo_path = 'D:\Media\Photos\Photogram\examples\Meshroom_6_monstree'
+    use_local_photos = True
 
-    # photo_paths = [
-    #     os.path.join(photo_path, cur_photo)
-    #     for cur_photo in os.listdir(photo_path)
-    # ]
+    if use_local_photos:
+        photo_path = 'D:/Media/Photos/Photogram/examples/Meshroom_6_monstree'
+
+        photo_paths = [
+            os.path.join(photo_path, cur_photo) for cur_photo in os.listdir(photo_path)
+        ]
+    else:
+        photo_paths = Photo.objects.filter(for_project_id=project_id).values_list(
+            'image', flat=True
+        )
+        photo_paths = [
+            os.path.join(settings.MEDIA_ROOT, cur_photo_path)
+            for cur_photo_path in photo_paths
+        ]
 
     model_path = os.path.join(settings.MEDIA_ROOT, 'models')
-    photogrammetry_thread = threading.Thread(
-        target=photogrammetry_main_thread,
-        args=(photo_paths, model_path, project_id),
+    photogrammetry_queue.put(
+        json.dumps(
+            {
+                'photo_paths': photo_paths,
+                'model_path': model_path,
+                'project_id': project_id,
+            }
+        )
     )
     Project.objects.filter(id=project_id).update(status='in_progress')
-    photogrammetry_thread.start()
 
     return model_path

@@ -12,6 +12,4 @@ def run_photogrammetry(request, project_id):
             '<h1>Your model is processing and will be able for download at'
             ' {0}.</h1>'.format(model_path)
         )
-    return HttpResponse(
-        '<h1>sorry, no photogrammetry yet... Working on it</h1>'
-    )
+    return HttpResponse('<h1>sorry, no photogrammetry yet... Working on it</h1>')
