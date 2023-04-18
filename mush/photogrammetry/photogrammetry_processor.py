@@ -1,26 +1,17 @@
-import pathlib
+import json
+import logging
+import os
+import time
+from pathlib import Path
 
 import Metashape
-
-print(f'im in {pathlib.Path(__file__)}')
-import os
+import adj_django_connection
+from catalog.models import Project
 from django.conf import settings
 from litequeue import LiteQueue
-import json
-import time
-import logging
-import sys
 
+DATABASE_DIR = adj_django_connection.ROOT_DIR / 'db.sqlite3'
 
-ROOT_DIR = pathlib.Path(__file__).parent.parent
-sys.path.insert(1, str(ROOT_DIR))
-DATABASE_DIR = ROOT_DIR / 'db.sqlite3'
-import django
-
-os.environ['DJANGO_SETTINGS_MODULE'] = 'mush.settings'
-django.setup()
-
-from catalog.models import Project
 
 photogrammetry_queue = LiteQueue(DATABASE_DIR)
 

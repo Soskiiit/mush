@@ -97,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-DATABASE_DIR = DATABASES["default"]["NAME"]
+DATABASE_DIR = DATABASES['default']['NAME']
 
 LANGUAGE_CODE = 'ru-ru'
 

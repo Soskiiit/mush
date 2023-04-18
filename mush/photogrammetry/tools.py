@@ -12,18 +12,19 @@ def run_photogrammetry_thread(project_id):
     if not settings.ENABLE_PHOTOGRAMMETRY:
         return
 
-    use_local_photos = True
+    use_local_photos = False
 
     if use_local_photos:
         photo_path = 'D:/Media/Photos/Photogram/examples/Meshroom_6_monstree'
 
         photo_paths = [
-            os.path.join(photo_path, cur_photo) for cur_photo in os.listdir(photo_path)
+            os.path.join(photo_path, cur_photo)
+            for cur_photo in os.listdir(photo_path)
         ]
     else:
-        photo_paths = Photo.objects.filter(for_project_id=project_id).values_list(
-            'image', flat=True
-        )
+        photo_paths = Photo.objects.filter(
+            for_project_id=project_id
+        ).values_list('image', flat=True)
         photo_paths = [
             os.path.join(settings.MEDIA_ROOT, cur_photo_path)
             for cur_photo_path in photo_paths
