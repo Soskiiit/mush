@@ -3,3 +3,4 @@ Pillow==9.4.0
 sorl-thumbnail==12.9.0
 python-dotenv==0.21.1
 litequeue==0.6
+django-browser-reload==1.7.0

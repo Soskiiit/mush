@@ -1,0 +1,46 @@
+{% extends "theme/base.html" %}
+{% load static %}
+
+{% block tab_title %}My projects{% endblock %}
+
+{% block fullwidth-body %}
+    <!-- Search -->
+    <div class="container-fluid px-5 pt-4 pb-3 bg-white">
+        <h1 class="display-6 fw-semibold lh-1 mb-4 text-center">
+            My Projects
+        </h1>
+
+        <form class="d-flex flex-column align-items-center" method="post">
+            {% csrf_token %}
+            <input class="mb-3 form-control" name="search" type="text" placeholder="Search..." style="max-width: 550px;">
+            <div class="d-flex flex-row">
+                <button class="me-2 btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Order by
+                </button>
+                <ul class="dropdown-menu" style="">
+                    <li><button type="submit" name="orderby" value="date"  class="dropdown-item">Date published</button></li>
+                </ul>
+                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Type
+                </button>
+                <ul class="dropdown-menu" style="">
+                    <li><button type="submit" name="type" value="generated" class="dropdown-item">Generated</button></li>
+                    <li><button type="submit" name="type" value="uploaded" class="dropdown-item">Uploaded</button></li>
+                </ul>
+            </div>
+        </form>
+    </div>
+
+    <!-- Project list -->
+    <div class="mx-lg-5 px-5 py-4 d-flex flex-column">
+        <div class="mb-3 mx-auto">
+            <a href="#" class="btn btn-light btn-lg">Create new</a>
+        </div>
+
+        {% for project in projects %}
+            <div class="mb-3">
+                {% include "catalog/components/projects-item-card.html" with project=project %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

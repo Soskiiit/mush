@@ -1,3 +1,5 @@
+import os
+
 from django.db import models
 from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
@@ -34,8 +36,15 @@ class Project(models.Model):
         null=True,
         blank=True,
     )
-    faces = models.IntegerField(default=0, verbose_name='число полигонов')
-    vertexes = models.IntegerField(default=0, verbose_name='число вершин')
+    preview = models.OneToOneField(
+        'Photo',
+        verbose_name='Превью',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    faces = models.IntegerField(default=0, verbose_name='Число полигонов')
+    vertexes = models.IntegerField(default=0, verbose_name='Число вершин')
     public_date = models.DateField(auto_now_add=True,
                                    verbose_name='дата публикации')
 
@@ -80,4 +89,4 @@ class Photo(models.Model):
         verbose_name_plural = 'изображения'
 
     def __str__(self):
-        return str(self.image).split('/')[-1]
+        return f'{os.path.basename(str(self.image))}'
