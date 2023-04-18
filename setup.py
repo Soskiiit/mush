@@ -65,7 +65,7 @@ def setup():
     if sys.prefix == sys.base_prefix:
         shutil.rmtree(VENV_DIR, ignore_errors=True)
         run([sys.executable, '-m', 'venv', VENV_DIR])
-        run([VENV_PYTHON, __file__], stdout=None, stderr=None)
+        run([VENV_PYTHON, __file__, 'ci_cd'], stdout=None, stderr=None)
         exit(0)
 
     run([sys.executable, '-m', 'pip', 'install', '-r', DEV_REQUIREMENTS_PATH])
