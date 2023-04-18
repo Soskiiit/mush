@@ -12,15 +12,17 @@ from tools import json_to_photogrammetry_args
 
 DATABASE_DIR = adj_django_connection.ROOT_DIR / 'db.sqlite3'
 
-
 photogrammetry_queue = LiteQueue(DATABASE_DIR)
 
 logging.basicConfig(
-    filename='photogrammetry.log',
     level=logging.INFO,
     format='%(asctime)s %(message)s',
 )
+handler = logging.FileHandler('photogrammetry.log')
 photogrametry_logger = logging.getLogger('photogrammetry_logger')
+photogrametry_logger.addHandler(handler)
+console_logger = logging.getLogger('console_logger')
+console_logger.setLevel(logging.INFO)
 
 
 def photogrammetry_calc(photo_paths, model_path, project_id):
@@ -82,8 +84,7 @@ def photogrammetry_calc(photo_paths, model_path, project_id):
 
 
 if __name__ == '__main__':
-    print('Waiting for tasks')
-    photogrametry_logger.info('Waiting for tasks')
+    console_logger.info('Waiting for tasks')
     while True:
         if photogrammetry_queue.empty():
             time.sleep(1)
@@ -99,9 +100,11 @@ if __name__ == '__main__':
                     f'done photogrammetry in project {args["project_id"]}'
                 )
                 if photogrammetry_queue.empty():
-                    print('Waiting for tasks')
+                    console_logger.info('Waiting for tasks')
             except Exception as ex:
-                print(f'caught {ex} during photogrammetry process')
+                console_logger.error(
+                    f'caught {ex} during photogrammetry process'
+                )
                 photogrametry_logger.error(
                     f'caught {ex} during photogrammetry process'
                 )

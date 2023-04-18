@@ -6,7 +6,6 @@ from .tools import run_photogrammetry_thread
 
 def run_photogrammetry(request, project_id):
     if ENABLE_PHOTOGRAMMETRY:
-        # LOAD EXAMPLE PHOTOS
         model_path = run_photogrammetry_thread(project_id)
         return HttpResponse(
             '<h1>Your model is processing and will be able for download at'

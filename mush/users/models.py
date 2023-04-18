@@ -10,16 +10,20 @@ class User(AbstractUser):
         null=True,
         upload_to='avatars'
     )
-    twitter = models.CharField(unique=True,
-                               verbose_name='twitter',
-                               blank=True,
-                               null=True,
-                               max_length=15)
-    github = models.CharField(unique=True,
-                              verbose_name='github',
-                              blank=True,
-                              null=True,
-                              max_length=255)
+    twitter = models.CharField(
+        unique=True,
+        verbose_name='twitter',
+        blank=True,
+        null=True,
+        max_length=15
+    )
+    github = models.CharField(
+        unique=True,
+        verbose_name='github',
+        blank=True,
+        null=True,
+        max_length=255
+    )
 
     def profile_img_300x300(self):
         if self.image:

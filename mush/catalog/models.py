@@ -54,7 +54,7 @@ class Project(models.Model):
         verbose_name_plural = 'проекты'
 
     def __str__(self):
-        return f'{self.name}'
+        return str(self.name)
 
 
 class Photo(models.Model):
@@ -77,7 +77,7 @@ class Photo(models.Model):
             micro_image = get_thumbnail(
                 self.image, '75x75', crop='center', quality=51
             )
-            return mark_safe(f'''<img src='{micro_image.url}' width='75px'>''')
+            return mark_safe(f'<img src="{micro_image.url}" width="75px">')
 
     img_thmb.short_description = 'превью'
     img_thmb.allow_tags = True
@@ -87,4 +87,4 @@ class Photo(models.Model):
         verbose_name_plural = 'изображения'
 
     def __str__(self):
-        return f'{os.path.basename(str(self.image))}'
+        return str(os.path.basename(str(self.image)))

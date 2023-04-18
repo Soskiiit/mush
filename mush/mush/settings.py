@@ -20,7 +20,7 @@ LOWRES_MODEL_FACE_COUNT = int(
 
 ENABLE_PHOTOGRAMMETRY = os.getenv(
     'DJANGO_ENABLE_PHOTOGRAMMETRY', 'True'
-) != 'False' and pkgutil.find_loader('Metashape') is not None
+) != 'False' and pkgutil.find_loader('Metashape')
 
 INSTALLED_APPS = [
     # Django
@@ -31,12 +31,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Third-party
-    'sorl.thumbnail',
     'django_browser_reload',
+    'sorl.thumbnail',
     # Project-specific
+    'catalog.apps.CatalogConfig',
     'photogrammetry.apps.PhotogrammetryConfig',
     'theme.apps.ThemeConfig',
-    'catalog.apps.CatalogConfig',
     'users.apps.UsersConfig',
 ]
 
@@ -84,26 +84,26 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': (
-            '''django.contrib.auth.password_validation.'''
-            '''UserAttributeSimilarityValidator'''
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
         ),
     },
     {
         'NAME': (
-            '''django.contrib.auth.password_validation.'''
-            '''MinimumLengthValidator'''
+            'django.contrib.auth.password_validation.'
+            'MinimumLengthValidator'
         ),
     },
     {
         'NAME': (
-            '''django.contrib.auth.password_validation.'''
-            '''CommonPasswordValidator'''
+            'django.contrib.auth.password_validation.'
+            'CommonPasswordValidator'
         ),
     },
     {
         'NAME': (
-            '''django.contrib.auth.password_validation.'''
-            '''NumericPasswordValidator'''
+            'django.contrib.auth.password_validation.'
+            'NumericPasswordValidator'
         ),
     },
 ]
