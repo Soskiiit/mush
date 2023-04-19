@@ -21,6 +21,7 @@ def signup(request):
             email=email
         )
         user.save()
+        django_login(request, user)
         return redirect('index')
 
     return render(request, 'users/signup.html', {'form': form})
@@ -67,4 +68,16 @@ def my_profile(request):
 
 
 def edit_my_profile(request):
+    if request.method == 'POST':
+        # form = UpdateProfileForm()
+        # request.user.update(
+        #     first_name=data['first_name'],
+        #     last_name=data['last_name'],
+        #     username=data['nickname'],
+        #     bio=data['bio'],
+        #     twitter=data['twitter'],
+        #     github=data['github'],
+        # )
+        return redirect('my-profile')
+
     return render(request, 'users/edit-my-profile.html', {})

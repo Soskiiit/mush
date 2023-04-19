@@ -3,17 +3,22 @@
 
 {% block tab_title %}Тыква{% endblock %}
 
+{% block action %}{% url "project-edit" id=project.id %}{% endblock %}
+
 {% block side-panel %}
+    {% csrf_token %}
     <!-- Name -->
     <div class="mb-3">
-        <input type="text" name="name" class="form-control form-control-lg" placeholder="Project name" value="Тыква">
+        {# <input type="text" name="name" class="form-control form-control-lg" placeholder="Project name" value="{{project.name}}"> #}
+        {{form.name}}
     </div>
 
     <hr class="mt-0 mb-3 border-secondary">
 
     <div class="mb-3 col-auto form-check form-switch fs-4">
         <label class="form-check-label fw-light" style="pointer-events: none; user-select: none;" for="public-switch">Make public</label>
-        <input class="form-check-input" style="cursor: pointer;" type="checkbox" name="public" role="switch" id="public-switch">
+        {# <input class="form-check-input" style="cursor: pointer;" type="checkbox" name="public" role="switch" id="public-switch" {% if project.is_public %}checked{% endif %}> #}
+        {{form.public}}
     </div>
 
     <div class="mb-3 col-auto d-flex flex-row">
@@ -21,32 +26,30 @@
     </div>
 
     <!-- Details -->
-    <!--
-    <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white">
-        <h5>Details</h5>
-        <div class="mb-0">
-            <div class="mb-1 d-flex flex-row justify-content-between">
-                <div>Publish date</div>
-                <div class="fw-bold text-muted">03-04-2022</div>
-            </div>
-            <div class="mb-1 d-flex flex-row justify-content-between">
-                <div>Polygons</div>
-                <div class="fw-bold text-muted">7502</div>
-            </div>
-            <div class="mb-1 d-flex flex-row justify-content-between">
-                <div>Vertices</div>
-                <div class="fw-bold text-muted">7651</div>
-            </div>
-            <div class="d-flex flex-row justify-content-between">
-                <div>Textures</div>
-                <div class="fw-bold text-muted">1</div>
+    {% if project.model.status == 'completed' %}
+        <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white">
+            <h5>Details</h5>
+            <div class="mb-0">
+                <div class="mb-1 d-flex flex-row justify-content-between">
+                    <div>Publish date</div>
+                    <div class="fw-bold text-muted">03-04-2022</div>
+                </div>
+                <div class="mb-1 d-flex flex-row justify-content-between">
+                    <div>Polygons</div>
+                    <div class="fw-bold text-muted">7502</div>
+                </div>
+                <div class="mb-1 d-flex flex-row justify-content-between">
+                    <div>Vertices</div>
+                    <div class="fw-bold text-muted">7651</div>
+                </div>
+                <div class="d-flex flex-row justify-content-between">
+                    <div>Textures</div>
+                    <div class="fw-bold text-muted">1</div>
+                </div>
             </div>
         </div>
-    </div>
-    -->
 
     <!-- Download options -->
-    {% if project.status == 'completed' %}
         <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white">
             <h5>Download options</h5>
             {% if project.status == 'completed' %}
@@ -62,9 +65,11 @@
         </div>
     {% endif %}
 
+    <!--
     <button type="submit" name="delete" value="1" class="w-100 btn btn-light-danger">
         Delete project
     </button>
+    -->
 {% endblock %}
 
 {% block panel %}
@@ -103,7 +108,8 @@
             role="tabpanel"
             aria-labelledby="nav-gen-tab">
                 <h4 class="fw-normal mb-3">Upload images</h4>
-                <input type="file" name="images" class="form-control" multiple accept="image/*">
+                {# <input type="file" name="images" class="form-control" multiple accept="image/*"> #}
+                {{form.images}}
             </div>
             <div
             class="tab-pane fade"
@@ -111,8 +117,16 @@
             role="tabpanel"
             aria-labelledby="nav-upload-tab">
                 <h4 class="fw-normal mb-3">Upload 3D model</h4>
-                <input type="file" name="model" class="form-control" accept=".obj,.glb">
+                {# <input type="file" name="model" class="form-control" accept=".obj,.glb"> #}
+                {{form.model}}
             </div>
+        </div>
+        <div class="mt-3">
+            <ul>
+                {% for message in messages %}
+                    <li>{{message}}</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}

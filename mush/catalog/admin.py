@@ -1,3 +1,4 @@
+from catalog.models import Model3D, Photo, Project
 from django.contrib import admin
 
 from .models import Photo, Project
@@ -9,9 +10,10 @@ class PhotoTabular(admin.TabularInline):
     readonly_fields = ('img_thmb',)
 
 
-@admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
+@admin.register(Model3D)
+class Model3DAdmin(admin.ModelAdmin):
     inlines = (PhotoTabular,)
 
 
 admin.site.register(Photo)
+admin.site.register(Project)

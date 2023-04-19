@@ -14,7 +14,6 @@ class TestModels(TestCase):
         act = Project.objects.create(
             owner=self.owner,
             name='Test123',
-            description='',
         )
         act.save()
         act.full_clean()

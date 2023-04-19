@@ -22,7 +22,7 @@
 class="catalog-card bg-img rounded rounded-3 overflow-hidden"
 style="
 aspect-ratio: 1;
-background-image: url({{project.preview.get_img_300x300.url}});
+background-image: url({% if project.preview %}{{project.preview.get_img_300x300.url}}{% else %}{% static "assets/no-image.jpg" %}{% endif %});
 ">
     <a href="{% url "project" id=project.id %}" class="h-100 user-select-none text-decoration-none catalog-card-body">
         <div class="w-100 mt-auto p-5 pb-4 text-white">
