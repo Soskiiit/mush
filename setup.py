@@ -75,7 +75,7 @@ def setup():
     install_metashape_package()
     run([sys.executable, MANAGEPY_PATH, 'migrate'])
     if IT_IS_NOT_CI_CD:
-        admin_password = input("Enter password for admin user: ")
+        admin_password = input('Enter password for admin user: ')
         run([sys.executable, MANAGEPY_PATH, 'shell'],
             input=bytes(f'from users.models import User; '
                         f'User.objects.create_superuser'
