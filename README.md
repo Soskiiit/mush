@@ -3,7 +3,6 @@
 [![Code Quality Check](https://github.com/Soskiiit/mush/actions/workflows/linters.yml/badge.svg)](https://github.com/Soskiiit/mush/actions/workflows/linters.yml) [![Django Tests](https://github.com/Soskiiit/mush/actions/workflows/tests.yml/badge.svg)](https://github.com/Soskiiit/mush/actions/workflows/tests.yml)
 
 **Useful links:**
-- [ToDo list](todo.md)
 - [ExcaliDraw Board](https://excalidraw.com/#room=40d1ff70b3686a5c5b03,w6kdCY5a6fkLumdioki-Cg)
 
 ## Installing
@@ -18,17 +17,24 @@ cd mush
 **Setting up the project**
 
 ```
-python setup.py
+python3 setup.py
 ```
 
 **Installing photogrammetry engine**
 
-1. Download Metashape python package and start free trial
-   https://agisoft.freshdesk.com/support/solutions/articles/31000148930-how-to-install-metashape-stand-alone-python-module
-2. Install package using pip
+1. Download [Metashape professional edition](https://www.agisoft.com/downloads/installer/) and install it
 
+2. Activete your license or stert free trial
+
+## Running development server
+
+1. Run server with
 ```
-pip install ...Metashape-...whl
+python3 ./manage.py
+```
+2. If you want to use photogrammetry run worker with
+```
+python3 ./photogrammetry/photogrammetry_processor.py
 ```
 
 **Running linters and Django tests**
@@ -37,13 +43,6 @@ pip install ...Metashape-...whl
 - *Tests* will run on every **push** or with `pre-commit run --hook-stage manual tests` command.
 
 You can always skip pre-commit hooks when committing changes by adding `--no-verify` flag.
-
-## Compiling localization messages
-
-```
-python ./mush/manage.py makemessages -a
-python ./mush/manage.py compilemessages --ignore .venv
-```
 
 ## Dumping fixtures
 ```
@@ -54,5 +53,5 @@ python ./mush/manage.py compilemessages --ignore .venv
 ## Running development server
 
 ```
-python ./mush/manage.py runserver
+python3 ./mush/manage.py runserver
 ```

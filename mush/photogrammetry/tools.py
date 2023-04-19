@@ -1,7 +1,7 @@
 import json
 import os
 
-from catalog.models import Photo, Project, Model3D
+from catalog.models import Model3D, Photo
 from django.conf import settings
 from litequeue import LiteQueue
 
@@ -33,20 +33,8 @@ def run_photogrammetry_thread(model_id):
         os.path.join(settings.MEDIA_ROOT, cur_photo_path)
         for cur_photo_path in photo_paths
     ]
-
     model_path = os.path.join(settings.MEDIA_ROOT, 'models')
-
-
-    print(Model3D.objects.get(id=model_id).status)
     Model3D.objects.filter(id=model_id).update(status='in_queue')
-    # cur_model = Model3D.objects.get(id=model_id)
-    # cur_model.status = 'in_queue'
-    # cur_model.save()
-
-    print('In run_photogrammetry_thread, found models by id:')
-    print(Model3D.objects.filter(id=model_id))
-    print(Model3D.objects.filter(id=model_id).count())
-    print(Model3D.objects.get(id=model_id).status)
     photogrammetry_queue.put(
         photogrammetry_args_to_json(photo_paths, model_path, model_id)
     )
