@@ -1,3 +1,5 @@
+import io
+from django.core.files.images import ImageFile
 from django.shortcuts import get_object_or_404
 from catalog.models import Photo, Project, Model3D
 from django.contrib import messages
@@ -41,19 +43,21 @@ def project_edit(request, id):
         if form.files:
             if project.model:
                 project.model.delete()
-            for photo in Photo.objects.filter(for_model=project.id):
-                photo.delete()
 
             project.model = Model3D.objects.create()
             
             if 'images' in form.files:
-                for image in form.files['images']:
-                    photo = Photo.objects.create(for_model=project.model, image=image)
+                for image in form.files.getlist('images'):
+                    photo = Photo.objects.create(
+                        for_model=project.model,
+                        image=image
+                    )
                     photo.save()
-                project.model.status = 'empty'
+                # Start photogrammetry thread
+                # ...
 
             elif 'model' in form.files:
-                print('Loading', form.files['model'])
+                print('Model:', form.files['model'])
                 project.model.original = form.files['model']
                 project.model.lowres = form.files['model']
                 project.model.status = 'completed'

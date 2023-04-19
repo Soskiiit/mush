@@ -118,7 +118,7 @@ class Model3D(models.Model):
             )
 
     def __str__(self):
-        return f'{os.path.basename(self.original.name)}'
+        return f'{os.path.basename(self.original.name)}' if self.original else 'From images'
 
     class Meta:
         verbose_name = '3D Модель'

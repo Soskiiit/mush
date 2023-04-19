@@ -75,28 +75,26 @@
 {% endblock %}
 
 {% block panel %}
-    {% if project.model %}
-        {% if project.model.status == 'completed' %}
-            <model-viewer
-            class="w-100 h-100"
-            shadow-intensity="1"
-            src="{{project.model.lowres.url}}"
-            auto-rotate
-            camera-controls
-            poster="">
-            </model-viewer>
-        {% elif project.model.status == 'in_progress' or project.status == 'in_queue' %}
-            <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
-                <div class="text-muted fw-light fs-4">Processing...</div>
-            </div>
-        {% else %}
-            <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
-                <div class="text-danger fw-light fs-4">Failed to generate</div>
-            </div>
-        {% endif %}
-    {% else %}
+    {% if project.model.status == 'completed' %}
+        <model-viewer
+        class="w-100 h-100"
+        shadow-intensity="1"
+        src="{{project.model.lowres.url}}"
+        auto-rotate
+        camera-controls
+        poster="">
+        </model-viewer>
+    {% elif project.model.status == 'in_progress' or project.status == 'in_queue' %}
+        <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
+            <div class="text-muted fw-light fs-4">Processing...</div>
+        </div>
+    {% elif project.model.status == 'empty' or not project.model %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
             <div class="text-muted fw-light fs-4">No model</div>
+        </div>
+    {% else %}
+        <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
+            <div class="text-danger fw-light fs-4">Failed to generate</div>
         </div>
     {% endif %}
 {% endblock %}
