@@ -14,53 +14,51 @@
             height: 15rem;
             border: solid 3px white;
             aspect-ratio: 1;
-            background-image: url({% static "assets/profile.jpeg" %});
+            background-image: url({% if user.profile_img_300x300 %}{{user.profile_img_300x300.url}}{% else %}{% static "assets/profile.png" %}{% endif %});
             ">
             </div>
             <div
             class="d-flex flex-column justify-content-center overflow-hidden"
             >
-                <h3>{{profile.first_name}} {{profile.last_name}}</h3>
-                <h4 class="text-muted">@{{profile.username}}</h4>
-                <!--
-                <div class="mb-2 d-flex flex-row justify-content-start">
-                    <a href="#" target="_blank" class="me-3 my-link text-muted">
-                        <span><img width="16" height="16" src="{% static "assets/github.svg" %}"> </span>
-                        ghnick
-                    </a>
-                    <a href="#" target="_blank" class="me-3 my-link text-muted">
-                        <span><img width="16" height="16" src="{% static "assets/twitter.svg" %}"> </span>
-                        twnick
-                    </a>
+                <h3>{{user.first_name}} {{user.last_name}}</h3>
+                <h4 class="text-muted">@{{user.username}}</h4>
+                <div class="d-flex flex-row justify-content-start">
+                    {% if user.github %}
+                        <a href="https://github.com/{{user.github}}" target="_blank" class="me-3 my-link text-muted">
+                            <span><img width="16" height="16" src="{% static "assets/github.svg" %}"> </span>
+                            {{user.github}}
+                        </a>
+                    {% endif %}
+                    {% if user.twitter %}
+                        <a href="https://twitter.com/{{user.twitter}}" target="_blank" class="me-3 my-link text-muted">
+                            <span><img width="16" height="16" src="{% static "assets/twitter.svg" %}"> </span>
+                            {{user.twitter}}
+                        </a>
+                    {% endif %}
                 </div>
-                -->
                 <a href="{% url "edit-my-profile" %}" class="btn btn-light" style="width: fit-content;">Edit profile</a>
             </div>
         </div>
 
         <!-- Row 2: Followers & Bio -->
         <div class="d-flex flex-row">
-            <!--
             <div class="me-3 p-3" style="flex: none">
                 <div class="mb-1">
-                    Active since <span class="fw-semibold">14 June 2019</span>
+                    Active since <span class="fw-semibold">{{user.date_joined}}</span>
                 </div>
-                <div class="mb-1">
+                <div>
                     Published <span class="fw-semibold">3</span> projects
                 </div>
-                <div class="mb-1">
-                    <span class="fw-semibold">2</span> followers
+            </div>
+            {% if user.bio %}
+                <div class="flex-grow-1 p-3">
+                    {{user.bio}}
                 </div>
-            </div>
-            -->
-            <div class="flex-grow-1 p-3">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </div>
+            {% else %}
+                <div class="flex-grow-1 p-3 text-center text-muted">
+                    No bio
+                </div>
+            {% endif %}
         </div>
     </div>
 
@@ -88,12 +86,11 @@
             <div
             class="catalog-card bg-img rounded rounded-3 overflow-hidden"
             style="
-            width: 300px;
-            height: 300px;
+            aspect-ratio: 1;
             background-size: 3rem;
             background-image: url({% static "assets/plus.svg" %});
             ">
-                <a href="#" class="h-100 user-select-none text-decoration-none catalog-card-body">
+                <a href="{% url "project-create" %}" class="h-100 user-select-none text-decoration-none catalog-card-body">
                     <div class="w-100 mt-auto p-5 pb-4 text-white">
                         <h3 class="w-100 mb-3 fs-4 lh-1 fw-bold">Create new</h3>
                     </div>

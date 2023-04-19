@@ -9,7 +9,8 @@ class ExtendedUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password', 'image')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name',
-                                         'email', 'twitter', 'github')}),
+                                         'email', 'twitter', 'github',
+                                         'bio')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups',
                        'user_permissions'),

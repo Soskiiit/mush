@@ -6,7 +6,14 @@
 {% block side-panel %}
     <!-- Name -->
     <div class="mb-3">
-        <h4 class="mb-0">{{project.name}}</h4>
+        <h4 class="mb-0 d-flex flex-row justify-content-between">
+            <span>{{project.name}}</span>
+            {% if user == project.owner %}
+                <span class="fs-5 fw-normal {% if project.is_public %}text-success{% else %}text-muted{% endif %}">
+                    {% if project.is_public %}Public{% else %}Private{% endif %}
+                </span>
+            {% endif %}
+        </h4>
     </div>
 
     <hr class="mt-0 mb-3 border-secondary">
@@ -16,13 +23,13 @@
     {% else %}
         <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white d-flex flex-row">
             <img
-            src="{% static "assets/profile.jpeg" %}"
+            src="{% if project.owner.profile_img_300x300 %}{{project.owner.profile_img_300x300.url}}{% else %}{% static "assets/profile.png" %}{% endif %}"
             alt="mdo"
             class="me-3 rounded-circle"
             width="64" height="64">
             <div class="d-flex flex-column justify-content-center">
                 <a class="text-reset" href="{% url "profile" id=project.owner.id %}">
-                    {{project.owner.first_name}}
+                    {{project.owner.first_name}} {{project.owner.last_name}}
                 </a>
                 <div class="text-muted">
                     @{{project.owner.username}}
@@ -32,37 +39,33 @@
     {% endif%}
 
     <!-- Details -->
-    <!--
     <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white">
         <h5>Details</h5>
         <div class="mb-0">
             <div class="mb-1 d-flex flex-row justify-content-between">
-                <div>Publish date</div>
-                <div class="fw-bold text-muted">03-04-2022</div>
+                <div>Last updated</div>
+                <div class="fw-bold text-muted">{{project.last_update_date}}</div>
             </div>
-            <div class="mb-1 d-flex flex-row justify-content-between">
-                <div>Polygons</div>
-                <div class="fw-bold text-muted">7502</div>
-            </div>
-            <div class="mb-1 d-flex flex-row justify-content-between">
-                <div>Vertices</div>
-                <div class="fw-bold text-muted">7651</div>
-            </div>
-            <div class="d-flex flex-row justify-content-between">
-                <div>Textures</div>
-                <div class="fw-bold text-muted">1</div>
-            </div>
+            {% if project.model %}
+                <div class="mb-1 d-flex flex-row justify-content-between">
+                    <div>Polygons</div>
+                    <div class="fw-bold text-muted">{{project.model.face_count}}</div>
+                </div>
+                <div class="mb-1 d-flex flex-row justify-content-between">
+                    <div>Vertices</div>
+                    <div class="fw-bold text-muted">{{project.model.vertex_count}}</div>
+                </div>
+            {% endif %}
         </div>
     </div>
-    -->
     <!-- Download options -->
     <div class="p-3 container-fluid border rounded rounded-lg bg-white">
         <h5>Download options</h5>
-        {% if project.status == 'completed' %}
+        {% if project.model and project.model.status == 'completed' %}
             <ul class="mb-0 list-unstyled">
                 <li class="d-flex flex-row justify-content-between">
-                    <a href="{{project.models_highres.url}}">{{project.model_ext}}</a>
-                    {# <div class="fw-bold text-muted">3 Mb</div> #}
+                    <a href="{{project.model.original.url}}">{{project.model.extension}}</a>
+                    <div class="fw-bold text-muted">{{project.model.file_size|filesizeformat}}</div>
                 </li>
             </ul>
         {% else %}
@@ -72,20 +75,45 @@
 {% endblock %}
 
 {% block panel %}
-    {% if project.status == 'completed' %}
+    {% if project.model.status == 'completed' %}
         <model-viewer
         class="w-100 h-100"
-        id="mv-demo"
         shadow-intensity="1"
-        src="{{project.models_highres.url}}"
-        alt="A 3D model of a pumpkin"
+        src="{{project.model.lowres.url}}"
         auto-rotate
         camera-controls
         poster="">
         </model-viewer>
-    {% else %}
+    {% elif project.model.status == 'in_queue' %}
+        <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
+            <div class="text-muted fw-light fs-4">Waiting in queue...</div>
+                <script>
+                    setTimeout(function(){
+                        location.reload();
+                        }, 10000);
+                </script>
+        </div>
+    {% elif project.model.status == 'in_progress' %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
             <div class="text-muted fw-light fs-4">Processing...</div>
+                <script>
+                    setTimeout(function(){
+                        location.reload();
+                        }, 10000);
+                </script>
+        </div>
+    {% elif project.model.status == 'empty' or not project.model %}
+        <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
+            <div class="text-muted fw-light fs-4">No model</div>
+                <script>
+                    setTimeout(function(){
+                        location.reload();
+                        }, 10000);
+                </script>
+        </div>
+    {% else %}
+        <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
+            <div class="text-danger fw-light fs-4">Failed to generate</div>
         </div>
     {% endif %}
 {% endblock %}

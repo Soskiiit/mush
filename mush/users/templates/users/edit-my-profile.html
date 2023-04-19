@@ -6,7 +6,7 @@
 {% block styles %}
 <style type="text/css">
     .profile-picture {
-        background-image: url({% static "assets/profile.jpeg" %});
+        background-image: url({% static "assets/profile.png" %});
         height: 15rem;
         aspect-ratio: 1;
         color: transparent;
@@ -47,7 +47,7 @@
                         </label>
                         <div
                         class="d-flex flex-column w-100">
-                            <div class="mb-3 row">
+                            <div class="mb-3 row g-3">
                                 <div class="col-lg-6">
                                     <label for="firstname" class="form-label">First name</label>
                                     <input type="text" class="form-control form-control-lg" id="firstname" name="firstname" placeholder="">
@@ -89,7 +89,6 @@
 
 
                 <!-- Contacts -->
-                <!--
                 <div class="col-lg-8"><hr class="mb-4 border-secondary"></div>
                 <div class="col-lg-8">
                     <div class="row row-cols-lg-2 gy-3">
@@ -108,7 +107,6 @@
                         </div>
                     </div>
                 </div>
-                -->
 
                 <div class="col-lg-8"><hr class="mb-4 border-secondary"></div>
 
@@ -120,7 +118,7 @@
                         </div>
                         <div class="col-lg-9">
                             <div class="d-flex flex-column" style="width: fit-content;">
-                                <a href="#" class="mb-2 btn btn-primary">Change password</a>
+                                {# <a href="#" class="mb-2 btn btn-primary">Change password</a> #}
                                 <button type="button" class="btn btn-light-danger" data-bs-toggle="modal" data-bs-target="#delete-modal">
                                     Delete account
                                 </button>
@@ -146,7 +144,10 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" name="delete" value="1" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <form id="delete" action="#" method="post">
+                            {% csrf_token %}
+                            <button form="delete" type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>
