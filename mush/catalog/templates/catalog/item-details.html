@@ -39,37 +39,33 @@
     {% endif%}
 
     <!-- Details -->
-    <!--
     <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white">
         <h5>Details</h5>
         <div class="mb-0">
             <div class="mb-1 d-flex flex-row justify-content-between">
-                <div>Publish date</div>
-                <div class="fw-bold text-muted">03-04-2022</div>
+                <div>Last updated</div>
+                <div class="fw-bold text-muted">{{project.last_update_date}}</div>
             </div>
-            <div class="mb-1 d-flex flex-row justify-content-between">
-                <div>Polygons</div>
-                <div class="fw-bold text-muted">7502</div>
-            </div>
-            <div class="mb-1 d-flex flex-row justify-content-between">
-                <div>Vertices</div>
-                <div class="fw-bold text-muted">7651</div>
-            </div>
-            <div class="d-flex flex-row justify-content-between">
-                <div>Textures</div>
-                <div class="fw-bold text-muted">1</div>
-            </div>
+            {% if project.model %}
+                <div class="mb-1 d-flex flex-row justify-content-between">
+                    <div>Polygons</div>
+                    <div class="fw-bold text-muted">{{project.model.face_count}}</div>
+                </div>
+                <div class="mb-1 d-flex flex-row justify-content-between">
+                    <div>Vertices</div>
+                    <div class="fw-bold text-muted">{{project.model.vertex_count}}</div>
+                </div>
+            {% endif %}
         </div>
     </div>
-    -->
     <!-- Download options -->
     <div class="p-3 container-fluid border rounded rounded-lg bg-white">
         <h5>Download options</h5>
-        {% if project.status == 'completed' %}
+        {% if project.model and project.model.status == 'completed' %}
             <ul class="mb-0 list-unstyled">
                 <li class="d-flex flex-row justify-content-between">
-                    <a href="{{project.models_highres.url}}">{{project.model_ext}}</a>
-                    {# <div class="fw-bold text-muted">3 Mb</div> #}
+                    <a href="{{project.model.original.url}}">{{project.model.extension}}</a>
+                    <div class="fw-bold text-muted">{{project.model.file_size|filesizeformat}}</div>
                 </li>
             </ul>
         {% else %}
@@ -79,26 +75,28 @@
 {% endblock %}
 
 {% block panel %}
-    {% if project.status == 'completed' %}
-        <model-viewer
-        class="w-100 h-100"
-        shadow-intensity="1"
-        src="{{project.models_highres.url}}"
-        auto-rotate
-        camera-controls
-        poster="">
-        </model-viewer>
-    {% elif project.status == 'empty' %}
-        <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
-            <div class="text-muted fw-light fs-4">No model</div>
-        </div>
-    {% elif project.status == 'in_progress' or project.status == 'in_queue' %}
-        <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
-            <div class="text-muted fw-light fs-4">Processing...</div>
-        </div>
+    {% if project.model %}
+        {% if project.model.status == 'completed' %}
+            <model-viewer
+            class="w-100 h-100"
+            shadow-intensity="1"
+            src="{{project.model.lowres.url}}"
+            auto-rotate
+            camera-controls
+            poster="">
+            </model-viewer>
+        {% elif project.model.status == 'in_progress' or project.status == 'in_queue' %}
+            <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
+                <div class="text-muted fw-light fs-4">Processing...</div>
+            </div>
+        {% else %}
+            <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
+                <div class="text-danger fw-light fs-4">Failed to generate</div>
+            </div>
+        {% endif %}
     {% else %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
-            <div class="text-danger fw-light fs-4">Failed to generate</div>
+            <div class="text-muted fw-light fs-4">No model</div>
         </div>
     {% endif %}
 {% endblock %}

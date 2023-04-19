@@ -9,14 +9,16 @@
     {% csrf_token %}
     <!-- Name -->
     <div class="mb-3">
-        <input type="text" name="name" class="form-control form-control-lg" placeholder="Project name" value="{{project.name}}">
+        {# <input type="text" name="name" class="form-control form-control-lg" placeholder="Project name" value="{{project.name}}"> #}
+        {{form.name}}
     </div>
 
     <hr class="mt-0 mb-3 border-secondary">
 
     <div class="mb-3 col-auto form-check form-switch fs-4">
         <label class="form-check-label fw-light" style="pointer-events: none; user-select: none;" for="public-switch">Make public</label>
-        <input class="form-check-input" style="cursor: pointer;" type="checkbox" name="public" role="switch" id="public-switch" {% if project.is_public %}checked{% endif %}>
+        {# <input class="form-check-input" style="cursor: pointer;" type="checkbox" name="public" role="switch" id="public-switch" {% if project.is_public %}checked{% endif %}> #}
+        {{form.public}}
     </div>
 
     <div class="mb-3 col-auto d-flex flex-row">
@@ -65,9 +67,11 @@
         </div>
     {% endif %}
 
+    <!--
     <button type="submit" name="delete" value="1" class="w-100 btn btn-light-danger">
         Delete project
     </button>
+    -->
 {% endblock %}
 
 {% block panel %}
@@ -85,7 +89,6 @@
                 aria-selected="true">
                     Generate from images
                 </button>
-                <!--
                 <button
                 class="nav-link"
                 id="nav-upload-tab"
@@ -98,7 +101,6 @@
                 tabindex="-1">
                     Upload 3D model
                 </button>
-                -->
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -108,18 +110,18 @@
             role="tabpanel"
             aria-labelledby="nav-gen-tab">
                 <h4 class="fw-normal mb-3">Upload images</h4>
-                <input type="file" name="images" class="form-control" multiple accept="image/*">
+                {# <input type="file" name="images" class="form-control" multiple accept="image/*"> #}
+                {{form.images}}
             </div>
-            <!--
             <div
             class="tab-pane fade"
             id="nav-upload"
             role="tabpanel"
             aria-labelledby="nav-upload-tab">
                 <h4 class="fw-normal mb-3">Upload 3D model</h4>
-                <input type="file" name="model" class="form-control" accept=".obj,.glb">
+                {# <input type="file" name="model" class="form-control" accept=".obj,.glb"> #}
+                {{form.model}}
             </div>
-            -->
         </div>
     </div>
 {% endblock %}

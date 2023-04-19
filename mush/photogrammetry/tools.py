@@ -9,16 +9,6 @@ if settings.ENABLE_PHOTOGRAMMETRY:
     import Metashape
 
 
-# def dummy_thread(photo_paths, model_path, project_id):
-#     print('Started thread for', project_id)
-#     print('images:', photo_paths)
-#     sleep(15)
-#     Project.objects.filter(id=project_id).update(
-#         status='completed', models_highres='models_highres/pumpkin.glb'
-#     )
-#     print('Finished thread for', project_id)
-
-
 def photogrammetry_main_thread(photo_paths, model_path, project_id):
     if not settings.ENABLE_PHOTOGRAMMETRY:
         return

@@ -33,3 +33,7 @@
 .my-link:hover {
     text-decoration: underline !important;
 }
+
+.pointer {
+    cursor: pointer;
+}

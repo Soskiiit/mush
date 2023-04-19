@@ -1,12 +1,14 @@
-from catalog.models import Photo, Project
+from django.shortcuts import get_object_or_404
+from catalog.models import Photo, Project, Model3D
+from django.contrib import messages
 from django.shortcuts import redirect, render
-from photogrammetry.tools import run_photogrammetry_thread
+from .forms import EditProjectForm
 
 
 def index(request):
     ctx = {
         'projects': Project.objects.filter(
-            is_public=True, status='completed'
+            is_public=True, model__status='completed'
         )
     }
     return render(request, 'catalog/index.html', ctx)
@@ -14,43 +16,54 @@ def index(request):
 
 def project(request, id):
     ctx = {
-        'project': Project.objects.get(id=id),
+        'project': get_object_or_404(Project, id=id),
     }
     return render(request, 'catalog/item-details.html', ctx)
 
 
 def project_edit(request, id):
-    project_query = Project.objects.filter(
-        owner__id=request.user.id, id=id
+    project = get_object_or_404(Project, id=id)
+
+    form = EditProjectForm(
+        initial={'name': project.name, 'public': project.is_public}
     )
 
-    if request.method == 'POST' and project_query.exists():
-        project = project_query[0]
-        if 'delete' in request.POST:
-            project.delete()
-            return redirect('my-profile')
+    if request.method == 'POST':
+        form = EditProjectForm(request.POST, request.FILES)
 
-        project.name = request.POST['name']
+        if not form.is_valid():
+            messages.error(request, 'Invalid form input', fail_silently=True)
+            return redirect('project-edit', id=id)
 
-        if 'public' in request.POST:
-            project.is_public = request.POST['public'] == 'on'
-        else:
-            project.is_public = False
+        project.name = form.cleaned_data['name']
+        project.is_public = form.cleaned_data['public']
+
+        if form.files:
+            if project.model:
+                project.model.delete()
+            for photo in Photo.objects.filter(for_model=project.id):
+                photo.delete()
+
+            project.model = Model3D.objects.create()
+            
+            if 'images' in form.files:
+                for image in form.files['images']:
+                    photo = Photo.objects.create(for_model=project.model, image=image)
+                    photo.save()
+                project.model.status = 'empty'
+
+            elif 'model' in form.files:
+                print('Loading', form.files['model'])
+                project.model.original = form.files['model']
+                project.model.lowres = form.files['model']
+                project.model.status = 'completed'
+
+            project.model.save()
 
         project.save()
-
-        if request.FILES:
-            for image in request.FILES.getlist('images'):
-                photo = Photo.objects.create(for_project=project, image=image)
-                photo.save()
-            run_photogrammetry_thread(project.id)
-
         return redirect('project', id=id)
 
-    ctx = {
-        'project': Project.objects.get(id=id),
-    }
-    return render(request, 'catalog/item-edit.html', ctx)
+    return render(request, 'catalog/item-edit.html', {'form': form, 'project': project})
 
 
 def project_create(request):
