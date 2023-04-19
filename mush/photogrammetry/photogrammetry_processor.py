@@ -5,9 +5,10 @@ from pathlib import Path
 
 import Metashape
 import adj_django_connection
-from catalog.models import Project
 from django.conf import settings
 from litequeue import LiteQueue
+
+from catalog.models import Model3D
 from tools import json_to_photogrammetry_args
 
 DATABASE_DIR = adj_django_connection.ROOT_DIR / 'db.sqlite3'
@@ -25,8 +26,9 @@ console_logger = logging.getLogger('console_logger')
 console_logger.setLevel(logging.INFO)
 
 
-def photogrammetry_calc(photo_paths, model_path, project_id):
+def photogrammetry_calc(photo_paths, model_path, model_id):
     try:
+        Model3D.objects.filter(id=model_id).update(status='in_progress')
         doc = Metashape.Document()
         chunk = doc.addChunk()
         chunk.addPhotos(photo_paths)
@@ -51,7 +53,7 @@ def photogrammetry_calc(photo_paths, model_path, project_id):
         )
 
         chunk.exportModel(
-            path=os.path.join(model_path, f'model{project_id}_full.glb')
+            path=os.path.join(model_path, f'model{model_id}_full.glb')
         )
         model_stats = chunk.model.statistics()
         face_count = model_stats.faces
@@ -63,24 +65,24 @@ def photogrammetry_calc(photo_paths, model_path, project_id):
             blending_mode=Metashape.MosaicBlending, texture_size=1024
         )
         chunk.exportModel(
-            path=os.path.join(model_path, f'model{project_id}_prev.glb')
+            path=os.path.join(model_path, f'model{model_id}_prev.glb')
         )
 
-        Project.objects.filter(id=project_id).update(
+        Model3D.objects.filter(id=model_id).update(
             status='completed',
-            models_highres=os.path.join(
-                Path(model_path).parts[-1], f'model{project_id}_full.glb'
+            original=os.path.join(
+                Path(model_path).parts[-1], f'model{model_id}_full.glb'
             ),
-            model_lod=os.path.join(
-                Path(model_path).parts[-1], f'model{project_id}_prev.glb'
+            lowres=os.path.join(
+                Path(model_path).parts[-1], f'model{model_id}_prev.glb'
             ),
-            faces=face_count,
-            vertices=vert_count,
+            face_count=face_count,
+            vertex_count=vert_count,
         )
 
     except Exception as ex:
-        photogrametry_logger.error(f'{ex} for project with id: {project_id}')
-        Project.objects.filter(id=project_id).update(status='error')
+        photogrametry_logger.error(f'{ex} for project with id: {model_id}')
+        Model3D.objects.filter(id=model_id).update(status='error')
 
 
 if __name__ == '__main__':
@@ -93,11 +95,11 @@ if __name__ == '__main__':
                 message = photogrammetry_queue.pop().data
                 args = json_to_photogrammetry_args(message)
                 photogrametry_logger.info(
-                    f'starting photogrammetry in project {args["project_id"]}'
+                    f'starting photogrammetry in project {args["model_id"]}'
                 )
                 photogrammetry_calc(**args)
                 photogrametry_logger.info(
-                    f'done photogrammetry in project {args["project_id"]}'
+                    f'done photogrammetry in project {args["model_id"]}'
                 )
                 if photogrammetry_queue.empty():
                     console_logger.info('Waiting for tasks')

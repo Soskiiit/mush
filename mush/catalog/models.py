@@ -13,11 +13,6 @@ class Project(models.Model):
         User, verbose_name='владелец', on_delete=models.CASCADE
     )
     is_public = models.BooleanField(default=False, verbose_name='публичный')
-    status = models.CharField(
-        choices=ProgressOfProcessing.choices,
-        default=ProgressOfProcessing.IN_QUEUE,
-        max_length=255,
-    )
     model = models.OneToOneField(
         'Model3D',
         on_delete=models.CASCADE,
@@ -127,9 +122,7 @@ class Model3D(models.Model):
             )
 
     def __str__(self):
-        if self.original:
-            return f'{os.path.basename(self.original.name)}'
-        return 'From images'
+       return f'model_{self.id}'
 
     class Meta:
         verbose_name = '3D Модель'

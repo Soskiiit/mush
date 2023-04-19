@@ -84,13 +84,32 @@
         camera-controls
         poster="">
         </model-viewer>
-    {% elif project.model.status == 'in_progress' or project.status == 'in_queue' %}
+    {% elif project.model.status == 'in_queue' %}
+        <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
+            <div class="text-muted fw-light fs-4">Waiting in queue...</div>
+                <script>
+                    setTimeout(function(){
+                        location.reload();
+                        }, 10000);
+                </script>
+        </div>
+    {% elif project.model.status == 'in_progress' %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
             <div class="text-muted fw-light fs-4">Processing...</div>
+                <script>
+                    setTimeout(function(){
+                        location.reload();
+                        }, 10000);
+                </script>
         </div>
     {% elif project.model.status == 'empty' or not project.model %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
             <div class="text-muted fw-light fs-4">No model</div>
+                <script>
+                    setTimeout(function(){
+                        location.reload();
+                        }, 10000);
+                </script>
         </div>
     {% else %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">

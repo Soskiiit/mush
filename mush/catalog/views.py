@@ -2,6 +2,7 @@ from catalog.models import Model3D, Photo, Project
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 
+from photogrammetry.tools import run_photogrammetry_thread
 from .forms import EditProjectForm
 
 
@@ -53,6 +54,9 @@ def project_edit(request, id):
                     photo.save()
                 # Start photogrammetry thread
                 # ...
+                print(f'starting project from views, status is {project.model.status}')
+                run_photogrammetry_thread(project.model.id)
+                print(f'done starting project from views, status is {project.model.status}')
 
             elif 'model' in form.files:
                 print('Model:', form.files['model'])
@@ -60,7 +64,7 @@ def project_edit(request, id):
                 project.model.lowres = form.files['model']
                 project.model.status = 'completed'
 
-            project.model.save()
+
 
         project.save()
         return redirect('project', id=id)

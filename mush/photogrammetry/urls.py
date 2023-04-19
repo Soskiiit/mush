@@ -6,7 +6,7 @@ app_name = 'photogrammetry'
 
 urlpatterns = [
     path(
-        'compute/<int:project_id>/',
+        'compute/<int:model_id>/',
         views.run_photogrammetry,
         name='run_process',
     ),
