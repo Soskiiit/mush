@@ -68,11 +68,15 @@ def project_edit(request, id):
 
 def project_create(request):
     if request.user.is_authenticated:
+        project = Project.objects.create(
+            name='New project',
+            owner=request.user,
+        )
         ctx = {
-            'project': Project.objects.create(
-                name='New project',
-                owner=request.user
-            ),
+            'project': project,
+            'form': EditProjectForm(
+                initial={'name': project.name, 'public': project.is_public}
+            )
         }
         return render(request, 'catalog/item-edit.html', ctx)
     return redirect('index')
