@@ -16,7 +16,8 @@ class Project(models.Model):
     model = models.OneToOneField(
         'Model3D',
         on_delete=models.CASCADE,
-        null=True
+        null=True,
+        blank=True,
     )
     preview = models.OneToOneField(
         'Photo',
