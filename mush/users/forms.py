@@ -49,3 +49,5 @@ class UpdateProfileForm(forms.Form):
     last_name = forms.CharField(max_length=100)
     nickname = forms.CharField(max_length=100)
     bio = forms.CharField(max_length=256)
+    twitter = forms.CharField(max_length=100)
+    github = forms.CharField(max_length=100)

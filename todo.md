@@ -1,3 +1,22 @@
+## Required
+- [ ] `/project-edit/<id>`
+  - [ ] Error checks & messages
+  - [ ] Upload 3D model
+  - [ ] Show confirmation dialog when deleting a project
+- [ ] `/my-profile` and `/profile/<id>`
+  - [ ] Show published projects count
+- [ ] `/edit-my-profile`
+  - [ ] Change name, nickname, contacts, bio
+  - [ ] Change avatar
+  - [ ] Error checks & messages
+  - [ ] Return to "profile" view
+  - [ ] Delete an account
+  - [ ] Log out
+- [ ] `/login`
+  - [ ] Error messages
+- [ ] `/signup`
+  - [ ] Error messages
+
 ## Endpoints
 **Catalog** app:
 - [ ] `/` - Catalog

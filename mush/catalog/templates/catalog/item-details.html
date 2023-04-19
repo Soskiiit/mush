@@ -6,7 +6,14 @@
 {% block side-panel %}
     <!-- Name -->
     <div class="mb-3">
-        <h4 class="mb-0">{{project.name}}</h4>
+        <h4 class="mb-0 d-flex flex-row justify-content-between">
+            <span>{{project.name}}</span>
+            {% if user == project.owner %}
+                <span class="fs-5 fw-normal {% if project.is_public %}text-success{% else %}text-muted{% endif %}">
+                    {% if project.is_public %}Public{% else %}Private{% endif %}
+                </span>
+            {% endif %}
+        </h4>
     </div>
 
     <hr class="mt-0 mb-3 border-secondary">
@@ -75,21 +82,23 @@
     {% if project.status == 'completed' %}
         <model-viewer
         class="w-100 h-100"
-        id="mv-demo"
         shadow-intensity="1"
         src="{{project.models_highres.url}}"
-        alt="A 3D model of a pumpkin"
         auto-rotate
         camera-controls
         poster="">
         </model-viewer>
+    {% elif project.status == 'empty' %}
+        <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
+            <div class="text-muted fw-light fs-4">No model</div>
+        </div>
     {% elif project.status == 'in_progress' or project.status == 'in_queue' %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
             <div class="text-muted fw-light fs-4">Processing...</div>
         </div>
     {% else %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
-            <div class="text-danger fw-light fs-4">Error</div>
+            <div class="text-danger fw-light fs-4">Failed to generate</div>
         </div>
     {% endif %}
 {% endblock %}

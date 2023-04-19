@@ -144,7 +144,10 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" name="delete" value="1" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <form id="delete" action="{% url 'delete-my-profile' %}" method="post">
+                            {% csrf_token %}
+                            <button form="delete" type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>

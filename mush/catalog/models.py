@@ -8,6 +8,7 @@ from users.models import User
 
 class Project(models.Model):
     status_choices = (
+        ('empty', 'пуст'),
         ('in_queue', 'в очереди'),
         ('in_progress', 'в обработке'),
         ('completed', 'обработка завершена'),
@@ -19,7 +20,7 @@ class Project(models.Model):
     )
     is_public = models.BooleanField(default=False, verbose_name='публичный')
     status = models.CharField(
-        choices=status_choices, default='in_queue', max_length=255
+        choices=status_choices, default='empty', max_length=255
     )
     models_highres = models.FileField(
         upload_to='models_highres',
