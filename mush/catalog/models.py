@@ -122,7 +122,7 @@ class Model3D(models.Model):
             )
 
     def __str__(self):
-       return f'model_{self.id}'
+        return f'model_{self.id}'
 
     class Meta:
         verbose_name = '3D Модель'

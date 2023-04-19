@@ -1,7 +1,6 @@
-from catalog.models import Model3D, Photo, Project
 from django.contrib import admin
 
-from .models import Photo, Project
+from .models import Model3D, Photo, Project
 
 
 class PhotoTabular(admin.TabularInline):
