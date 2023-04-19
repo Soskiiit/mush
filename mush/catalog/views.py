@@ -55,7 +55,6 @@ def project_edit(request, id):
                 run_photogrammetry_thread(project.model.id)
 
             elif 'model' in form.files:
-                print('Model:', form.files['model'])
                 project.model.original = form.files['model']
                 project.model.lowres = form.files['model']
                 project.model.status = 'completed'
