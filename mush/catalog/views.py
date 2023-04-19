@@ -1,9 +1,7 @@
-import io
-from django.core.files.images import ImageFile
-from django.shortcuts import get_object_or_404
-from catalog.models import Photo, Project, Model3D
+from catalog.models import Model3D, Photo, Project
 from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
+
 from .forms import EditProjectForm
 
 
@@ -45,7 +43,7 @@ def project_edit(request, id):
                 project.model.delete()
 
             project.model = Model3D.objects.create()
-            
+
             if 'images' in form.files:
                 for image in form.files.getlist('images'):
                     photo = Photo.objects.create(
@@ -67,7 +65,11 @@ def project_edit(request, id):
         project.save()
         return redirect('project', id=id)
 
-    return render(request, 'catalog/item-edit.html', {'form': form, 'project': project})
+    return render(
+        request,
+        'catalog/item-edit.html',
+        {'form': form, 'project': project}
+    )
 
 
 def project_create(request):

@@ -2,7 +2,6 @@ import os
 
 from django.db import models
 from django.forms import ValidationError
-from django.utils.autoreload import raise_last_exception
 from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
 from users.models import User
@@ -103,6 +102,7 @@ class Model3D(models.Model):
         default=0,
         verbose_name='Число вершин'
     )
+
     def extension(self):
         return os.path.splitext(str(self.original))[1]
     extension.short_description = 'Расширение модели'
@@ -118,7 +118,9 @@ class Model3D(models.Model):
             )
 
     def __str__(self):
-        return f'{os.path.basename(self.original.name)}' if self.original else 'From images'
+        if self.original:
+            return f'{os.path.basename(self.original.name)}'
+        return 'From images'
 
     class Meta:
         verbose_name = '3D Модель'

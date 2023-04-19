@@ -1,4 +1,4 @@
-from catalog.models import Photo, Model3D, Project
+from catalog.models import Model3D, Photo, Project
 from django.contrib import admin
 
 
