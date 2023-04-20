@@ -46,7 +46,7 @@
                 <div>Last updated</div>
                 <div class="fw-bold text-muted">{{project.last_update_date}}</div>
             </div>
-            {% if project.model %}
+            {% if project.model.status == 'completed' %}
                 <div class="mb-1 d-flex flex-row justify-content-between">
                     <div>Polygons</div>
                     <div class="fw-bold text-muted">{{project.model.face_count}}</div>
@@ -61,7 +61,7 @@
     <!-- Download options -->
     <div class="p-3 container-fluid border rounded rounded-lg bg-white">
         <h5>Download options</h5>
-        {% if project.model and project.model.status == 'completed' %}
+        {% if project.model.status == 'completed' %}
             <ul class="mb-0 list-unstyled">
                 <li class="d-flex flex-row justify-content-between">
                     <a href="{{project.model.original.url}}">{{project.model.extension}}</a>
