@@ -47,10 +47,13 @@
                 <div class="fw-bold text-muted">{{project.last_update_date}}</div>
             </div>
             {% if project.model.status == 'completed' %}
-                <div class="mb-1 d-flex flex-row justify-content-between">
-                    <div>Polygons</div>
-                    <div class="fw-bold text-muted">{{project.model.face_count}}</div>
-                </div>
+                {% if project.model.face_count > 0 %}
+                    {# project.model.face_count is set to 0 when loading GLTF #}
+                    <div class="mb-1 d-flex flex-row justify-content-between">
+                        <div>Polygons</div>
+                        <div class="fw-bold text-muted">{{project.model.face_count}}</div>
+                    </div>
+                {% endif %}
                 <div class="mb-1 d-flex flex-row justify-content-between">
                     <div>Vertices</div>
                     <div class="fw-bold text-muted">{{project.model.vertex_count}}</div>

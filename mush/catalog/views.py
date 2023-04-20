@@ -4,6 +4,7 @@ from photogrammetry.tools import run_photogrammetry_thread
 
 from .forms import EditProjectForm
 from .models import Model3D, Photo, Project
+from .utils import get_gltf_metadata
 
 
 def index(request):
@@ -58,6 +59,13 @@ def project_edit(request, id):
                 project.model.original = form.files['model']
                 project.model.lowres = form.files['model']
                 project.model.status = 'completed'
+                project.model.save()
+
+                gltf_meta = get_gltf_metadata(project.model.original.path)
+                project.model.vertex_count = gltf_meta.vertex_count
+                # Not implemented yet (it's tricky)
+                # project.model.face_count = gltf_meta.face_count
+                project.model.save()
 
         project.save()
         return redirect('project', id=id)
