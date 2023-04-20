@@ -19,13 +19,6 @@ class Project(models.Model):
         null=True,
         blank=True,
     )
-    preview = models.OneToOneField(
-        'Photo',
-        verbose_name='Превью',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
     last_update_date = models.DateField(
         auto_now_add=True,
         verbose_name='Дата публикации'
