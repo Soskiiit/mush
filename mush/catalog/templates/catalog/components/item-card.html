@@ -35,14 +35,12 @@ background-image: url({% if project.preview %}{{project.preview.get_img_300x300.
                     width="32" height="32">
                     <small>{{project.owner.username}}</small>
                 </div>
-                <!--
                 <div>
                     <small class="text-nowrap d-flex align-items-baseline">
-                        <span class="me-1">0 </span>
+                        <span class="me-1">{{project.download_count}} </span>
                         <img src="{% static "assets/download.svg" %}">
                     </small>
                 </div>
-                -->
             </div>
         </div>
     </a>

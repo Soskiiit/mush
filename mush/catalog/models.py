@@ -30,6 +30,10 @@ class Project(models.Model):
         auto_now_add=True,
         verbose_name='Дата публикации'
     )
+    download_count = models.PositiveIntegerField(
+        verbose_name='Кол-вл скачиваний',
+        default=0,
+    )
 
     class Meta:
         verbose_name = 'проект'

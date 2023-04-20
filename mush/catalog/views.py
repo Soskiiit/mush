@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from photogrammetry.tools import run_photogrammetry_thread
 
@@ -45,6 +46,7 @@ def project_edit(request, id):
                 project.model.delete()
 
             project.model = Model3D.objects.create()
+            project.download_count = 0
 
             if 'images' in form.files:
                 for image in form.files.getlist('images'):
@@ -91,3 +93,17 @@ def project_create(request):
         }
         return render(request, 'catalog/item-edit.html', ctx)
     return redirect('index')
+
+
+def project_download(request, id):
+    project = get_object_or_404(
+        Project,
+        id=id,
+        model__status='completed',
+    )
+    if not project.is_public and request.user != project.owner:
+        raise Http404()
+
+    project.download_count += 1
+    project.save()
+    return FileResponse(open(project.model.original.path, 'rb'))

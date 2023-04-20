@@ -46,6 +46,10 @@
                 <div>Last updated</div>
                 <div class="fw-bold text-muted">{{project.last_update_date}}</div>
             </div>
+            <div class="mb-1 d-flex flex-row justify-content-between">
+                <div>Downloads</div>
+                <div class="fw-bold text-muted">{{project.download_count}}</div>
+            </div>
             {% if project.model.status == 'completed' %}
                 {% if project.model.face_count > 0 %}
                     {# project.model.face_count is set to 0 when loading GLTF #}
@@ -67,7 +71,7 @@
         {% if project.model.status == 'completed' %}
             <ul class="mb-0 list-unstyled">
                 <li class="d-flex flex-row justify-content-between">
-                    <a href="{{project.model.original.url}}">{{project.model.extension}}</a>
+                    <a href="{% url "project-download" id=project.id %}" download>{{project.model.extension}}</a>
                     <div class="fw-bold text-muted">{{project.model.file_size|filesizeformat}}</div>
                 </li>
             </ul>

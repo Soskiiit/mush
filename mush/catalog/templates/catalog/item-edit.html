@@ -32,6 +32,10 @@
                     <div>Publish date</div>
                     <div class="fw-bold text-muted">03-04-2022</div>
                 </div>
+                <div class="mb-1 d-flex flex-row justify-content-between">
+                    <div>Downloads</div>
+                    <div class="fw-bold text-muted">{{project.download_count}}</div>
+                </div>
                 {% if project.model.face_count > 0 %}
                     {# project.model.face_count is set to 0 when loading GLTF #}
                     <div class="mb-1 d-flex flex-row justify-content-between">
@@ -49,10 +53,11 @@
     <!-- Download options -->
         <div class="mb-3 p-3 container-fluid border rounded rounded-lg bg-white">
             <h5>Download options</h5>
-            {% if project.status == 'completed' %}
+            {% if project.model.status == 'completed' %}
                 <ul class="mb-0 list-unstyled">
                     <li class="d-flex flex-row justify-content-between">
-                        <a href="{{project.models_highres.url}}">{{project.model_ext}}</a>
+                        <a href="{% url "project-download" id=project.id %}" download>{{project.model.extension}}</a>
+                        <div class="fw-bold text-muted">{{project.model.file_size|filesizeformat}}</div>
                     </li>
                 </ul>
             {% else %}
