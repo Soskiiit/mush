@@ -99,7 +99,7 @@ def setup():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
-                        format='%(levelname)s %(message)s')
+                        format='%(message)s')
     console_logger = logging.getLogger('console_logger')
     console_logger.setLevel(logging.INFO)
     try:
