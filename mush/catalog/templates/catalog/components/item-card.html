@@ -25,10 +25,15 @@
 class="catalog-card bg-img rounded rounded-3 overflow-hidden"
 style="
 aspect-ratio: 1;
-background-color: whitesmoke;
+{% if project.model.status == 'completed' %}
+    background-color: whitesmoke
+{% else %}
+    background-image: url({% static "assets/no-image.jpg" %})
+{% endif %};
 ">
     <model-viewer
     class="w-100 h-100"
+    style="background: transparent;"
     shadow-intensity="1"
     loading="eager"
     src="{{project.model.lowres.url}}">

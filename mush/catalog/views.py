@@ -107,3 +107,13 @@ def project_download(request, id):
     project.download_count += 1
     project.save()
     return FileResponse(open(project.model.original.path, 'rb'))
+
+
+def project_delete(request, id):
+    if not request.user.is_authenticated:
+        return Http404()
+
+    project = get_object_or_404(Project, id=id, owner=request.user)
+    project.delete()
+
+    return redirect('my-profile')
