@@ -43,7 +43,7 @@ aspect-ratio: 1;
                 <div class="d-flex flex-row align-items-baseline justify-content-between">
                     <div>
                         <img
-                        src="{% static "assets/profile.jpeg" %}"
+                        src="{% if project.owner.profile_img_300x300 %}{{project.owner.profile_img_300x300.url}}{% else %}{% static "assets/profile.png" %}{% endif %}"
                         class="rounded-circle"
                         width="32" height="32">
                         <small>{{project.owner.username}}</small>

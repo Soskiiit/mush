@@ -1,7 +1,7 @@
 {% extends "catalog/item-base.html" %}
 {% load static %}
 
-{% block tab_title %}Тыква{% endblock %}
+{% block tab_title %}{{project.name}}{% endblock %}
 
 {% block side-panel %}
     <!-- Name -->
@@ -28,12 +28,15 @@
             class="me-3 rounded-circle"
             width="64" height="64">
             <div class="d-flex flex-column justify-content-center">
-                <a class="text-reset" href="{% url "profile" id=project.owner.id %}">
-                    {{project.owner.first_name}} {{project.owner.last_name}}
-                </a>
-                <div class="text-muted">
-                    @{{project.owner.username}}
-                </div>
+                {% if not project.owner.first_name or project.owner.last_name %}
+                    <a class="text-reset" href="{% url "profile" id=project.owner.id %}">
+                        @{{project.owner.username}}
+                    </a>
+                {% else %}
+                    <a class="text-reset" href="{% url "profile" id=project.owner.id %}">
+                        {{project.owner.first_name}} {{project.owner.last_name}}
+                    </a>
+                {% endif %}
             </div>
         </div>
     {% endif%}
@@ -94,29 +97,14 @@
     {% elif project.model.status == 'in_queue' %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
             <div class="text-muted fw-light fs-4">Waiting in queue...</div>
-                <script>
-                    setTimeout(function(){
-                        location.reload();
-                        }, 10000);
-                </script>
         </div>
     {% elif project.model.status == 'in_progress' %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
             <div class="text-muted fw-light fs-4">Processing...</div>
-                <script>
-                    setTimeout(function(){
-                        location.reload();
-                        }, 10000);
-                </script>
         </div>
     {% elif project.model.status == 'empty' or not project.model %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
             <div class="text-muted fw-light fs-4">No model</div>
-                <script>
-                    setTimeout(function(){
-                        location.reload();
-                        }, 10000);
-                </script>
         </div>
     {% else %}
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
