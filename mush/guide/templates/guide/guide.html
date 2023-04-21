@@ -6,41 +6,55 @@
 {% block fullwidth-body %}
     <div class="bg-white">
         <div class="container py-5">
-            <div class="row flex-lg-row-reverse align-items-center">
-                <div class="col-lg-6">
-                    <img src="{% static "assets/catalog-hero.jpg" %}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
-                </div>
-                <div class="col-lg-6">
-                    <h1 class="display-5 fw-bold lh-1 mb-3">
-                        Photogrammetry the easy way
+            <div class="row align-items-center">
+                    <h1 class="display-5 fw-bold mb-3 text-center">
+                        Guide
                     </h1>
-                    <p class="lead">
-                        Welcome to Mush3D, here you can create and share your
-                        3D models, making them from a couple of pictures.
-                        Take multiple photos of any object from different angles
-                        and load them using "Create new project", wait until the
-                        end of processing and get the finished 3d model!
-                    </p>
-                    {% if not user.is_authenticated %}
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                            <a
-                            href="{% url "signup" %}"
-                            class="btn btn-primary btn-lg px-4 me-md-2">
-                                Get started
-                            </a>
-                        </div>
-                    {% endif %}
-                </div>
+
             </div>
         </div>
     </div>
 
-    <div class="container-fluid p-5 row g-3">
-        {% for project in projects %}
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                {% include "catalog/components/item-card.html" with project=project %}
-            </div>
-        {% endfor %}
+
+
+    <div class="container-sm p-5">
+        <h3>Introduction in photogrammetry</h3>
+        <div>
+            Photogrammetry at all is "the science and technology of obtaining
+            reliable information about physical objects and the environment
+            through the process of recording, measuring and interpreting
+            photographic images and patterns of electromagnetic radiant
+            imagery and other phenomena", but, skipping this scary words,
+            photogrammetry is the science of obtaining information about
+            a three-dimensional - 3D object from
+            two-dimensional - 2D data, in our case, a 3D model of an object
+            from its photo. You can read more about photogrammetry
+            <a href="https://en.wikipedia.org/wiki/Photogrammetry">here</a>.
+        </div>
+
+        <h3 class="pt-5">Your first project</h3>
+        <div>
+            Let's move from words to work, we'll begin from simple seven image
+            dataset of a monitor, you can
+            <a href="https://disk.yandex.ru/d/vKlc0vzMQgLs9A">download it here</a>.
+            <ol class="py-1">
+              <li class="py-1">Create project by pressing "Create new project button" and select downloaded
+            photos in the "Choose files" menu</li>
+              <li class="py-1">After that, you can specify the
+            project's name and set its status - if it's public, then it could be
+            seen and downloaded by other users, otherwise, only you can see it.
+            Also, you can delete any of your projects whenever you want by pressing
+            "Delete" button in project settings</li>
+              <li class="py-1">When you're all set, press the
+            "Upload model" button - after a few minutes of processing, it'll become
+            available in "Personal projects" under your profile.</li>
+            </ol>
+
+            Congratulations, you have just created your first 3d model from photos!
+        </div>
+
+
+
     </div>
 {% endblock %}
 
