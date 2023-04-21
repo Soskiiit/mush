@@ -17,6 +17,15 @@ def index(request):
     return render(request, 'catalog/index.html', ctx)
 
 
+def list(request):
+    ctx = {
+        'projects': Project.objects.filter(
+            is_public=True, model__status='completed'
+        )
+    }
+    return render(request, 'catalog/list.html', ctx)
+
+
 def project(request, id):
     ctx = {
         'project': get_object_or_404(Project, id=id),

@@ -9,7 +9,8 @@
 
             {% with request.resolver_match.view_name as view_name %}
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="{% url "index" %}" class="nav-link px-2 link-{% if view_name == 'index' %}secondary{% else %}dark{% endif %}">Catalog</a></li>
+                    <li><a href="{% url "list" %}" class="nav-link px-2 link-{% if view_name == 'list' %}dark{% else %}secondary{% endif %}"> Catalog </a></li>
+                    <li><a href="{% url "guide" %}" class="nav-link px-2 link-{% if view_name == 'guide' %}dark{% else %}secondary{% endif %}"> Guide </a></li>
                 </ul>
             {% endwith %}
 
@@ -24,6 +25,7 @@
                         {% if user.is_superuser %}
                             <li><a class="dropdown-item" href="/admin" target="_blank">Admin</a></li>
                         {% endif %}
+                        <li><a class="dropdown-item" href="{% url "project-create" %}">Create new project</a></li>
                         <li><a class="dropdown-item" href="{% url "my-profile" %}">Profile</a></li>
                         <li><a class="dropdown-item" href="{% url "edit-my-profile" %}">Settings</a></li>
                         <li><hr class="dropdown-divider"></li>

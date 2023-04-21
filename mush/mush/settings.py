@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'sorl.thumbnail',
     # Project-specific
+    'guide.apps.GuideConfig',
     'catalog.apps.CatalogConfig',
     'photogrammetry.apps.PhotogrammetryConfig',
     'theme.apps.ThemeConfig',

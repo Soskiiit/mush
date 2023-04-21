@@ -17,28 +17,19 @@
                     <p class="lead">
                         Welcome to Mush3D, here you can create and share your
                         3D models, making them from a couple of pictures.
-                        Just take multiple photos of any object from different angles
-                        and load them to the site, wait a couple of minutes
-                        and get 3d model of your object!
+                        Take multiple photos of any object from different angles
+                        and load them using "Create new project", wait until the
+                        end of processing and get the finished 3d model!
                     </p>
-                    <div class="row">
-
+                    {% if not user.is_authenticated %}
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                            {% if not user.is_authenticated %}
-                                <a
-                                href="{% url "signup" %}"
-                                class="btn btn-primary btn-lg px-4 me-md-2">
-                                    Sign up
-                                </a>
-                            {% endif %}
-                                <a
-                                href="{% url "guide" %}"
-                                class="btn btn-primary btn-lg px-4 me-md-2">
-                                    Guide
-                                </a>
+                            <a
+                            href="{% url "signup" %}"
+                            class="btn btn-primary btn-lg px-4 me-md-2">
+                                Get started
+                            </a>
                         </div>
-
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

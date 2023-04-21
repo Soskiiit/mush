@@ -1,0 +1,29 @@
+{% extends "theme/base.html" %}
+{% load static %}
+
+{% block tab_title %}Catalog{% endblock %}
+
+{% block fullwidth-body %}
+<div class="bg-white">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                    <h1 class="display-5 fw-bold mb-3 text-center">
+                        All available models
+                    </h1>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid p-5 row g-3">
+        {% for project in projects %}
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                {% include "catalog/components/item-card.html" with project=project %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static "js/model-viewer.min.js" %}"></script>
+{% endblock %}
