@@ -67,15 +67,18 @@ def photogrammetry_calc(photo_paths, model_path, model_id):
         chunk.exportModel(
             path=os.path.join(model_path, f'model{model_id}_prev.glb')
         )
+        # Normalize path if project runs on Windows
+        orig_model_path = os.path.join(
+            Path(model_path).parts[-1], f'model{model_id}_full.glb'
+        ).replace('\\', '/')
+        lowres_model_path = os.path.join(
+            Path(model_path).parts[-1], f'model{model_id}_prev.glb'
+        ).replace('\\', '/')
 
         Model3D.objects.filter(id=model_id).update(
             status='completed',
-            original=os.path.join(
-                Path(model_path).parts[-1], f'model{model_id}_full.glb'
-            ),
-            lowres=os.path.join(
-                Path(model_path).parts[-1], f'model{model_id}_prev.glb'
-            ),
+            original=orig_model_path,
+            lowres=lowres_model_path,
             face_count=face_count,
             vertex_count=vert_count,
         )

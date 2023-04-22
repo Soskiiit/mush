@@ -44,7 +44,7 @@
         <div class="d-flex flex-row">
             <div class="me-3 p-3" style="flex: none">
                 <div class="mb-1">
-                    Active since <span class="fw-semibold">{{user.date_joined}}</span>
+                    Active since <span class="fw-semibold">{{user.date_joined|date:'d.m.Y'}}</span>
                 </div>
                 <div>
                     Created <span class="fw-semibold">{{projects|length}}</span> projects

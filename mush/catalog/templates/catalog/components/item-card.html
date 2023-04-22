@@ -36,14 +36,20 @@ aspect-ratio: 1;
     style="background: transparent;"
     shadow-intensity="1"
     loading="eager"
-    src="{{project.model.lowres.url}}">
+    {% if project.model.status == 'completed' %}
+    src="{{project.model.lowres.url}}"
+    {% endif %}>
         <a href="{% url "project" id=project.id %}" class="h-100 user-select-none text-decoration-none catalog-card-body">
             <div class="w-100 mt-auto p-5 pb-4 text-white">
                 <h3 class="w-100 mb-3 fs-4 lh-1 fw-bold">{{project.name}}</h3>
                 <div class="d-flex flex-row align-items-baseline justify-content-between">
                     <div>
                         <img
-                        src="{% if project.owner.profile_img_300x300 %}{{project.owner.profile_img_300x300.url}}{% else %}{% static "assets/profile.png" %}{% endif %}"
+                        {% if project.owner.image %}
+                            src="{{project.owner.profile_img_300x300.url}}"
+                        {% else %}
+                            src="{% static "assets/profile.jpeg" %}"
+                        {% endif %}
                         class="rounded-circle"
                         width="32" height="32">
                         <small>{{project.owner.username}}</small>

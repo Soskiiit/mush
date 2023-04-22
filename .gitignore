@@ -4,8 +4,6 @@
 # Folders
 .ignore/
 node_modules/
-mush/theme/static/
-mush/media/cache/
 mush/media/
 
 # Python
@@ -52,7 +50,7 @@ cover/
 *.pot
 *.log
 local_settings.py
-db.sqlite3*
+#db.sqlite3*
 db.sqlite3-journal
 instance/
 .webassets-cache

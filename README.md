@@ -14,6 +14,24 @@ git clone https://github.com/Soskiiit/mush.git
 cd mush
 ```
 
+**Creating the virtual environment**
+
+```
+python3 -m venv venv
+```
+
+**How to activate virtual environment**
+
+***Windows***
+```
+venv\Scripts\activate
+```
+
+***Linux***
+```
+source ./venv/bin/activate
+```
+
 **Setting up the project**
 
 ```
@@ -24,7 +42,7 @@ python3 setup.py
 
 1. Download [Metashape professional edition](https://www.agisoft.com/downloads/installer/) and install it
 
-2. Activete your license or stert free trial
+2. Activate your license or start free trial
 
 ## Running development server
 

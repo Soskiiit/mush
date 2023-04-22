@@ -1,0 +1,74 @@
+{% extends "theme/base.html" %}
+{% load static %}
+
+{% block tab_title %}Catalog{% endblock %}
+
+{% block fullwidth-body %}
+    <div class="bg-white">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                    <h1 class="display-5 fw-bold mb-3 text-center">
+                        Guide
+                    </h1>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container-sm p-5">
+        <h3>Introduction in photogrammetry</h3>
+        <div>
+            Photogrammetry at all is "the science and technology of obtaining
+            reliable information about physical objects and the environment
+            through the process of recording, measuring and interpreting
+            photographic images and patterns of electromagnetic radiant
+            imagery and other phenomena", but, skipping this scary words,
+            photogrammetry is the science of obtaining information about
+            a three-dimensional - 3D object from
+            two-dimensional - 2D data, in our case, a 3D model of an object
+            from its photo. You can read more about photogrammetry
+            <a href="https://en.wikipedia.org/wiki/Photogrammetry">here</a>.
+        </div>
+
+        <h3 class="pt-5">Your first project</h3>
+        <div>
+            Let's move from words to work, we'll begin from simple seven image
+            dataset of a monitor, you can
+            <a href="https://disk.yandex.ru/d/vKlc0vzMQgLs9A">download it here</a>.
+            <ol class="py-1">
+              <li class="py-1">Create project by pressing "Create new project button" and select downloaded
+            photos in the "Choose files" menu</li>
+              <li class="py-1">Now You can specify the
+            project's name and set its status - if it's public, then it could be
+            seen and downloaded by other users, otherwise, only You can see it.
+            Also, You can delete any of your projects whenever You want by pressing
+            "Delete" button in project settings</li>
+              <li class="py-1">When You're all set, press the
+            "Upload model" button - after a few minutes of processing, it'll become
+            available in "Personal projects" under your profile.</li>
+            </ol>
+
+            Congratulations, you have just created your first 3d model from photos!
+        </div>
+
+        <h3 class="pt-5">How to make good photos</h3>
+        <div>
+            Quality photos is the key for quality model, here are some tips on how
+            to get the most out of your photos.
+
+            <ul class="py-1">
+              <li class="py-1">Cover the whole object by photos, there shouldn't be any uncaptured spots </li>
+              <li class="py-1">Meow meow - meow meow? </li>
+              <li class="py-1">Meow meow. Meow meow mEoW! MEOW! MEOW! MEOW!</li>
+            </ul>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{% static "js/model-viewer.min.js" %}"></script>
+{% endblock %}
