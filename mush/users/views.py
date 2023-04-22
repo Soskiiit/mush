@@ -62,7 +62,7 @@ def profile(request, id):
 def my_profile(request):
     ctx = {
         'profile': User.objects.get(id=request.user.id),
-        'projects': Project.objects.filter(owner__id=request.user.id),
+        'projects': Project.objects.filter(owner__id=request.user.id, model__status__in=['completed', 'error']),
     }
     return render(request, 'users/my-profile.html', ctx)
 

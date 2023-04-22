@@ -36,7 +36,9 @@ aspect-ratio: 1;
     style="background: transparent;"
     shadow-intensity="1"
     loading="eager"
-    src="{{project.model.lowres.url}}">
+    {% if project.model.status == 'completed' %}
+    src="{{project.model.lowres.url}}"
+    {% endif %}>
         <a href="{% url "project" id=project.id %}" class="h-100 user-select-none text-decoration-none catalog-card-body">
             <div class="w-100 mt-auto p-5 pb-4 text-white">
                 <h3 class="w-100 mb-3 fs-4 lh-1 fw-bold">{{project.name}}</h3>
