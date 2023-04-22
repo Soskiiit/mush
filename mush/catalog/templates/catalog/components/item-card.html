@@ -46,7 +46,7 @@ aspect-ratio: 1;
                     <div>
                         <img
                         {% if project.owner.image %}
-                            src="{{project.owner.image.url}}"
+                            src="{{project.owner.profile_img_300x300.url}}"
                         {% else %}
                             src="{% static "assets/profile.jpeg" %}"
                         {% endif %}
