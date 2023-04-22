@@ -4,10 +4,7 @@
 # Folders
 .ignore/
 node_modules/
-mush/theme/static/
-mush/media/cache/
-#mush/media/
-mush/media/gallery/
+mush/media/
 
 # Python
 __pycache__/
