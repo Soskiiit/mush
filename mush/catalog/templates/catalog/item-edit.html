@@ -1,7 +1,7 @@
 {% extends "catalog/item-base.html" %}
 {% load static %}
 
-{% block tab_title %}Тыква{% endblock %}
+{% block tab_title %}{{project.name}}{% endblock %}
 
 {% block action %}{% url "project-edit" id=project.id %}{% endblock %}
 

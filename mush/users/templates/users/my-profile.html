@@ -22,7 +22,7 @@
             >
                 <h3>{{user.first_name}} {{user.last_name}}</h3>
                 <h4 class="text-muted">@{{user.username}}</h4>
-                <div class="d-flex flex-row justify-content-start">
+                <div class="mb-2 d-flex flex-row justify-content-start">
                     {% if user.github %}
                         <a href="https://github.com/{{user.github}}" target="_blank" class="me-3 my-link text-muted">
                             <span><img width="16" height="16" src="{% static "assets/github.svg" %}"> </span>
@@ -36,7 +36,7 @@
                         </a>
                     {% endif %}
                 </div>
-                <a href="{% url "edit-my-profile" %}" class="btn btn-light" style="width: fit-content;">Edit profile</a>
+                {# <a href="{% url "edit-my-profile" %}" class="btn btn-light" style="width: fit-content;">Edit profile</a> #}
             </div>
         </div>
 
