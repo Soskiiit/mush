@@ -14,6 +14,24 @@ git clone https://github.com/Soskiiit/mush.git
 cd mush
 ```
 
+**Creating the virtual environment**
+
+```
+python3 -m venv venv
+```
+
+**How to activate virtual environment**
+
+***Windows***
+```
+venv\Scripts\activate
+```
+
+***Linux***
+```
+source ./venv/bin/activate
+```
+
 **Setting up the project**
 
 ```
