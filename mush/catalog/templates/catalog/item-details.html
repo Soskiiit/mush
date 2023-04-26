@@ -1,5 +1,6 @@
 {% extends "catalog/item-base.html" %}
 {% load static %}
+{% load tz %}
 
 {% block tab_title %}{{project.name}}{% endblock %}
 
@@ -110,5 +111,14 @@
         <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center ">
             <div class="text-danger fw-light fs-4">Failed to generate</div>
         </div>
+    {% endif %}
+    {% if project.model.status != 'completed' %}
+        <script>
+            let url = "{{ request.path }}/last_update";
+            {% timezone 'UTC' %}
+            let loaded_at = "{{ project.model.last_update_date|date:'d/m/Y H:i:s:u'}}";
+            {% endtimezone %}
+        </script>
+        <script src="{% static 'js/smart-refresher.js' %}"></script>
     {% endif %}
 {% endblock %}
