@@ -3,6 +3,7 @@ import os
 
 from catalog.models import Model3D, Photo
 from django.conf import settings
+from django.utils import timezone
 from litequeue import LiteQueue
 
 photogrammetry_queue = LiteQueue(settings.DATABASE_DIR)
@@ -34,7 +35,10 @@ def run_photogrammetry_thread(model_id):
         for cur_photo_path in photo_paths
     ]
     model_path = os.path.join(settings.MEDIA_ROOT, 'models')
-    Model3D.objects.filter(id=model_id).update(status='in_queue')
+    Model3D.objects.filter(id=model_id).update(
+        status='in_queue',
+        last_update_date=timezone.now()
+    )
     photogrammetry_queue.put(
         photogrammetry_args_to_json(photo_paths, model_path, model_id)
     )

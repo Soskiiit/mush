@@ -7,6 +7,7 @@ import Metashape
 import adj_django_connection
 from catalog.models import Model3D
 from django.conf import settings
+from django.utils import timezone
 from litequeue import LiteQueue
 from photogrammetry.tools import json_to_photogrammetry_args
 
@@ -28,7 +29,10 @@ console_logger.setLevel(logging.INFO)
 
 def photogrammetry_calc(photo_paths, model_path, model_id):
     try:
-        Model3D.objects.filter(id=model_id).update(status='in_progress')
+        Model3D.objects.filter(id=model_id).update(
+            status='in_progress',
+            last_update_date=timezone.now()
+        )
         doc = Metashape.Document()
         chunk = doc.addChunk()
         chunk.addPhotos(photo_paths)
@@ -81,11 +85,15 @@ def photogrammetry_calc(photo_paths, model_path, model_id):
             lowres=lowres_model_path,
             face_count=face_count,
             vertex_count=vert_count,
+            last_update_date=timezone.now()
         )
 
     except Exception as ex:
         photogrametry_logger.error(f'{ex} for project with id: {model_id}')
-        Model3D.objects.filter(id=model_id).update(status='error')
+        Model3D.objects.filter(id=model_id).update(
+            status='error',
+            last_update_date=timezone.now()
+        )
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.http import FileResponse, Http404
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from photogrammetry.tools import run_photogrammetry_thread
 
 from .forms import EditProjectForm
@@ -31,6 +31,15 @@ def project(request, id):
         'project': get_object_or_404(Project, id=id),
     }
     return render(request, 'catalog/item-details.html', ctx)
+
+
+def project_last_update(request, id):
+    last_update_time = (Project.objects
+                        .filter(id=id)
+                        .values_list('model__last_update_date', flat=True))
+    if last_update_time:
+        return HttpResponse(last_update_time[0]
+                            .strftime("%d/%m/%Y %H:%M:%S:%f"))
 
 
 def project_edit(request, id):

@@ -19,9 +19,9 @@ class Project(models.Model):
         null=True,
         blank=True,
     )
-    last_update_date = models.DateField(
-        auto_now_add=True,
-        verbose_name='Дата публикации'
+    last_update_date = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Последнее изменение'
     )
     download_count = models.PositiveIntegerField(
         verbose_name='Кол-вл скачиваний',
@@ -102,6 +102,10 @@ class Model3D(models.Model):
     vertex_count = models.PositiveIntegerField(
         default=0,
         verbose_name='Число вершин'
+    )
+    last_update_date = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Последнее изменение'
     )
 
     def extension(self):
