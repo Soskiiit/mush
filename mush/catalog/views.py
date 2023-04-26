@@ -39,7 +39,7 @@ def project_last_update(request, id):
                         .values_list('model__last_update_date', flat=True))
     if last_update_time:
         return HttpResponse(last_update_time[0]
-                            .strftime("%d/%m/%Y %H:%M:%S:%f"))
+                            .strftime('%d/%m/%Y %H:%M:%S:%f'))
 
 
 def project_edit(request, id):
